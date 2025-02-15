@@ -1,12 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import './App.css'
 import ContentItems from './components/ContentItems'
+import SignOut from './components/Sign/SignOut'
+import DesctopNavbar from './components/Navbar/DesctopNavbar'
+import MobileNavbar from './components/Navbar/MobileNavbar'
 
 function App() {
 
   const nav = useNavigate()
   return (
       <div> 
+        <DesctopNavbar/>
+        <MobileNavbar/>
         <div>
           <button onClick={() => {
             nav("/signin")
@@ -22,6 +27,22 @@ function App() {
         <div>
           <ContentItems/>
         </div>
+        <div>
+          <button onClick={() => {
+            nav("/profile")
+          }}> profile </button>
+        </div>
+        <div>
+          <button onClick={() => {
+            nav("/order")
+          }}> order </button>
+        </div>
+        <div>
+          <button onClick={() => {
+            nav("/payment")
+          }}> payment </button>
+        </div>
+          <SignOut/>
 
 
       </div>  

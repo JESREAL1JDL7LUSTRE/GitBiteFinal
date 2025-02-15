@@ -5,7 +5,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Profile from './pages/Profile.tsx'
 import SignIn from './pages/SignIn.tsx'
 import SignUp from './pages/SignUp.tsx'
-
+import ProtectedRoute from './components/ProtectedRoute.tsx'
+import Payment from './pages/Payment.tsx'
+import Order from './pages/Order.tsx'
+import NotFound from './pages/NotFound.tsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +26,28 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignUp/>
+  },
+  {
+    path: '/payment',
+    element: <ProtectedRoute>
+      <Payment/>
+    </ProtectedRoute>
+  },
+  {
+    path: '/order',
+    element: <ProtectedRoute>
+      <Order/>
+    </ProtectedRoute>
+  },
+  {
+    path: '*',
+    element: <NotFound/>
+  },
+  {
+    path: '/profile',
+    element: <ProtectedRoute>
+      <Profile/>
+    </ProtectedRoute>
   }
 ])
 
