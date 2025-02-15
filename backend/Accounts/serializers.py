@@ -1,28 +1,24 @@
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
-from .models import Customer
+Customer = get_user_model()
 
+
+# Customer Serializer
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ["email", "first_name", "last_name", "username", "phone_number", "password", "address"]
-        extra_kwargs = {"password": {"write_only": True}}
+        fields = ["id", "email", "first_name", "last_name", "username", "phone_number", "password", "address"]
+        extra_kwargs = {"password": {"write_only": True}}  # Hide password in responses
 
     def create(self, validated_data):
         password = validated_data.pop("password", None)  # Remove password from validated data
-        customer = Customer(**validated_data)  # Create Customer instance without password
+        customer = Customer(**validated_data)
         if password:
             customer.set_password(password)  # Hash the password before saving
         customer.save()
         return customer
-
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import serializers
-from django.contrib.auth.hashers import check_password
-from .models import Customer
 
 class CustomerTokenObtainSerializer(serializers.Serializer):
     """Custom Token Serializer to authenticate Customers using email OR username"""
@@ -34,17 +30,10 @@ class CustomerTokenObtainSerializer(serializers.Serializer):
         email_or_username = attrs.get("email_or_username")
         password = attrs.get("password")
 
-        # Try to find customer by email or username
-        try:
-            customer = Customer.objects.get(email=email_or_username)
-        except Customer.DoesNotExist:
-            try:
-                customer = Customer.objects.get(username=email_or_username)
-            except Customer.DoesNotExist:
-                raise serializers.ValidationError("Invalid credentials")
+        # Try to find the user by email first, then by username
+        customer = Customer.objects.filter(email=email_or_username).first() or Customer.objects.filter(username=email_or_username).first()
 
-        # Check password
-        if not check_password(password, customer.password):
+        if customer is None or not check_password(password, customer.password):
             raise serializers.ValidationError("Invalid credentials")
 
         refresh = RefreshToken.for_user(customer)
@@ -53,5 +42,5 @@ class CustomerTokenObtainSerializer(serializers.Serializer):
             "refresh": str(refresh),
             "access": str(refresh.access_token),
             "email": customer.email,
-            "username": customer.username,  # Only included in the response
+            "username": customer.username,
         }
