@@ -40,7 +40,12 @@ function App() {
         <div>
           <button onClick={() => {
             nav("/payment")
-          }}> payment </button>
+          }}> Previous Payment </button>
+        </div>
+        <div>
+          <button onClick={() => {
+            nav("/cart")
+          }}> cart </button>
         </div>
           <SignOut/>
 

@@ -6,9 +6,10 @@ import Profile from './pages/Profile.tsx'
 import SignIn from './pages/SignIn.tsx'
 import SignUp from './pages/SignUp.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx'
-import Payment from './pages/Payment.tsx'
+import PreviousPayment from './pages/PreviousPayment.tsx'
 import Order from './pages/Order.tsx'
 import NotFound from './pages/NotFound.tsx'
+import Cart from './pages/Cart.tsx'
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
   {
     path: '/payment',
     element: <ProtectedRoute>
-      <Payment/>
+      <PreviousPayment/>
     </ProtectedRoute>
   },
   {
@@ -47,6 +48,12 @@ const router = createBrowserRouter([
     path: '/profile',
     element: <ProtectedRoute>
       <Profile/>
+    </ProtectedRoute>
+  },
+  {
+    path: '/cart',
+    element: <ProtectedRoute>
+      <Cart/>
     </ProtectedRoute>
   }
 ])

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 
-interface OrderItem {
+interface CartItem {
   id: number;
   name: string;
   description: string;
@@ -11,30 +11,30 @@ interface OrderItem {
   image?: string; // Optional
 }
 
-const Order = () => {
-  const [orders, setOrders] = useState<OrderItem[]>([]); // Correctly typed state
+const Cart = () => {
+  const [cart, setCart] = useState<CartItem[]>([]); // Correctly typed state
 
   useEffect(() => {
-    getOrder();
+    getCart();
   }, []);
 
-  const getOrder = async () => {
+  const getCart = async () => {
     try {
-      const res = await api.get<OrderItem[]>("/api/order/"); // Ensure correct response type
-      setOrders(res.data);
+      const res = await api.get<CartItem[]>("/api/cart/"); // Ensure correct response type
+      setCart(res.data);
       console.log(res.data);
     } catch (err) {
-      alert("Failed to fetch orders");
+      alert("Failed to fetch cart items");
       console.error(err);
     }
   };
 
   return (
     <div>
-      <h2>Order List</h2>
+      <h2>Cart Items</h2>
       <ul>
-        {orders.length > 0 ? (
-          orders.map((item) => (
+        {cart.length > 0 ? (
+          cart.map((item) => (
             <li key={item.id}>
               <h3>{item.name}</h3>
               <p>{item.description}</p>
@@ -45,11 +45,11 @@ const Order = () => {
             </li>
           ))
         ) : (
-          <p>No orders available</p>
+          <p>No items in the cart</p>
         )}
       </ul>
     </div>
   );
 };
 
-export default Order;
+export default Cart;

@@ -49,6 +49,9 @@ from django.db import IntegrityError
 class CartViewSet(viewsets.ModelViewSet):
     serializer_class = CartSerializers
     permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        return Cart.objects.filter(customer=self.request.user)
 
     def perform_create(self, serializer):
         customer = self.request.user

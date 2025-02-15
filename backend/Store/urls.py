@@ -8,6 +8,7 @@ router.register('category', CategoryViewSet, basename='category')
 router.register('dish', DishViewSet, basename='dish')
 router.register('order', OrderListCreateViewset, basename='order-list')
 router.register('payment', PaymentListCreateViewset, basename='payment')
+router.register('cart', CartViewSet, basename='cart')
 
 
 urlpatterns = [
