@@ -7,6 +7,14 @@ class CategorySerializers(serializers.ModelSerializer):
         fields = ("id", "name")
 
 class DishSerializers(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()  # Ensures full URL
+
+    def get_image(self, obj):
+        request = self.context.get('request')  # Get the request object
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
+
     class Meta:
         model = Dish
         fields = ("id", "name", "description", "recipes", "price", "image", "category", "available")

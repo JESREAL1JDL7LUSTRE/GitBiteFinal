@@ -9,12 +9,15 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategorySerializers
     permission_classes = [permissions.AllowAny]
     queryset = Category.objects.all()
-    
-    
-class DishViewSet(viewsets.ReadOnlyModelViewSet):
+
+
+class DishViewSet(viewsets.ReadOnlyModelViewSet):  # Allows only GET requests
     serializer_class = DishSerializers
     permission_classes = [permissions.AllowAny]
     queryset = Dish.objects.all()
+
+    def get_serializer_context(self):
+        return {"request": self.request}  # Pass request context
 
 
 class OrderListCreateViewset(viewsets.ModelViewSet):
