@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import PaymentButton from "@/components/DifferentButtons/PaymentButton";
 
 interface OrderedItem {
   id: number;
@@ -56,6 +57,7 @@ const Order = () => {
                   order.ordered_items.map((item) => (
                     <li key={item.id}>
                       <p>{item.quantity} x {item.dish_name} - ${item.subtotal}</p>
+                      <PaymentButton orderId = {order.id} />
                     </li>
                   ))
                 ) : (

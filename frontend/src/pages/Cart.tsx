@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 
-interface CartItem {
+interface Dish {
   id: number;
   name: string;
   description: string;
   recipes: number;
   category: string;
   available: boolean;
-  image?: string; // Optional
+  image?: string;
+}
+
+interface CartItem {
+  id: number;
+  quantity: number;
+  dish: Dish; // Now includes full dish details
 }
 
 const Cart = () => {
-  const [cart, setCart] = useState<CartItem[]>([]); // Correctly typed state
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    getCart();
+    getCartItems();
   }, []);
 
-  const getCart = async () => {
+  const getCartItems = async () => {
     try {
-      const res = await api.get<CartItem[]>("/api/cart/"); // Ensure correct response type
+      const res = await api.get<CartItem[]>("/api/cart/"); // Fetch cart data
       setCart(res.data);
       console.log(res.data);
     } catch (err) {
@@ -36,12 +42,15 @@ const Cart = () => {
         {cart.length > 0 ? (
           cart.map((item) => (
             <li key={item.id}>
-              <h3>{item.name}</h3>
-              <p>{item.description}</p>
-              <p>Recipes: {item.recipes}</p>
-              <p>Category: {item.category}</p>
-              <p>Available: {item.available ? "Yes" : "No"}</p>
-              {item.image && <img src={item.image} alt={item.name} width="100" />}
+              <h3>{item.dish.name}</h3>
+              <p>{item.dish.description}</p>
+              <p>Recipes: {item.dish.recipes}</p>
+              <p>Category: {item.dish.category}</p>
+              <p>Available: {item.dish.available ? "Yes" : "No"}</p>
+              <p>Quantity: {item.quantity}</p>
+              {item.dish.image && (
+                <img src={item.dish.image} alt={item.dish.name} width="100" />
+              )}
             </li>
           ))
         ) : (

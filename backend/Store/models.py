@@ -88,7 +88,7 @@ PAYMENT_METHODS = [
 class Payment(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="payments")
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="payments")
-    amount = models.FloatField(null=False)
+    amount = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="amount")
     payment_status = models.BooleanField(default=False)  # False = Pending, True = Completed
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='COD')
     transaction_id = models.CharField(max_length=20, unique=True, default=uuid.uuid4().hex[:12])  # 12-character unique ID
