@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 
-interface OrderItem {
+interface OrderedItem {
   id: number;
-  name: string;
-  description: string;
-  recipes: number;
-  category: string;
-  available: boolean;
-  image?: string; // Optional
+  dish_name: string;
+  quantity: number;
+  subtotal: number;
+}
+
+interface Order {
+  id: number;
+  customer: number;
+  total_price: number;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  ordered_items: OrderedItem[]; // ✅ Add Ordered Items
 }
 
 const Order = () => {
-  const [orders, setOrders] = useState<OrderItem[]>([]); // Correctly typed state
+  const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
     getOrder();
@@ -20,7 +27,7 @@ const Order = () => {
 
   const getOrder = async () => {
     try {
-      const res = await api.get<OrderItem[]>("/api/order/"); // Ensure correct response type
+      const res = await api.get<Order[]>("/api/order/");
       setOrders(res.data);
       console.log(res.data);
     } catch (err) {
@@ -34,14 +41,27 @@ const Order = () => {
       <h2>Order List</h2>
       <ul>
         {orders.length > 0 ? (
-          orders.map((item) => (
-            <li key={item.id}>
-              <h3>{item.name}</h3>
-              <p>{item.description}</p>
-              <p>Recipes: {item.recipes}</p>
-              <p>Category: {item.category}</p>
-              <p>Available: {item.available ? "Yes" : "No"}</p>
-              {item.image && <img src={item.image} alt={item.name} width="100" />}
+          orders.map((order) => (
+            <li key={order.id}>
+              <h3>Order ID: {order.id}</h3>
+              <p>Customer ID: {order.customer}</p>
+              <p>Status: {order.status}</p>
+              <p>Total Price: ${order.total_price}</p>
+              <p>Created At: {new Date(order.created_at).toLocaleString()}</p>
+
+              {/* Display Ordered Items */}
+              <h4>Ordered Items:</h4>
+              <ul>
+                {order.ordered_items.length > 0 ? (
+                  order.ordered_items.map((item) => (
+                    <li key={item.id}>
+                      <p>{item.quantity} x {item.dish_name} - ${item.subtotal}</p>
+                    </li>
+                  ))
+                ) : (
+                  <p>No items ordered.</p>
+                )}
+              </ul>
             </li>
           ))
         ) : (

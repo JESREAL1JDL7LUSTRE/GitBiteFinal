@@ -19,21 +19,25 @@ class DishSerializers(serializers.ModelSerializer):
         model = Dish
         fields = ("id", "name", "description", "recipes", "price", "image", "category", "available")
 
+class OrderedItemSerializers(serializers.ModelSerializer):
+    dish_name = serializers.CharField(source="dish.name", read_only=True)  # ✅ Include dish name
+
+    class Meta:
+        model = OrderedItem
+        fields = ["id", "dish_name", "quantity", "subtotal"]  # ✅ Only relevant fields
+        extra_kwargs = {"subtotal": {"read_only": True}}
+
 class OrderSerializers(serializers.ModelSerializer):
+    ordered_items = OrderedItemSerializers(many=True, read_only=True)  # ✅ Include related items
+
     class Meta:
         model = Order
-        fields = "__all__"
+        fields = ["id", "customer", "total_price", "status", "created_at", "updated_at", "ordered_items"]  # ✅ Include ordered_items
         extra_kwargs = {
             "customer": {"read_only": True},
             "status": {"read_only": True},
             "total_price": {"read_only": True},
         }
-
-class OrderedItemSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = OrderedItem
-        fields = "__all__"
-        extra_kwargs = {"subtotal": {"read_only": True}}
 
 class CartSerializers(serializers.ModelSerializer):
     class Meta:
@@ -43,15 +47,19 @@ class CartSerializers(serializers.ModelSerializer):
             "customer": {"read_only": True},
             "quantity": {"min_value": 1},  # Ensures quantity is at least 1
         }
-
+        
+        
 class PaymentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = "__all__"
-        extra_kwargs = {
-            "order": {"read_only": True},
-            "customer": {"read_only": True},
-            "amount": {"read_only": True},
-            "payment_status": {"read_only": True},
-            "transaction_id": {"read_only": True},
-        }
+        fields = "__all__"  # Ensure all fields are included
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["order"] = instance.order.id  # Ensure order ID is included
+        data["payment_method"] = instance.payment_method  # Ensure method is included
+        data["transaction_id"] = instance.transaction_id  # Ensure transaction ID is included
+        if data.get("amount") is None:  
+            data["amount"] = 0.0  # Ensure amount is always valid
+        return data
+

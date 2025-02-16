@@ -4,8 +4,8 @@ import api from "../api/api";
 interface PaymentItem {
   id: number;
   order: number; // Assuming order is an order ID
-  paymentMethod: string;
-  transactionId: string;
+  payment_method: string;
+  transaction_id: string;
   amount: number;
 }
 
@@ -34,10 +34,10 @@ const PreviousPayment = () => {
         {payments.length > 0 ? (
           payments.map((payment) => (
             <li key={payment.id}>
-              <p>Order ID: {payment.order}</p>
-              <p>Payment Method: {payment.paymentMethod}</p>
-              <p>Transaction ID: {payment.transactionId}</p>
-              <p>Amount: ${payment.amount.toFixed(2)}</p>
+              <p>Order ID: {payment.order ?? "N/A"}</p>
+              <p>Payment Method: {payment.payment_method ?? "N/A"}</p>
+              <p>Transaction ID: {payment.transaction_id ?? "N/A"}</p>
+              <p>Amount: ${payment.amount ? payment.amount.toFixed(2) : "N/A"}</p>
             </li>
           ))
         ) : (

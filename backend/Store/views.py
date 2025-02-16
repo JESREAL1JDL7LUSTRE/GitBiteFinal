@@ -42,7 +42,7 @@ class PaymentListCreateViewset(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        return Order.objects.filter(customer = self.request.user)
+        return Payment.objects.filter(customer = self.request.user)
     
     def perform_create(self, serializer):
         serializer.save(customer = self.request.user)
