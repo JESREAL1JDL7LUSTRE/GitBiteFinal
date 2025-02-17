@@ -3,17 +3,10 @@ import api from "../../api/api";
 
 interface PaymentButtonProps {
   orderId: number;
+  orderAmount: number;
 }
 
-interface PaymentError {
-  response: {
-    data: {
-      detail: string;
-    };
-  };
-}
-
-function PaymentButton({ orderId }: PaymentButtonProps) {
+function PaymentButton({ orderId, orderAmount }: PaymentButtonProps) {
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("Card");
   const [paymentMethods, setPaymentMethods] = useState<{ value: string; label: string }[]>([]);
@@ -43,16 +36,12 @@ function PaymentButton({ orderId }: PaymentButtonProps) {
     try {
       await api.post(
         "/api/payment/",
-        { order: orderId, payment_method: paymentMethod },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        { order: orderId, payment_method: paymentMethod, amount: orderAmount }
       );
       setLoading(false);
       alert("Order paid successfully!");
     } catch (error) {
       console.error("Payment failed:", error);
-      const paymentError = error as PaymentError;
-      const errorMessage = paymentError?.response?.data?.detail || "Payment failed.";
-      alert(errorMessage);
       setLoading(false);
     }
   };

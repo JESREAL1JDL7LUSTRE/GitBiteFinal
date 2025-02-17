@@ -6,6 +6,7 @@ function SignOut() {
     const handleSignOut = () => {
         localStorage.clear();
         navigate("/");
+        window.location.reload();
     };
 
     return (

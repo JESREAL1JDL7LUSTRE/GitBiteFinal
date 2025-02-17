@@ -1,13 +1,18 @@
-import React from "react";
+import { Link } from 'react-router-dom';
 import NavbarMenu from "./NavbarMenu";
+import IsSignInOrNot from "../Sign/IsSignInOrNot";
 
-const DesktopNavbar = () => {
+function handleClick() {
+}
+
+const DesctopNavbar = () => {
   return (
     <div className="w-full h-14 border-2 border-green-500 hidden md:flex items-center justify-between px-4">
-      <div>Desktop Navbar</div>
+      <Link to="/" onClick={handleClick}>GitBite</Link>
+      <div><IsSignInOrNot/></div>
       <div><NavbarMenu /></div>
     </div>
   );
 };
 
-export default DesktopNavbar;
+export default DesctopNavbar;

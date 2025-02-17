@@ -57,7 +57,7 @@ const Order = () => {
                   order.ordered_items.map((item) => (
                     <li key={item.id}>
                       <p>{item.quantity} x {item.dish_name} - ${item.subtotal}</p>
-                      <PaymentButton orderId = {order.id} />
+                      <PaymentButton orderId = {order.id} orderAmount = {order.total_price} />
                     </li>
                   ))
                 ) : (

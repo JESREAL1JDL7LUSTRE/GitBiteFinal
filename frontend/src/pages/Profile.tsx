@@ -1,32 +1,16 @@
-import { useEffect, useState } from "react";
-import api from "../api/api";
 
-interface ProfileData {
-  first_name: string;
-  last_name: string;
-  username: string;
-  email: string;
-  phone_number: string;
-  address: string;
-}
+import useFetchProfile from "../utils/useFetchProfile"; // Import the custom hook
 
 const Profile = () => {
-  const [profile, setProfile] = useState<ProfileData | null>(null); // Correctly typed state
+  const { profile, loading, error } = useFetchProfile(); // Use the custom hook
 
-  useEffect(() => {
-    getProfile();
-  }, []);
+  if (loading) {
+    return <p>Loading profile...</p>;
+  }
 
-  const getProfile = async () => {
-    try {
-      const res = await api.get<ProfileData>("/api/profile/"); // Ensure correct response type
-      setProfile(res.data);
-      console.log(res.data);
-    } catch (err) {
-      alert("Failed to fetch profile details");
-      console.error(err);
-    }
-  };
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div>
@@ -41,7 +25,7 @@ const Profile = () => {
           <p><strong>Address:</strong> {profile.address}</p>
         </div>
       ) : (
-        <p>Loading profile...</p>
+        <p>No profile available</p>
       )}
     </div>
   );

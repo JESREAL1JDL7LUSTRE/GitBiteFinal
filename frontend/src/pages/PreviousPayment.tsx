@@ -1,38 +1,23 @@
-import { useEffect, useState } from "react";
-import api from "../api/api";
 
-interface PaymentItem {
-  id: number;
-  order: number; // Assuming order is an order ID
-  payment_method: string;
-  transaction_id: string;
-  amount: number;
-}
+import useFetchPayments, { PaymentItem } from "../utils/useFetchPayments"; // Import the custom hook
 
 const PreviousPayment = () => {
-  const [payments, setPayments] = useState<PaymentItem[]>([]); // Correctly typed state
+  const { payments, loading, error } = useFetchPayments(); // Use the custom hook
 
-  useEffect(() => {
-    getPayment();
-  }, []);
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-  const getPayment = async () => {
-    try {
-      const res = await api.get<PaymentItem[]>("/api/payment/"); // Ensure correct response type
-      setPayments(res.data);
-      console.log(res.data);
-    } catch (err) {
-      alert("Failed to fetch payment details");
-      console.error(err);
-    }
-  };
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div>
       <h2>Previous Payment List</h2>
       <ul>
         {payments.length > 0 ? (
-          payments.map((payment) => (
+          payments.map((payment: PaymentItem) => (
             <li key={payment.id}>
               <p>Order ID: {payment.order ?? "N/A"}</p>
               <p>Payment Method: {payment.payment_method ?? "N/A"}</p>

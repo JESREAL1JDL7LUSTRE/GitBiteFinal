@@ -38,17 +38,51 @@ ORDER_STATUS = [
 
 class Order(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders")
-    total_price = models.FloatField(default=0.0)  # Sum of all OrderedItem prices
+    total_price = models.FloatField(default=0.0)
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default='Pending')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def update_total_price(self):
         self.total_price = sum(item.subtotal for item in self.ordered_items.all())
         self.save()
 
+    def update_status_from_payments(self):
+        """ Update Order status based on Payment status """
+        completed_payments = self.payments.filter(payment_status='Completed')
+        if completed_payments.exists():
+            self.status = 'Completed'
+        else:
+            self.status = 'Pending'
+        self.save()
+
     def __str__(self):
         return f"Order {self.id} for {getattr(self.customer, 'email', 'Unknown Customer')}"
+
+# Payment Model
+PAYMENT_METHODS = [
+    ('COD', 'Cash on Delivery'),
+    ('Card', 'Card Payment'),
+    ('Epay', 'E-Payment'),
+]
+
+class Payment(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="payments")
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="payments")
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.CharField(max_length=20, choices=ORDER_STATUS, default='Pending')  
+    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='COD')
+    transaction_id = models.CharField(max_length=32, unique=True, default=uuid.uuid4().hex)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if self.order:
+            self.order.status = self.payment_status  # Sync Payment status with Order
+            self.order.save()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Payment {self.id} - Order {self.order.id} ({self.payment_method})"
 
 
 # Ordered Item Model
@@ -78,21 +112,3 @@ class Cart(models.Model):
     def __str__(self):
         return f"Cart of {self.customer.email} - {self.dish.name} ({self.quantity})"
 
-# Payment Model
-PAYMENT_METHODS = [
-    ('COD', 'Cash on Delivery'),
-    ('Card', 'Card Payment'),
-    ('Epay', 'E-Payment'),
-]
-
-class Payment(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="payments")
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="payments")
-    amount = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="amount")
-    payment_status = models.BooleanField(default=False)  # False = Pending, True = Completed
-    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='COD')
-    transaction_id = models.CharField(max_length=20, unique=True, default=uuid.uuid4().hex[:12])  # 12-character unique ID
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Payment {self.id} - Order {self.order.id} ({self.payment_method})"

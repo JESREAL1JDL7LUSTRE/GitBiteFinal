@@ -75,9 +75,9 @@ class PaymentListCreateViewset(viewsets.ModelViewSet):
         return Payment.objects.filter(customer = self.request.user)
     
     def perform_create(self, serializer):
-        serializer.save(customer = self.request.user)
-        
-
+        customer = self.request.user
+        print(f"Authenticated user: {customer}") 
+        serializer.save(customer=customer)
 
 class CartViewSet(viewsets.ModelViewSet):
     serializer_class = CartSerializers

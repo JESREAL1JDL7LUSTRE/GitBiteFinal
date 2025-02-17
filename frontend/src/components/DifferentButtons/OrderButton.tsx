@@ -9,8 +9,7 @@ function OrderButton({ dishId }: OrderButtonProps) {
     try {
       const res = await api.post(
         "/api/order/",
-        { dish: dishId },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        { dish: dishId }
       );
       alert("Item added to Order!");
       console.log(res.data);

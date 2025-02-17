@@ -20,7 +20,7 @@ function CartButton({ dishId }: { dishId: number }) {
     };
 
     return (
-        <button onClick={addToCart}>Add to cart</button> // 🔹 No extra wrapper causing double calls
+        <button onClick={addToCart}>Add to cart</button>
     );
 }
 

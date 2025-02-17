@@ -1,46 +1,23 @@
-import { useEffect, useState } from "react";
-import api from "../api/api";
 
-interface Dish {
-  id: number;
-  name: string;
-  description: string;
-  recipes: number;
-  category: string;
-  available: boolean;
-  image?: string;
-}
-
-interface CartItem {
-  id: number;
-  quantity: number;
-  dish: Dish; // Now includes full dish details
-}
+import useFetchCart, { CartItem } from "../utils/useFetchCart"; // Import the custom hook
 
 const Cart = () => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const { cart, loading, error } = useFetchCart(); // Use the custom hook
 
-  useEffect(() => {
-    getCartItems();
-  }, []);
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-  const getCartItems = async () => {
-    try {
-      const res = await api.get<CartItem[]>("/api/cart/"); // Fetch cart data
-      setCart(res.data);
-      console.log(res.data);
-    } catch (err) {
-      alert("Failed to fetch cart items");
-      console.error(err);
-    }
-  };
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div>
       <h2>Cart Items</h2>
       <ul>
         {cart.length > 0 ? (
-          cart.map((item) => (
+          cart.map((item: CartItem) => (
             <li key={item.id}>
               <h3>{item.dish.name}</h3>
               <p>{item.dish.description}</p>
