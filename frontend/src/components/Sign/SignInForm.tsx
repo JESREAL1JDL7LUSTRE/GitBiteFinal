@@ -23,6 +23,7 @@ function SignInForm({ route }: SignInFormProps) {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRECH_TOKEN, res.data.refresh);
                 nav("/");
+                window.location.reload();
             } else {
                 nav("/signin");
             }
