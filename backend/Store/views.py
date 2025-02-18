@@ -33,34 +33,40 @@ class OrderListCreateViewset(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         customer = request.user
-        dish_id = request.data.get("dish")
-        quantity = int(request.data.get("quantity", 1))
+        dish_data = request.data.get("dishes", [])
 
-        if not dish_id:
-            return Response({"error": "Dish ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+        if not dish_data:
+            return Response({"error": "Dish data is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            dish = Dish.objects.get(id=dish_id)
-        except Dish.DoesNotExist:
-            return Response({"error": "Dish not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        # ✅ Ensure only one active order per customer
         order = Order.objects.filter(customer=customer, status="Pending").first()
         if not order:
             order = Order.objects.create(customer=customer, status="Pending")
 
-        # ✅ Find or create an ordered item within the order
-        ordered_item, item_created = OrderedItem.objects.get_or_create(
-            order=order, dish=dish,
-            defaults={"quantity": quantity, "subtotal": dish.price * quantity}
-        )
+        for dish_info in dish_data:
+            dish_id = dish_info.get("dish_id")
+            quantity = int(dish_info.get("quantity", 1))
 
-        if not item_created:
-            ordered_item.quantity += quantity
-            ordered_item.subtotal = ordered_item.quantity * dish.price
-            ordered_item.save()
+            if not dish_id:
+                return Response({"error": "Dish ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        order.update_total_price()  # ✅ Ensure total price is updated
+            try:
+                dish = Dish.objects.get(id=dish_id)
+            except Dish.DoesNotExist:
+                return Response({"error": f"Dish with ID {dish_id} not found."}, status=status.HTTP_404_NOT_FOUND)
+
+            # Handle ordered item creation or update
+            ordered_item, item_created = OrderedItem.objects.get_or_create(
+                order=order, dish=dish,
+                defaults={"quantity": quantity, "subtotal": dish.price * quantity}
+            )
+
+            if not item_created:
+                ordered_item.quantity += quantity
+                ordered_item.subtotal = ordered_item.quantity * dish.price
+                ordered_item.save()
+
+        # Update the order's total price
+        order.update_total_price()
 
         return Response(OrderSerializers(order).data, status=status.HTTP_201_CREATED)
 
