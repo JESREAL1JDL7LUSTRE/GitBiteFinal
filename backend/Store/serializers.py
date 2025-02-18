@@ -43,22 +43,23 @@ class OrderSerializers(serializers.ModelSerializer):
 from django.conf import settings
 
 class CartSerializers(serializers.ModelSerializer):
-    # Use SerializerMethodField to get custom dish data
-    dish = serializers.SerializerMethodField()
+    dish = serializers.PrimaryKeyRelatedField(
+        queryset=Dish.objects.all(),  # Ensure this allows valid dish objects
+        write_only=True  # Accepts input but not returned in response
+    )
+    dish_data = serializers.SerializerMethodField()  # Rename existing `dish` field
 
     class Meta:
         model = Cart
-        fields = ["id", "quantity", "dish"]
+        fields = ["id", "quantity", "dish", "dish_data"]  # Include both fields
 
-    def get_dish(self, obj):
-        request = self.context.get("request")  # Get the request context
+    def get_dish_data(self, obj):  # Renamed to avoid conflict
+        request = self.context.get("request")
         image_url = obj.dish.image.url if obj.dish.image else None
 
-        # Convert relative URL to absolute URL
-        if image_url and request is not None:
+        if image_url and request:
             image_url = request.build_absolute_uri(image_url)
 
-        # Handle the case where no categories are assigned
         category_name = obj.dish.category.first().name if obj.dish.category.exists() else None
 
         return {
@@ -66,10 +67,11 @@ class CartSerializers(serializers.ModelSerializer):
             "name": obj.dish.name,
             "description": obj.dish.description,
             "recipes": obj.dish.recipes,
-            "category": category_name,  # Safely return the category name if it exists
+            "category": category_name,
             "available": obj.dish.available,
-            "image": image_url,  # Now returns the full image URL
+            "image": image_url,
         }
+
 
 
 class PaymentSerializers(serializers.ModelSerializer):

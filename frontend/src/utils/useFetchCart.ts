@@ -1,4 +1,3 @@
-// src/hooks/useFetchCart.ts
 import { useState, useEffect } from "react";
 import api from "../api/api"; // Ensure this is the correct path for your API
 
@@ -15,7 +14,7 @@ export interface Dish {
 export interface CartItem {
   id: number;
   quantity: number;
-  dish: Dish; // Now includes full dish details
+  dish: Dish; // Ensure we use 'dish' to match frontend expectations
 }
 
 const useFetchCart = () => {
@@ -27,12 +26,25 @@ const useFetchCart = () => {
     const getCartItems = async () => {
       setLoading(true);
       try {
-        const res = await api.get<CartItem[]>("/api/cart/");
-        setCart(res.data);
-        console.log(res.data)
+        const res = await api.get("/api/cart/");
+    
+        if (!Array.isArray(res.data)) {
+          throw new Error("Invalid cart data format received");
+        }
+    
+        const formattedCart = res.data.map((item) => {
+    
+          return {
+            id: item.id,
+            quantity: item.quantity,
+            dish: item.dish_data ?? {}, // Rename dish_data -> dish, ensure it exists
+          };
+        });
+
+        setCart(formattedCart);
       } catch (err) {
         setError("Failed to fetch cart items");
-        console.error(err);
+        console.error("Fetch Cart Error:", err);
       } finally {
         setLoading(false);
       }
