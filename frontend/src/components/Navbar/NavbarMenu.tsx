@@ -13,7 +13,7 @@ const NavbarMenu = () => {
         <div>
           <button onClick={() => {
             nav("/order")
-          }}> order </button>
+          }}> Previous order </button>
         </div>
         <div>
           <button onClick={() => {
