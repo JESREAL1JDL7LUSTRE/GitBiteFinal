@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 import api from "../../api/api";
-import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import { Button } from "../ui/button";
+import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 
 interface OrderButtonProps {
-  dishId: number[];  // This expects an array of dish IDs (in case you want to add multiple)
+  dishDetails: { id: number; name: string; price: number }[];
 }
 
-function OrderButton({ dishId }: OrderButtonProps) {
-  const [isOrderSuccessful, setIsOrderSuccessful] = useState(false);  // Track order success
+function OrderButton({ dishDetails }: OrderButtonProps) {
+  const [isOrderSuccessful, setIsOrderSuccessful] = useState(false);
+  const [order, setOrder] = useState<{ id: number; total_price: number } | null>(null);
 
   const addToOrder = async (): Promise<void> => {
     try {
-      // Prepare data to send in the request
-      const dishesToOrder = dishId.map(id => ({ dish_id: id, quantity: 1 }));
+      const dishesToOrder = dishDetails.map(dish => ({
+        dish_id: dish.id
+      }));
 
       const res = await api.post("/api/order/", { dishes: dishesToOrder });
 
+      alert("Items added to Order!");
       console.log(res.data);
 
-      // If successful, trigger the payment pop-up
-      setIsOrderSuccessful(true);  // Update state to show the PaymentPopUpForm
+      setOrder({ id: res.data.id, total_price: res.data.total_price });
+
+      setIsOrderSuccessful(true);
     } catch (error) {
       console.error("Failed to add to Order:", error);
       alert("Error adding items to Order.");
@@ -28,15 +32,21 @@ function OrderButton({ dishId }: OrderButtonProps) {
   };
 
   const closePaymentPopUp = () => {
-    setIsOrderSuccessful(false);  // Close the Payment PopUp
+    setIsOrderSuccessful(false);
   };
 
   return (
     <div>
       <Button onClick={addToOrder}>Add to Order</Button>
 
-      {/* Automatically show the PaymentPopUpForm if the order was successful */}
-      <PaymentPopUpForm isOpen={isOrderSuccessful} onClose={closePaymentPopUp} />
+      {isOrderSuccessful && order && (
+        <PaymentPopUpForm
+          isOpen={isOrderSuccessful}
+          onClose={closePaymentPopUp}
+          order={order}
+          dishDetails={dishDetails} // ✅ Correctly pass dishDetails to PaymentPopUpForm
+        />
+      )}
     </div>
   );
 }

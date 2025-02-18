@@ -12,7 +12,7 @@ class DishSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Dish
-        fields = ["id", "name", "description", "recipes", "category_name", "available", "image"]
+        fields = ["id", "name", "description", "recipes", "category_name", "available", "image", "price"]
 
     def get_category_name(self, obj):
         # If category is ManyToManyField, this returns all related categories as a list of names

@@ -2,15 +2,18 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 
+// Dish type in useFetchDishes.ts or wherever it's defined
 export interface Dish {
   id: number;
   name: string;
   description: string;
-  recipes: number;
-  category_name: string | string[];
+  recipes: string;
+  category_name: string;
   available: boolean;
-  image?: string;
+  price: number;        // Add the price field
+  image?: string;       // Optional field for the image
 }
+
 
 const useFetchDishes = () => {
   const [dishes, setDishes] = useState<Dish[]>([]);
@@ -23,6 +26,7 @@ const useFetchDishes = () => {
       try {
         const res = await api.get<Dish[]>("/api/dish/");
         setDishes(res.data);
+        console.log(res.data)
       } catch (err) {
         setError("Failed to fetch dishes");
         console.error(err);

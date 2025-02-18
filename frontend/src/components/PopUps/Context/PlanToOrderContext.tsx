@@ -1,8 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+// Example: PlanToOrderContext.tsx
+import { createContext, useContext, useState } from "react";
 
 interface Dish {
   id: number;
   name: string;
+  price: number;
 }
 
 interface PlanToOrderContextType {
@@ -10,15 +12,21 @@ interface PlanToOrderContextType {
   addToPlanToOrder: (dish: Dish) => void;
 }
 
-const PlanToOrderContext = createContext<PlanToOrderContextType | undefined>(
-  undefined
-);
+const PlanToOrderContext = createContext<PlanToOrderContextType | undefined>(undefined);
 
-export const PlanToOrderProvider = ({ children }: { children: ReactNode }) => {
+export function usePlanToOrder() {
+  const context = useContext(PlanToOrderContext);
+  if (!context) {
+    throw new Error("usePlanToOrder must be used within a PlanToOrderProvider");
+  }
+  return context;
+}
+
+export const PlanToOrderProvider = ({ children }: { children: React.ReactNode }) => {
   const [planToOrderList, setPlanToOrderList] = useState<Dish[]>([]);
 
   const addToPlanToOrder = (dish: Dish) => {
-    setPlanToOrderList((prevList) => [...prevList, dish]);
+    setPlanToOrderList((prev) => [...prev, dish]);
   };
 
   return (
@@ -26,12 +34,4 @@ export const PlanToOrderProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </PlanToOrderContext.Provider>
   );
-};
-
-export const usePlanToOrder = () => {
-  const context = useContext(PlanToOrderContext);
-  if (!context) {
-    throw new Error("usePlanToOrder must be used within a PlanToOrderProvider");
-  }
-  return context;
 };

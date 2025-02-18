@@ -2,7 +2,7 @@ import React from "react";
 import { usePlanToOrder } from "../PopUps/Context/PlanToOrderContext"; // Fixed import path
 
 interface PlanToOrderButtonProps {
-  dish: { id: number; name: string };
+  dish: { id: number; name: string; price: number }; // Ensure the required properties are passed
 }
 
 function PlanToOrderButton({ dish }: PlanToOrderButtonProps) {
@@ -10,7 +10,7 @@ function PlanToOrderButton({ dish }: PlanToOrderButtonProps) {
 
   return (
     <div>
-      <button onClick={() => addToPlanToOrder(dish)}> plan Add to Order</button>
+      <button onClick={() => addToPlanToOrder(dish)}>Add to Order</button>
     </div>
   );
 }
