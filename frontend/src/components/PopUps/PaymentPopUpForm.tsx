@@ -52,7 +52,6 @@ interface PaymentPopUpFormProps {
           amount: order.total_price,
         });
         setLoading(false);
-        alert("Order paid successfully!");
         onClose(); // Close the dialog after payment
       } catch (error) {
         console.error("Payment failed:", error);

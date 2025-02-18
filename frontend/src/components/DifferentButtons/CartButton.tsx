@@ -8,7 +8,7 @@ function CartButton({ dishId }: { dishId: number }) {
                 dish: dishId, 
                 quantity: 1 
             });
-            alert("Item added to cart!");
+                
         } catch (error: unknown) { 
             if (axios.isAxiosError(error)) {
                 console.error("Failed to add to cart:", error.response?.data || error.message);

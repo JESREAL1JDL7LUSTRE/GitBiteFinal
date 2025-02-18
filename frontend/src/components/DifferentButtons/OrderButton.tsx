@@ -19,7 +19,6 @@ function OrderButton({ dishDetails }: OrderButtonProps) {
 
       const res = await api.post("/api/order/", { dishes: dishesToOrder });
 
-      alert("Items added to Order!");
       console.log(res.data);
 
       setOrder({ id: res.data.id, total_price: res.data.total_price });
@@ -37,7 +36,7 @@ function OrderButton({ dishDetails }: OrderButtonProps) {
 
   return (
     <div>
-      <Button onClick={addToOrder}>Add to Order</Button>
+      <Button onClick={addToOrder}>Pay order</Button>
 
       {isOrderSuccessful && order && (
         <PaymentPopUpForm

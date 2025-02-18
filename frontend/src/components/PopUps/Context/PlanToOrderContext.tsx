@@ -10,6 +10,7 @@ interface Dish {
 interface PlanToOrderContextType {
   planToOrderList: Dish[];
   addToPlanToOrder: (dish: Dish) => void;
+  clearPlanToOrder: () => void;
 }
 
 const PlanToOrderContext = createContext<PlanToOrderContextType | undefined>(undefined);
@@ -29,8 +30,12 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
     setPlanToOrderList((prev) => [...prev, dish]);
   };
 
+  const clearPlanToOrder = () => {
+    setPlanToOrderList([]);  // Clears the list
+  };
+
   return (
-    <PlanToOrderContext.Provider value={{ planToOrderList, addToPlanToOrder }}>
+    <PlanToOrderContext.Provider value={{ planToOrderList, addToPlanToOrder, clearPlanToOrder  }}>
       {children}
     </PlanToOrderContext.Provider>
   );
