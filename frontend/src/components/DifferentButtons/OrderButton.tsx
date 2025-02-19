@@ -36,7 +36,7 @@ function OrderButton({ dishDetails }: OrderButtonProps) {
 
   return (
     <div>
-      <Button onClick={addToOrder}>Pay order</Button>
+      <Button onClick={addToOrder}>Pay your order now</Button>
 
       {isOrderSuccessful && order && (
         <PaymentPopUpForm
