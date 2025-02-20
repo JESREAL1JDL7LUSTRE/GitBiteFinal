@@ -38,9 +38,7 @@ class OrderListCreateViewset(viewsets.ModelViewSet):
         if not dish_data:
             return Response({"error": "Dish data is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        order = Order.objects.filter(customer=customer, status="Pending").first()
-        if not order:
-            order = Order.objects.create(customer=customer, status="Pending")
+        order = Order.objects.create(customer=customer, status="Pending")
 
         for dish_info in dish_data:
             dish_id = dish_info.get("dish_id")
