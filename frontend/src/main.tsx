@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound.tsx';
 import Cart from './pages/Cart.tsx';
 import { useState } from 'react';
 import Navbar from './components/Navbar/NavBar.tsx';
+import About from './pages/About.tsx';
 
 const Layout = () => {
   const location = useLocation();
@@ -39,7 +40,7 @@ const Layout = () => {
         <Route path='/order' element={<ProtectedRoute><Order /></ProtectedRoute>} />
         <Route path='/cart' element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path='/about' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path='/about' element={<ProtectedRoute><About/></ProtectedRoute>} />
         <Route path='/author' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='*' element={<NotFound />} />
       </Routes>

@@ -14,7 +14,7 @@ export interface Dish {
 export interface CartItem {
   id: number;
   quantity: number;
-  dish: Dish; // Ensure we use 'dish' to match frontend expectations
+  dish: Dish;
 }
 
 const useFetchCart = () => {
@@ -37,7 +37,7 @@ const useFetchCart = () => {
           return {
             id: item.id,
             quantity: item.quantity,
-            dish: item.dish_data ?? {}, // Rename dish_data -> dish, ensure it exists
+            dish: item.dish_data ?? {}, 
           };
         });
 

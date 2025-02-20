@@ -22,12 +22,12 @@ const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
     };
 
   return (
-    <nav className="sticky top-0 left-0 right-0 bg-white shadow-lg w-full z-50">
+    <nav className="sticky top-0 left-0 right-0 bg-white shadow-lg w-full z-50 md:h-20 h-32">
       <div className="flex items-center justify-between px-6 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-10 cursor-pointer" />
-          <p className="font-semibold">BrandName</p>
+          <p className="font-semibold">GitCook</p>
         </Link>
 
         {/* Right-aligned content */}
@@ -49,7 +49,7 @@ const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
             </li>
             <li>
               <Link to="/about" className="hover:text-gray-600">
-                About
+                About Us
               </Link>
             </li>
           </ul>
