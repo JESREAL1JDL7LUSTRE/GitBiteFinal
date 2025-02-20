@@ -35,28 +35,41 @@ function SignInForm({ route }: SignInFormProps) {
     };
 
     return (
-        <div>
-            <h1>Sign In</h1>
-            <form onSubmit={handleSubmit} className="">
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="w-full max-w-md p-8 bg-white border border-gray-300 rounded-lg shadow-md">
+                <h1 className="text-2xl font-semibold text-center mb-6">Sign In</h1>
+                
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <input
-                    className=""
+                    className="w-full px-4 py-2 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     type="text"
                     placeholder="Username or Email"
                     value={email_or_username}
                     onChange={(e) => setemail_or_username(e.target.value)}
                 />
+                
                 <input
-                    className=""
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit" disabled={loading}>
+                
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className={`w-full py-2 text-white rounded-md ${
+                    loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+                    } transition-all`}
+                >
                     {loading ? "Signing in..." : "Sign In"}
                 </button>
-            </form>
-        </div>
+                <button onClick={() => nav('/signup')}>Sign Up</button>
+                </form>
+            </div>
+            </div>
+
     );
 }
 
