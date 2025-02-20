@@ -22,7 +22,7 @@ function PlanToOrderPopUp() {
   };
 
   return (
-    <div className="bg-white border p-4 shadow-md rounded-lg">
+    <div className="sticky top-14 bg-white border p-4 shadow-md rounded-lg">
       <h2 className="text-lg font-bold mb-4">Planned Orders</h2>
 
       {planToOrderList.length === 0 ? (

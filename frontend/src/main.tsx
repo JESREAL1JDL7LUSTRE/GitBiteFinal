@@ -17,7 +17,6 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <DesctopNavbar />
       <MobileNavbar />
-      <div className="h-14"></div>
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
