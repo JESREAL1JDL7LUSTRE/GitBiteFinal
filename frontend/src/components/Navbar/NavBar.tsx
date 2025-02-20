@@ -5,7 +5,12 @@ import { Menu, X, ShoppingCartIcon } from "lucide-react";
 import IsSignInOrNot from "../Sign/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
 import NavLinks from "./NavLinks";
-const Navbar = () => {
+
+interface NavbarProps {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}
+const Navbar = ({ searchQuery, setSearchQuery} : NavbarProps ) => {
   const [open, setOpen] = useState(false);
   const nav = useNavigate();
 
@@ -17,6 +22,15 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="h-10 cursor-pointer" />
           <p className="font-semibold">BrandName</p>
         </Link>
+
+              {/* Search Input */}
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="border p-1 rounded-md"
+      />
 
         <ul className="hidden md:flex items-center gap-4">
           <li>

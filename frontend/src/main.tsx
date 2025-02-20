@@ -10,11 +10,13 @@ import PreviousPayment from './pages/PreviousPayment.tsx';
 import Order from './pages/Order.tsx';
 import NotFound from './pages/NotFound.tsx';
 import Cart from './pages/Cart.tsx';
-
+import { useState } from 'react';
 import Navbar from './components/Navbar/NavBar.tsx';
 
 const Layout = () => {
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState(""); // Store search input
+
   
   // Define routes where the navbar should NOT be displayed
   const hideNavbarRoutes = ['*'];
@@ -25,11 +27,11 @@ const Layout = () => {
     <>
       {shouldShowNavbar && (
         <>
-          <Navbar />
+          <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         </>
       )}
       <Routes>
-        <Route path='/' element={<App />} />
+        <Route path='/' element={<App searchQuery={searchQuery} />} />
         <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
