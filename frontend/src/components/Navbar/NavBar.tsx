@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Menu, X, Search, ShoppingCart } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import IsSignInOrNot from "../Sign/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
+import SearchFunction from "../SearchFunction";
+import CategoryDropdown from "../DropdownThings/CategoryDropdown";
 
 interface NavbarProps {
   searchQuery: string;
@@ -12,7 +14,6 @@ interface NavbarProps {
 
 const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
   const [open, setOpen] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
   const nav = useNavigate();
 
   return (
@@ -26,28 +27,9 @@ const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
 
         {/* Right-aligned content */}
         <div className="flex items-center gap-6 ml-auto">
-          {/* Search Button & Input */}
-          <div className="relative">
-            {!showSearch ? (
-              <button onClick={() => setShowSearch(true)} className="p-2">
-                <Search className="w-6 h-6 text-gray-600" />
-              </button>
-            ) : (
-              <div className="flex items-center border rounded-md p-1 bg-white shadow-md">
-                <input
-                  type="text"
-                  autoFocus
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="p-1 focus:outline-none"
-                />
-                <button onClick={() => setShowSearch(false)} className="p-2">
-                  ✖
-                </button>
-              </div>
-            )}
-          </div>
+          <SearchFunction searchQuery={searchQuery} onSearch={setSearchQuery} />
+
+          <CategoryDropdown setSearchQuery={setSearchQuery} />
 
           <ul className="hidden md:flex items-center gap-2">
             <li>

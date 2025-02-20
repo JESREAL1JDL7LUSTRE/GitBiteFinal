@@ -39,6 +39,8 @@ const Layout = () => {
         <Route path='/order' element={<ProtectedRoute><Order /></ProtectedRoute>} />
         <Route path='/cart' element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path='/about' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path='/author' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
