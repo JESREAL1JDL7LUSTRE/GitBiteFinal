@@ -1,87 +1,121 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Menu, X, ShoppingCartIcon } from "lucide-react";
+import { Menu, X, Search, ShoppingCart } from "lucide-react";
 import IsSignInOrNot from "../Sign/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
-import NavLinks from "./NavLinks";
 
 interface NavbarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
 }
-const Navbar = ({ searchQuery, setSearchQuery} : NavbarProps ) => {
+
+const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
   const [open, setOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const nav = useNavigate();
 
   return (
     <nav className="sticky top-0 left-0 right-0 bg-white shadow-lg w-full z-50">
       <div className="flex items-center justify-between px-6 py-3">
-        {/* Left side - Logo */}
+        {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-10 cursor-pointer" />
           <p className="font-semibold">BrandName</p>
         </Link>
 
-              {/* Search Input */}
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="border p-1 rounded-md"
-      />
+        {/* Right-aligned content */}
+        <div className="flex items-center gap-6 ml-auto">
+          {/* Search Button & Input */}
+          <div className="relative">
+            {!showSearch ? (
+              <button onClick={() => setShowSearch(true)} className="p-2">
+                <Search className="w-6 h-6 text-gray-600" />
+              </button>
+            ) : (
+              <div className="flex items-center border rounded-md p-1 bg-white shadow-md">
+                <input
+                  type="text"
+                  autoFocus
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="p-1 focus:outline-none"
+                />
+                <button onClick={() => setShowSearch(false)} className="p-2">
+                  ✖
+                </button>
+              </div>
+            )}
+          </div>
 
-        <ul className="hidden md:flex items-center gap-4">
-          <li>
-            <Link to="/" className="hover:text-gray-600">Home</Link>
-          </li>
-          <NavLinks />
-          <li>
-            <Link to="/authors" className="hover:text-gray-600">Authors</Link>
-          </li>
-          <li>
-            <Link to="/about" className="hover:text-gray-600">About</Link>
-          </li>
-        </ul>
+          <ul className="hidden md:flex items-center gap-2">
+            <li>
+              <Link to="/" className="hover:text-gray-600">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/authors" className="hover:text-gray-600">
+                Authors
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-gray-600">
+                About
+              </Link>
+            </li>
+          </ul>
 
-        <div className="flex items-center gap-4 ml-auto">
-          <Button onClick={() => nav("cart")} variant="outline">
-            <ShoppingCartIcon />
+          {/* Cart and User */}
+          <Button onClick={() => nav("/cart")} variant="outline">
+            <ShoppingCart className="w-6 h-6" />
           </Button>
-          <IsSignInOrNot />
-        </div>
 
-        <div className="text-3xl md:hidden flex items-center ml-4" onClick={() => setOpen(true)}>
-          <Menu />
+          <IsSignInOrNot />
+
+          {/* Mobile Menu Button */}
+          <div
+            className="text-3xl md:hidden flex items-center ml-4 cursor-pointer"
+            onClick={() => setOpen(true)}
+          >
+            <Menu />
+          </div>
         </div>
       </div>
 
-        <div className={`fixed top-0 right-0 h-full w-1/2 bg-white shadow-lg transform ${
-            open ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 ease-in-out z-50`}>
- 
+      {/* Mobile Sidebar Menu */}
+      <div
+        className={`fixed top-0 right-0 h-full w-1/2 bg-white shadow-lg transform ${
+          open ? "translate-x-0" : "translate-x-full"
+        } transition-transform duration-300 ease-in-out z-50`}
+      >
         <div className="flex justify-end p-4">
-            <button onClick={() => setOpen(false)}>
+          <button onClick={() => setOpen(false)}>
             <X className="text-2xl" />
-            </button>
+          </button>
         </div>
 
         <ul className="flex flex-col items-center px-6 space-y-4">
-            <li>
-            <Link to="/" onClick={() => setOpen(false)}>Home</Link>
-            </li>
-            <NavLinks />
-            <li>
-            <Link to="/authors" onClick={() => setOpen(false)}>Authors</Link>
-            </li>
-            <li>
-            <Link to="/about" onClick={() => setOpen(false)}>About</Link>
-            </li>
+          <li>
+            <Link to="/" onClick={() => setOpen(false)}>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/authors" onClick={() => setOpen(false)}>
+              Authors
+            </Link>
+          </li>
+          <li>
+            <Link to="/about" onClick={() => setOpen(false)}>
+              About
+            </Link>
+          </li>
         </ul>
-        </div>
+      </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

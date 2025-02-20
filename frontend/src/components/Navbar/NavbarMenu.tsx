@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom'
 const NavbarMenu = () => {
   const nav = useNavigate()
   return (
-    <li>
-        <div>
+    <li className='flex flex-col p-4 gap-2'>
+        <div >
           <button onClick={() => {
             nav("/profile")
-          }}> profile </button>
+          }}> Profile </button>
         </div>
         <div>
           <button onClick={() => {
@@ -20,12 +20,6 @@ const NavbarMenu = () => {
             nav("/payment")
           }}> Previous Payment </button>
         </div>
-        <div>
-          <button onClick={() => {
-            nav("/cart")
-          }}> cart </button>
-        </div>
-  
     </li>
   )
 }

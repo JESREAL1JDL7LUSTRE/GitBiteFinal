@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import api from "../../api/api";
 import { ACCESS_TOKEN, REFRECH_TOKEN } from '@/api/constant';
+import { UserCircle } from 'lucide-react';
 import SignOut from './SignOut';
+import NavbarMenu from '../Navbar/NavbarMenu';
+import { Button } from '../ui/button';
 
-// Utility function to check the token and refresh it if needed
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem(REFRECH_TOKEN);
   try {
@@ -21,7 +23,6 @@ const refreshToken = async () => {
   return false;
 };
 
-// Utility function to check if the token is valid
 const isLoggedIn = async () => {
   const token = localStorage.getItem(ACCESS_TOKEN);
   if (!token) return false;
@@ -31,7 +32,6 @@ const isLoggedIn = async () => {
     const tokenExpiration = decoded.exp;
     const now = Date.now() / 1000;
 
-    // If the token is expired, attempt to refresh it
     if (!tokenExpiration || tokenExpiration < now) {
       const refreshed = await refreshToken();
       if (!refreshed) return false;
@@ -46,10 +46,10 @@ const isLoggedIn = async () => {
 
 function IsSignInOrNot() {
   const [isLoggedInState, setIsLoggedInState] = useState<boolean | null>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
-    // Check login status on component mount
     const checkLoginStatus = async () => {
       const loggedInStatus = await isLoggedIn();
       setIsLoggedInState(loggedInStatus);
@@ -59,19 +59,37 @@ function IsSignInOrNot() {
   }, []);
 
   if (isLoggedInState === null) {
-    return <div>Loading...</div>; // You can add a spinner or a loading indicator
+    return <div>Loading...</div>; 
   }
 
   return isLoggedInState ? (
-    <SignOut /> // If logged in, show SignOut button
+    <div style={{ position: 'relative' }}>
+      <UserCircle
+        size={32}
+        onClick={() => setShowDropdown(!showDropdown)}
+        style={{ cursor: 'pointer' }}
+      />
+      {showDropdown && (
+        <div className='flex flex-col p-4 gap-2'
+          style={{
+            position: 'absolute',
+            top: '40px',
+            right: '0',
+            backgroundColor: 'white',
+            boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+            padding: '30px',
+            borderRadius: '10px',
+          }}
+        >
+          <NavbarMenu />
+          <SignOut />
+        </div>
+      )}
+    </div>
   ) : (
-    <div>
-      <div>
-        <button onClick={() => nav('/signin')}>Sign In</button>
-      </div>
-      <div>
-        <button onClick={() => nav('/signup')}>Sign Up</button>
-      </div>
+    <div className='flex gap-2'>
+      <Button onClick={() => nav('/signin')}>Sign In</Button>
+      <Button onClick={() => nav('/signup')}>Sign Up</Button>
     </div>
   );
 }
