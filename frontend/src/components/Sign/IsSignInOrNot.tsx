@@ -47,6 +47,7 @@ const isLoggedIn = async () => {
 function IsSignInOrNot() {
   const [isLoggedInState, setIsLoggedInState] = useState<boolean | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [profile, setProfile] = useState<{ first_name: string } | null>(null);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -59,26 +60,31 @@ function IsSignInOrNot() {
   }, []);
 
   if (isLoggedInState === null) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
+  
   return isLoggedInState ? (
-    <div style={{ position: 'relative' }}>
-      <UserCircle
-        size={32}
+    <div style={{ position: "relative" }}>
+      {/* Profile Avatar Button */}
+      <div
+        className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-lg font-bold text-white cursor-pointer"
         onClick={() => setShowDropdown(!showDropdown)}
-        style={{ cursor: 'pointer' }}
-      />
+      >
+        {profile?.first_name ? profile.first_name.charAt(0).toUpperCase() : "U"}
+      </div>
+
       {showDropdown && (
-        <div className='flex flex-col p-4 gap-2'
+        <div
+          className="flex flex-col p-4 gap-2"
           style={{
-            position: 'absolute',
-            top: '40px',
-            right: '0',
-            backgroundColor: 'white',
-            boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-            padding: '30px',
-            borderRadius: '10px',
+            position: "absolute",
+            top: "40px",
+            right: "0",
+            backgroundColor: "white",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            padding: "30px",
+            borderRadius: "10px",
           }}
         >
           <NavbarMenu />
@@ -87,9 +93,9 @@ function IsSignInOrNot() {
       )}
     </div>
   ) : (
-    <div className='flex gap-2'>
-      <Button onClick={() => nav('/signin')}>Sign In</Button>
-      <Button onClick={() => nav('/signup')}>Sign Up</Button>
+    <div className="flex gap-2">
+      <Button onClick={() => nav("/signin")}>Sign In</Button>
+      <Button onClick={() => nav("/signup")}>Sign Up</Button>
     </div>
   );
 }
