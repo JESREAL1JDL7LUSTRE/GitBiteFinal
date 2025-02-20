@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 const NavbarMenu = () => {
   const nav = useNavigate()
   return (
-    <div>
+    <li>
         <div>
           <button onClick={() => {
             nav("/profile")
@@ -25,7 +25,8 @@ const NavbarMenu = () => {
             nav("/cart")
           }}> cart </button>
         </div>
-    </div>
+  
+    </li>
   )
 }
 

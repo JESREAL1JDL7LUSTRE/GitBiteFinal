@@ -10,13 +10,12 @@ import PreviousPayment from './pages/PreviousPayment.tsx';
 import Order from './pages/Order.tsx';
 import NotFound from './pages/NotFound.tsx';
 import Cart from './pages/Cart.tsx';
-import DesctopNavbar from './components/Navbar/DesctopNavbar.tsx';
-import MobileNavbar from './components/Navbar/MobileNavbar.tsx';
+
+import Navbar from './components/Navbar/NavBar.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
-      <DesctopNavbar />
-      <MobileNavbar />
+      <Navbar />
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
