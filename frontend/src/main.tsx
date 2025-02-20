@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './index.css';
 import App from './App.tsx';
 import Profile from './pages/Profile.tsx';
@@ -13,9 +13,21 @@ import Cart from './pages/Cart.tsx';
 
 import Navbar from './components/Navbar/NavBar.tsx';
 
-createRoot(document.getElementById('root')!).render(
-    <BrowserRouter>
-      <Navbar />
+const Layout = () => {
+  const location = useLocation();
+  
+  // Define routes where the navbar should NOT be displayed
+  const hideNavbarRoutes = ['*'];
+  
+  const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
+
+  return (
+    <>
+      {shouldShowNavbar && (
+        <>
+          <Navbar />
+        </>
+      )}
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
@@ -27,5 +39,12 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </>
+  );
+};
+
+createRoot(document.getElementById('root')!).render(
+  <BrowserRouter>
+    <Layout />
+  </BrowserRouter>
 );

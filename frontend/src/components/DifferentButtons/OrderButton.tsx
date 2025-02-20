@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import api from "../../api/api";
 import { Button } from "../ui/button";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
+import { useNavigate } from 'react-router-dom'
 
 interface OrderButtonProps {
   dishDetails: { id: number; name: string; price: number }[];
 }
 
 function OrderButton({ dishDetails }: OrderButtonProps) {
+  const nav = useNavigate()
   const [isOrderSuccessful, setIsOrderSuccessful] = useState(false);
   const [order, setOrder] = useState<{ id: number; total_price: number } | null>(null);
 
@@ -26,7 +28,8 @@ function OrderButton({ dishDetails }: OrderButtonProps) {
       setIsOrderSuccessful(true);
     } catch (error) {
       console.error("Failed to add to Order:", error);
-      alert("Error adding items to Order.");
+      alert("Error adding items to Order. Please try log in.");
+      nav("/signin")
     }
   };
 
