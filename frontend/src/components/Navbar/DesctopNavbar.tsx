@@ -20,7 +20,6 @@ const DesctopNavbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
         onChange={(e) => setSearchQuery(e.target.value)}
         className="border p-1 rounded-md"
       />
-
       <div><IsSignInOrNot/></div>
       <div><NavbarMenu /></div>
     </div>
