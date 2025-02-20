@@ -5,16 +5,15 @@ import PlanToOrderPopUp from './components/PopUps/PlanToOrderPopUp'
 
 interface AppProps {
   searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
 function App({ searchQuery }: AppProps) {
   return (
-    <div>
-      <PlanToOrderProvider>
-        <PlanToOrderPopUp />
-        <ContentItems searchQuery={searchQuery} />
-      </PlanToOrderProvider>
-    </div>
+    <PlanToOrderProvider>
+      <PlanToOrderPopUp />
+      <ContentItems searchQuery={searchQuery} />
+    </PlanToOrderProvider>
   )
 }
 

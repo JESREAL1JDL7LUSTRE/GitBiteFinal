@@ -14,8 +14,6 @@ import {
   
   const CategoryDropdown = ({ setSearchQuery }: CategoryDropdownProps) => {
     const { dishes, loading, error } = useFetchDishes();
-  
-    // Get unique categories
     const categories = Array.from(new Set(dishes?.map((dish) => dish.category_name)));
   
     if (loading) return <p>Loading...</p>;
@@ -28,7 +26,12 @@ import {
           <DropdownMenuLabel>Select a Category</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {categories.map((category) => (
-            <DropdownMenuItem key={category} onClick={() => setSearchQuery(category)}>
+            <DropdownMenuItem
+              key={category}
+              onClick={() => {
+                setSearchQuery(Array.isArray(category) ? category[0] : category); // Ensure it's a string
+              }}
+            >
               {category}
             </DropdownMenuItem>
           ))}

@@ -31,7 +31,7 @@ const Layout = () => {
         </>
       )}
       <Routes>
-        <Route path='/' element={<App searchQuery={searchQuery} />} />
+        <Route path='/' element={<App searchQuery={searchQuery} setSearchQuery={setSearchQuery} />} />
         <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />

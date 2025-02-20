@@ -16,6 +16,11 @@ const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
   const [open, setOpen] = useState(false);
   const nav = useNavigate();
 
+    // When a category is selected, update searchQuery
+    const handleCategorySelect = (category: string) => {
+      setSearchQuery(category);
+    };
+
   return (
     <nav className="sticky top-0 left-0 right-0 bg-white shadow-lg w-full z-50">
       <div className="flex items-center justify-between px-6 py-3">
@@ -29,7 +34,7 @@ const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
         <div className="flex items-center gap-6 ml-auto">
           <SearchFunction searchQuery={searchQuery} onSearch={setSearchQuery} />
 
-          <CategoryDropdown setSearchQuery={setSearchQuery} />
+          <CategoryDropdown setSearchQuery={handleCategorySelect} />
 
           <ul className="hidden md:flex items-center gap-2">
             <li>
