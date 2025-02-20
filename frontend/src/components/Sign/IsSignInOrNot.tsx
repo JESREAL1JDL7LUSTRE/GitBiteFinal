@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import api from "../../api/api";
 import { ACCESS_TOKEN, REFRECH_TOKEN } from '@/api/constant';
-import { UserCircle } from 'lucide-react';
 import SignOut from './SignOut';
 import NavbarMenu from '../Navbar/NavbarMenu';
 import { Button } from '../ui/button';
+import useFetchProfile from "../../utils/useFetchProfile"; // Import the custom hook
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem(REFRECH_TOKEN);
@@ -44,10 +44,11 @@ const isLoggedIn = async () => {
   }
 };
 
+
 function IsSignInOrNot() {
   const [isLoggedInState, setIsLoggedInState] = useState<boolean | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [profile, setProfile] = useState<{ first_name: string } | null>(null);
+  const { profile, loading, error } = useFetchProfile(); // ✅ Correct usage
   const nav = useNavigate();
 
   useEffect(() => {
@@ -59,11 +60,14 @@ function IsSignInOrNot() {
     checkLoginStatus();
   }, []);
 
-  if (isLoggedInState === null) {
-    return <div>Loading...</div>;
+  if (isLoggedInState === null || loading) {
+    return <div>Loading...</div>; // ✅ Show loading state properly
   }
 
-  
+  if (error) {
+    return <div>Error loading profile: {error}</div>; // ✅ Handle error
+  }
+
   return isLoggedInState ? (
     <div style={{ position: "relative" }}>
       {/* Profile Avatar Button */}
@@ -71,7 +75,7 @@ function IsSignInOrNot() {
         className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-lg font-bold text-white cursor-pointer"
         onClick={() => setShowDropdown(!showDropdown)}
       >
-        {profile?.first_name ? profile.first_name.charAt(0).toUpperCase() : "U"}
+        {profile?.first_name ? profile.first_name.charAt(0).toUpperCase() : "?"}
       </div>
 
       {showDropdown && (
