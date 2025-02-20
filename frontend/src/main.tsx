@@ -12,9 +12,12 @@ import NotFound from './pages/NotFound.tsx';
 import Cart from './pages/Cart.tsx';
 import DesctopNavbar from './components/Navbar/DesctopNavbar.tsx';
 import MobileNavbar from './components/Navbar/MobileNavbar.tsx';
+import { useState } from 'react';
 
 const Layout = () => {
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState(""); // Store search input
+
   
   // Define routes where the navbar should NOT be displayed
   const hideNavbarRoutes = ['*'];
@@ -25,12 +28,12 @@ const Layout = () => {
     <>
       {shouldShowNavbar && (
         <>
-          <DesctopNavbar />
+          <DesctopNavbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <MobileNavbar />
         </>
       )}
       <Routes>
-        <Route path='/' element={<App />} />
+        <Route path='/' element={<App searchQuery={searchQuery} />} />
         <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />

@@ -3,7 +3,11 @@ import ContentItems from './components/ContentItems'
 import { PlanToOrderProvider } from './components/PopUps/Context/PlanToOrderContext'
 import PlanToOrderPopUp from './components/PopUps/PlanToOrderPopUp'
 
-function App() {
+interface AppProps {
+  searchQuery: string;
+}
+
+function App({ searchQuery }: AppProps) {
 
   return (
         <div>
@@ -12,7 +16,7 @@ function App() {
           <div className="">
             <PlanToOrderPopUp/>
             <div className="">
-              <ContentItems/>
+              <ContentItems searchQuery={searchQuery}/>
               </div>
           </div>
           </PlanToOrderProvider>
