@@ -3,21 +3,21 @@ import useFetchDishes from "../utils/useFetchDishes";
 import CartButton from "./DifferentButtons/CartButton";
 import PlanToOrderButton from "./DifferentButtons/PlanToOrderButton";
 
-interface ContentItemsProps {
-  searchQuery: string;
-}
 
-const ContentItems = ({ searchQuery }: ContentItemsProps) => {
+const ContentItems = ({ searchQuery = "" }: { searchQuery: string }) => {
   const { dishes, loading, error } = useFetchDishes();
 
+  // Ensure searchQuery is always a string
+  const safeSearchQuery = typeof searchQuery === "string" ? searchQuery.trim().toLowerCase() : "";
+
   // Filter dishes based on search query
-  const filteredDishes = searchQuery.trim()
+  const filteredDishes = safeSearchQuery
     ? (Array.isArray(dishes) ? dishes.filter((dish: Dish) => {
         return (
-          (dish.name ? dish.name.toLowerCase().includes(searchQuery.toLowerCase()) : false) ||
-          (dish.recipes ? dish.recipes.toLowerCase().includes(searchQuery.toLowerCase()) : false) ||
-          (dish.category_name ? dish.category_name.toString().toLowerCase().includes(searchQuery.toLowerCase()) : false) ||
-          (dish.price ? dish.price.toString().includes(searchQuery) : false)
+          (dish.name ? dish.name.toLowerCase().includes(safeSearchQuery) : false) ||
+          (dish.recipes ? dish.recipes.toLowerCase().includes(safeSearchQuery) : false) ||
+          (dish.category_name ? dish.category_name.toString().toLowerCase().includes(safeSearchQuery) : false) ||
+          (dish.price ? dish.price.toString().includes(safeSearchQuery) : false)
         );
       }) : [])
     : dishes;

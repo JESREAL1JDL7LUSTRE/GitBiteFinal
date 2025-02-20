@@ -8,22 +8,14 @@ interface AppProps {
 }
 
 function App({ searchQuery }: AppProps) {
-
   return (
-        <div>
-          
-          <PlanToOrderProvider>
-          <div className="">
-            <PlanToOrderPopUp/>
-            <div className="">
-              <ContentItems searchQuery={searchQuery}/>
-              </div>
-          </div>
-          </PlanToOrderProvider>
-          
-        </div>
-
+    <div>
+      <PlanToOrderProvider>
+        <PlanToOrderPopUp />
+        <ContentItems searchQuery={searchQuery} />
+      </PlanToOrderProvider>
+    </div>
   )
 }
 
-export default App
+export default App;

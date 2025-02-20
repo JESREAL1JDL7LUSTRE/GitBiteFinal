@@ -10,9 +10,8 @@ import PreviousPayment from './pages/PreviousPayment.tsx';
 import Order from './pages/Order.tsx';
 import NotFound from './pages/NotFound.tsx';
 import Cart from './pages/Cart.tsx';
-import DesctopNavbar from './components/Navbar/DesctopNavbar.tsx';
-import MobileNavbar from './components/Navbar/MobileNavbar.tsx';
 import { useState } from 'react';
+import Navbar from './components/Navbar/NavBar.tsx';
 
 const Layout = () => {
   const location = useLocation();
@@ -28,8 +27,7 @@ const Layout = () => {
     <>
       {shouldShowNavbar && (
         <>
-          <DesctopNavbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-          <MobileNavbar />
+          <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         </>
       )}
       <Routes>
@@ -41,6 +39,8 @@ const Layout = () => {
         <Route path='/order' element={<ProtectedRoute><Order /></ProtectedRoute>} />
         <Route path='/cart' element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path='/about' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path='/author' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
