@@ -2,7 +2,7 @@ import { Dish } from "../utils/useFetchDishes";
 import useFetchDishes from "../utils/useFetchDishes";
 import CartButton from "./DifferentButtons/CartButton";
 import PlanToOrderButton from "./DifferentButtons/PlanToOrderButton";
-import PaymentButton from "./PopUps/PaymentButton";
+import PaymentButton from "./PopUps/Payment";
 
 
 const ContentItems = ({ searchQuery = "" }: { searchQuery: string }) => {
@@ -44,8 +44,7 @@ const ContentItems = ({ searchQuery = "" }: { searchQuery: string }) => {
                     <p>Price: ${item.price}</p>
                     <div className="flex justify-center">
                       {item.image && <img src={item.image} alt={item.name} className="size-60" />}
-                    </div>
-                    <PaymentButton orderId={item.id} orderAmount={0} />
+                    </div><PaymentButton order={{ id: item.id, total_price: item.price }} dishDetails={[item]} />
                     <CartButton dishId={item.id} />
                     <PlanToOrderButton dish={item} />
                   </li>

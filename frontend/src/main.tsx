@@ -13,6 +13,7 @@ import Cart from './pages/Cart.tsx';
 import { useState } from 'react';
 import Navbar from './components/Navbar/NavBar.tsx';
 import About from './pages/About.tsx';
+import PreviousOrders from './pages/PreviousOrders.tsx';
 
 const Layout = () => {
   const location = useLocation();
@@ -41,7 +42,7 @@ const Layout = () => {
         <Route path='/cart' element={<ProtectedRoute><Cart /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path='/about' element={<ProtectedRoute><About/></ProtectedRoute>} />
-        <Route path='/author' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path='/previousorder' element={<ProtectedRoute><PreviousOrders/></ProtectedRoute>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

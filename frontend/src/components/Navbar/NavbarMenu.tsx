@@ -20,6 +20,11 @@ const NavbarMenu = () => {
             nav("/payment")
           }}> Previous Payment </button>
         </div>
+        <div>
+          <button onClick={() => {
+            nav("/previousorder")
+          }}> Ordered </button>
+        </div>
     </li>
   )
 }

@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import api from "../../api/api";
 
 interface PaymentButtonProps {
-  orderId: number;
-  orderAmount: number;
+  order: { id: number; total_price: number };
+  dishDetails: { id: number, name: string; price: number }[]; // ✅ Accept dish details
 }
 
-function PaymentButton({ orderId, orderAmount }: PaymentButtonProps) {
+function PaymentButton({ order, dishDetails }: PaymentButtonProps) {
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("Card");
   const [paymentMethods, setPaymentMethods] = useState<{ value: string; label: string }[]>([]);
@@ -34,10 +34,30 @@ function PaymentButton({ orderId, orderAmount }: PaymentButtonProps) {
   const PayOrder = async (): Promise<void> => {
     setLoading(true);
     try {
-      await api.post(
-        "/api/payment/",
-        { order: orderId, payment_method: paymentMethod, amount: orderAmount }
-      );
+      // ✅ Step 1: Create a new order with dish details
+      const orderResponse = await api.post("/api/order/", {
+        dishes: dishDetails.map(dish => ({
+          dish_id: dish.id,  
+          quantity: 1,  // Default quantity (adjust if needed)
+        }))
+      });
+  
+      console.log("Order Response:", orderResponse.data); // Debugging
+  
+      if (!orderResponse.data || !orderResponse.data.id) {
+        throw new Error("Order creation failed.");
+      }
+  
+      const newOrderId = orderResponse.data.id;
+      console.log("New Order Created:", newOrderId);
+  
+      // ✅ Step 2: Make the payment for the new order
+      await api.post("/api/payment/", {
+        order: newOrderId, 
+        payment_method: paymentMethod,
+        amount: order.total_price,  // Ensure this matches the backend calculation
+      });
+  
       setLoading(false);
       alert("Order paid successfully!");
     } catch (error) {
@@ -45,15 +65,28 @@ function PaymentButton({ orderId, orderAmount }: PaymentButtonProps) {
       setLoading(false);
     }
   };
+  
+  
 
   return (
     <div>
+      <h3 className="font-semibold">Your Order:</h3>
+      {dishDetails.map((dish, index) => (
+        <div key={index} className="mb-2">
+          <p>{dish.name} - Price: ${dish.price}</p>
+        </div>
+      ))}
+
       <label>
         Select Payment Method:
         {paymentMethods.length === 0 ? (
           <p>Loading payment methods...</p>
         ) : (
-          <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} disabled={loading}>
+          <select
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+            disabled={loading}
+          >
             {paymentMethods.map((method) => (
               <option key={method.value} value={method.value}>
                 {method.label}
