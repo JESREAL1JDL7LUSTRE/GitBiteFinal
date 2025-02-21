@@ -11,5 +11,5 @@ router.register('cart', CartViewSet, basename='cart')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('payment-methods/', get_payment_methods, name='payment-methods'),  # ✅ Add this line
+    path('payment-methods/', get_payment_methods, name='payment-methods'),
 ]

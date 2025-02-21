@@ -3,10 +3,11 @@ from .models import *
 from .serializers import *
 from rest_framework import viewsets, permissions, mixins, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view      
+from rest_framework.decorators import api_view, permission_classes
 from django.db import IntegrityError
 
 @api_view(["GET"])
+@permission_classes([permissions.AllowAny])
 def get_payment_methods(request):
     return Response({"payment_methods": PAYMENT_METHODS})
 

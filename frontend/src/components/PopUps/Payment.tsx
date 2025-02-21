@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../../api/api";
+import { useNavigate } from 'react-router-dom'
 
 interface PaymentButtonProps {
   order: { id: number; total_price: number };
@@ -10,6 +11,7 @@ function PaymentButton({ order, dishDetails }: PaymentButtonProps) {
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("Card");
   const [paymentMethods, setPaymentMethods] = useState<{ value: string; label: string }[]>([]);
+  const nav = useNavigate();
 
   useEffect(() => {
     const fetchPaymentMethods = async () => {
@@ -42,8 +44,6 @@ function PaymentButton({ order, dishDetails }: PaymentButtonProps) {
         }))
       });
   
-      console.log("Order Response:", orderResponse.data); // Debugging
-  
       if (!orderResponse.data || !orderResponse.data.id) {
         throw new Error("Order creation failed.");
       }
@@ -64,6 +64,8 @@ function PaymentButton({ order, dishDetails }: PaymentButtonProps) {
       console.error("Payment failed:", error);
       setLoading(false);
     }
+      alert("Payment failed. Please log in to continue.");
+      nav("/profile")
   };
   
   

@@ -48,7 +48,7 @@ const isLoggedIn = async () => {
 function IsSignInOrNot() {
   const [isLoggedInState, setIsLoggedInState] = useState<boolean | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const { profile, loading, error } = useFetchProfile(); // ✅ Correct usage
+  const { profile, loading } = useFetchProfile(); // ✅ Correct usage
   const nav = useNavigate();
 
   useEffect(() => {
@@ -64,9 +64,6 @@ function IsSignInOrNot() {
     return <div>Loading...</div>; // ✅ Show loading state properly
   }
 
-  if (error) {
-    return <div>Error loading profile: {error}</div>; // ✅ Handle error
-  }
 
   return isLoggedInState ? (
     <div style={{ position: "relative" }}>

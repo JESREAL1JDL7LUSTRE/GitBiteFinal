@@ -65,8 +65,8 @@ function SignInForm({ route }: SignInFormProps) {
                 >
                     {loading ? "Signing in..." : "Sign In"}
                 </button>
-                <button onClick={() => nav('/signup')}>Sign Up</button>
                 </form>
+                <button onClick={() => nav('/signup')}>Sign Up</button>
             </div>
             </div>
 

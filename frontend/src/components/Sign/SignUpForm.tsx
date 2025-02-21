@@ -67,6 +67,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                     <button className="w-full py-2 text-white rounded-md bg-blue-500 hover:bg-blue-60 " type="submit" disabled={loading}>
                         {loading ? "Signing up..." : "Sign Up"}
                     </button>
+                    <button onClick={() => nav('/signin')}>Sign in</button>
                 </form>
             </div>
         </div>
