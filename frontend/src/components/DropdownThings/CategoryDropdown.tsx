@@ -25,6 +25,10 @@ import {
         <DropdownMenuContent>
           <DropdownMenuLabel>Select a Category</DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <button onClick={() => setSearchQuery("")}>All</button>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           {categories.map((category) => (
             <DropdownMenuItem
               key={category}

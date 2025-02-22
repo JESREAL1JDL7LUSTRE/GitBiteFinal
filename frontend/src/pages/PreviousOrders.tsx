@@ -1,57 +1,13 @@
-import { useEffect, useState } from "react";
-import api from "../api/api";
-
-interface OrderedItem {
-  id: number;
-  dish_name: string;
-  quantity: number;
-  subtotal: number;
-}
-
-interface Order {
-  id: number;
-  customer: number;
-  total_price: number;
-  status: string;
-  created_at: string;
-  updated_at: string;
-  ordered_items: OrderedItem[];
-}
-
-interface PaymentItem {
-  id: number;
-  order: number;
-  payment_method: string;
-  transaction_id: string;
-  amount: number;
-}
+import useFetchPayments from "../utils/useFetchPayments"; // Import the custom hook
+import useFetchOrders from "../utils/useFetchOrders";
 
 const PreviousOrders = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [payments, setPayments] = useState<PaymentItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { orders, loading: ordersLoading, error: ordersError } = useFetchOrders();
+  const { payments, loading: paymentsLoading, error: paymentsError } = useFetchPayments();
 
-  useEffect(() => {
-    const fetchOrdersAndPayments = async () => {
-      try {
-        const orderRes = await api.get<Order[]>("/api/order/");
-        const paymentRes = await api.get<PaymentItem[]>("/api/payment/");
-        setOrders(orderRes.data);
-        setPayments(paymentRes.data);
-      } catch (err) {
-        setError("Failed to fetch orders or payments.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrdersAndPayments();
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (ordersLoading || paymentsLoading) return <p>Loading orders and payments...</p>;
+  if (ordersError) return <p>{ordersError}</p>;
+  if (paymentsError) return <p>{paymentsError}</p>;
 
   return (
     <div>
@@ -63,7 +19,7 @@ const PreviousOrders = () => {
               <h3>Order ID: {order.id}</h3>
               <p>Customer ID: {order.customer}</p>
               <p>Status: {order.status}</p>
-              <p>Total Price: ${order.total_price}</p>
+              <p>Total Price: ${order.total_price.toFixed(2)}</p>
               <p>Created At: {new Date(order.created_at).toLocaleString()}</p>
 
               <h4>Ordered Items:</h4>
@@ -71,7 +27,7 @@ const PreviousOrders = () => {
                 {order.ordered_items.length > 0 ? (
                   order.ordered_items.map((item) => (
                     <li key={item.id}>
-                      <p>{item.quantity} x {item.dish_name} - ${item.subtotal}</p>
+                      <p>{item.quantity} x {item.dish_name} - ${item.subtotal.toFixed(2)}</p>
                     </li>
                   ))
                 ) : (
