@@ -22,9 +22,8 @@ const useFetchProfile = () => {
       try {
         const res = await api.get<ProfileData>("/api/profile/");
         setProfile(res.data);
-      } catch (err) {
+      } catch {
         setError("Failed to fetch profile details");
-        console.error(err);
       } finally {
         setLoading(false);
       }

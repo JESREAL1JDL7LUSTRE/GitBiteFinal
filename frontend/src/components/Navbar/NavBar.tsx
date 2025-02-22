@@ -43,11 +43,6 @@ const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
               </Link>
             </li>
             <li>
-              <Link to="/authors" className="hover:text-gray-600">
-                Authors
-              </Link>
-            </li>
-            <li>
               <Link to="/about" className="hover:text-gray-600">
                 About Us
               </Link>
@@ -87,11 +82,6 @@ const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
           <li>
             <Link to="/" onClick={() => setOpen(false)}>
               Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/authors" onClick={() => setOpen(false)}>
-              Authors
             </Link>
           </li>
           <li>

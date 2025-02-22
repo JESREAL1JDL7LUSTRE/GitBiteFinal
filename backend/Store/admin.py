@@ -4,6 +4,7 @@ from django import forms
 
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
+    filter_horizontal = ('category',)
     list_display = [field.name for field in Dish._meta.fields]  # Shows all fields
 
 @admin.register(Order)
