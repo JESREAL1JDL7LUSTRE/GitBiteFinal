@@ -1,7 +1,8 @@
 import './App.css'
-import ContentItems from './components/ContentItems'
-import FeaturedDish from './components/FeaturedDish';
+import ContentItems from './components/Contents/ContentItems'
+import FeaturedDish from './components/Contents/FeaturedDish';
 import { PlanToOrderProvider } from './components/PopUps/Context/PlanToOrderContext'
+import ProductGrid from './components/Contents/ProductGrid';
 import PlanToOrderPopUp from './components/PopUps/PlanToOrderPopUp'
 
 interface AppProps {
@@ -12,7 +13,7 @@ interface AppProps {
 function App({ searchQuery }: AppProps) {
   return (
     <PlanToOrderProvider>
-      <PlanToOrderPopUp />
+      <ProductGrid />
       <FeaturedDish />
       <ContentItems searchQuery={searchQuery} />
     </PlanToOrderProvider>

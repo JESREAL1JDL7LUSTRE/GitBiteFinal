@@ -2,97 +2,66 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { Menu, X, ShoppingCart } from "lucide-react";
-import IsSignInOrNot from "../Sign/IsSignInOrNot";
+import IsSignInOrNot from "../User/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
-import SearchFunction from "../SearchFunction";
-import CategoryDropdown from "../DropdownThings/CategoryDropdown";
+import SearchFunction from "./SearchFunction";
+import DesktopNav from "./DesktopNav";
+import MobileNav from "./MobileNav";
 
 interface NavbarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
 }
 
-const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
+const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
   const [open, setOpen] = useState(false);
-  const nav = useNavigate();
-
-    // When a category is selected, update searchQuery
-    const handleCategorySelect = (category: string) => {
-      setSearchQuery(category);
-    };
+  const navigate = useNavigate();
 
   return (
-    <nav className="sticky top-0 left-0 right-0 bg-white shadow-lg w-full z-50 md:h-20 h-32">
-      <div className="flex items-center justify-between px-6 py-3">
+    <nav className="sticky top-0 right-0 bg-white shadow-md w-full z-50">
+      <div className="flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-10 cursor-pointer" />
-          <p className="font-semibold">GitCook</p>
+          <p className="font-medium text-base md:text-s">GitCook</p>
         </Link>
 
-        {/* Right-aligned content */}
-        <div className="flex items-center gap-6 ml-auto">
-          <SearchFunction searchQuery={searchQuery} onSearch={setSearchQuery} />
+        {/* Main Navigation */}
+        <div className="flex-1 flex items-center justify-end gap-1 md:gap-6">
 
-          <CategoryDropdown setSearchQuery={handleCategorySelect} />
+          <div className="flex-1 min-w-[100px] md:min-w-[100px] max-w-[250px] md:max-w-[300px]">
+            <SearchFunction searchQuery={searchQuery} onSearch={setSearchQuery} />
+          </div>
 
-          <ul className="hidden md:flex items-center gap-2">
-            <li>
-              <Link to="/" className="hover:text-gray-600">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="hover:text-gray-600">
-                About Us
-              </Link>
-            </li>
-          </ul>
+          <DesktopNav setSearchQuery={setSearchQuery} />
 
-          {/* Cart and User */}
-          <Button onClick={() => nav("/cart")} variant="outline">
-            <ShoppingCart className="w-6 h-6" />
+          <Button
+            onClick={() => navigate("/cart")}
+            variant="outline"
+            className="p-2 md:p-3"
+          >
+            <ShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
           </Button>
 
           <IsSignInOrNot />
 
           {/* Mobile Menu Button */}
-          <div
-            className="text-3xl md:hidden flex items-center ml-4 cursor-pointer"
-            onClick={() => setOpen(true)}
-          >
-            <Menu />
+          <div className="md:hidden">
+            <button onClick={() => setOpen(!open)} className="p-1">
+              {open ? <X className="text-2xl" /> : <Menu className="text-2xl" />}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Sidebar Menu */}
-      <div
-        className={`fixed top-0 right-0 h-full w-1/2 bg-white shadow-lg transform ${
-          open ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 ease-in-out z-50`}
-      >
-        <div className="flex justify-end p-4">
-          <button onClick={() => setOpen(false)}>
-            <X className="text-2xl" />
-          </button>
+      {/* Mobile Navigation */}
+      {open && (
+        <div className="block md:hidden">
+          <MobileNav open={open} setOpen={setOpen} setSearchQuery={setSearchQuery} />
         </div>
-
-        <ul className="flex flex-col items-center px-6 space-y-4">
-          <li>
-            <Link to="/" onClick={() => setOpen(false)}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/about" onClick={() => setOpen(false)}>
-              About
-            </Link>
-          </li>
-        </ul>
-      </div>
+      )}
     </nav>
   );
 };
 
-export default Navbar;
+export default NavBar;

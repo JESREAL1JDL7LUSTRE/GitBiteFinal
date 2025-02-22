@@ -1,8 +1,8 @@
-import { Dish } from "../utils/Hooks/FetchHooks/useFetchDishes";
-import useFetchDishes from "../utils/Hooks/FetchHooks/useFetchDishes";
-import CartButton from "./DifferentButtons/CartButton";
-import PlanToOrderButton from "./DifferentButtons/PlanToOrderButton";
-import PaymentButton from "./PopUps/Payment";
+import { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
+import useFetchDishes from "../../utils/Hooks/FetchHooks/useFetchDishes";
+import CartButton from "../Buttons/CartButton";
+import PlanToOrderButton from "../Buttons/PlanToOrderButton";
+import PaymentButton from "../PopUps/Payment";
 
 
 const ContentItems = ({ searchQuery = "" }: { searchQuery: string }) => {

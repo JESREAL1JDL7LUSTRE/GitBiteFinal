@@ -1,7 +1,7 @@
-import useFetchDishes, { Dish } from "../utils/Hooks/FetchHooks/useFetchDishes";
-import CartButton from "./DifferentButtons/CartButton";
-import PlanToOrderButton from "./DifferentButtons/PlanToOrderButton";
-import PaymentButton from "./PopUps/Payment";
+import useFetchDishes, { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
+import CartButton from "../Buttons/CartButton";
+import PlanToOrderButton from "../Buttons/PlanToOrderButton";
+import PaymentButton from "../PopUps/Payment";
 
 function FeaturedDish() {
   const { dishes, loading, error } = useFetchDishes();

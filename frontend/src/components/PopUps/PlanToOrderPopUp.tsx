@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { usePlanToOrder } from "./Context/PlanToOrderContext";
-import OrderButton from "../DifferentButtons/OrderButton";
+import OrderButton from "../Buttons/OrderButton";
 import { Button } from "../ui/button"; // Adjust according to your setup
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"; // Customize if needed
 

@@ -4,9 +4,10 @@ import { jwtDecode } from 'jwt-decode';
 import api from "../../api/api";
 import { ACCESS_TOKEN, REFRECH_TOKEN } from '@/api/constant';
 import SignOut from './SignOut';
-import NavbarMenu from '../Navbar/NavbarMenu';
+import NavbarMenu from '../Navbar/Dropdowns/ProfileDropDown';
 import { Button } from '../ui/button';
 import useFetchProfile from "../../utils/Hooks/FetchHooks/useFetchProfile"; // Import the custom hook
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem(REFRECH_TOKEN);
@@ -59,6 +60,8 @@ function IsSignInOrNot() {
 
     checkLoginStatus();
   }, []);
+  
+  
 
   if (isLoggedInState === null || loading) {
     return <div>Loading...</div>; // ✅ Show loading state properly
@@ -66,33 +69,16 @@ function IsSignInOrNot() {
 
 
   return isLoggedInState ? (
-    <div style={{ position: "relative" }}>
-      {/* Profile Avatar Button */}
-      <div
-        className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-lg font-bold text-white cursor-pointer"
-        onClick={() => setShowDropdown(!showDropdown)}
-      >
+    <DropdownMenu>
+      <DropdownMenuTrigger className="w-9 h-9 bg-gray-300 rounded-full flex items-center justify-center text-lg font-bold text-white cursor-pointer">
         {profile?.first_name ? profile.first_name.charAt(0).toUpperCase() : "?"}
-      </div>
-
-      {showDropdown && (
-        <div
-          className="flex flex-col p-4 gap-2"
-          style={{
-            position: "absolute",
-            top: "40px",
-            right: "0",
-            backgroundColor: "white",
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            padding: "30px",
-            borderRadius: "10px",
-          }}
-        >
-          <NavbarMenu />
-          <SignOut />
-        </div>
-      )}
-    </div>
+      </DropdownMenuTrigger>
+      
+      <DropdownMenuContent className="w-20 mt-2 bg-white shadow-md rounded-lg">
+        <DropdownMenuItem className="flex justify-center" onClick={() => nav("/profile")}>View Profile</DropdownMenuItem>
+        <DropdownMenuItem className="flex justify-center"><SignOut /></DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   ) : (
     <div className="flex gap-2">
       <Button onClick={() => nav("/signin")}>Sign In</Button>
@@ -100,5 +86,4 @@ function IsSignInOrNot() {
     </div>
   );
 }
-
 export default IsSignInOrNot;
