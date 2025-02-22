@@ -1,5 +1,6 @@
 import './App.css'
 import ContentItems from './components/ContentItems'
+import FeaturedDish from './components/FeaturedDish';
 import { PlanToOrderProvider } from './components/PopUps/Context/PlanToOrderContext'
 import PlanToOrderPopUp from './components/PopUps/PlanToOrderPopUp'
 
@@ -12,6 +13,7 @@ function App({ searchQuery }: AppProps) {
   return (
     <PlanToOrderProvider>
       <PlanToOrderPopUp />
+      <FeaturedDish />
       <ContentItems searchQuery={searchQuery} />
     </PlanToOrderProvider>
   )

@@ -153,4 +153,4 @@ CORS_ALLOW_CREDENTIALS = True
 AUTH_USER_MODEL = "Accounts.Customer"
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"  # This is the correct way for Django 3.1+
+MEDIA_ROOT = BASE_DIR / "media" 

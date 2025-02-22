@@ -2,7 +2,6 @@ from django.db import models
 from Accounts.models import Customer
 import uuid
 from django.conf import settings
-from django.db import models
 
 # Category Model
 class Category(models.Model):
@@ -19,15 +18,27 @@ class Dish(models.Model):
     description = models.TextField(blank=True)
     recipes = models.TextField(null=False)
     price = models.FloatField(null=False)
-    image = models.ImageField(upload_to="dishes/")
+    image = models.URLField(max_length=500, blank=True)
     category = models.ManyToManyField(Category, related_name="dishes")
     available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    featured = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
-
+    
+class Reviews(models.Model):
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE, related_name="reviews")
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reviews")
+    rating = models.IntegerField()
+    review = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"Review by {self.customer.email} for {self.dish.name}"
+    
 # Order Model
 ORDER_STATUS = [
     ('Pending', 'Pending'),
@@ -69,17 +80,22 @@ PAYMENT_METHODS = [
 class Payment(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="payments")
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="payments")
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.DecimalField(max_digits=1000, decimal_places=2)
     payment_status = models.CharField(max_length=20, choices=ORDER_STATUS, default='Pending')  
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='COD')
     transaction_id = models.CharField(max_length=32, unique=True, default=uuid.uuid4().hex)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        if self.order:
-            self.order.status = self.payment_status  # Sync Payment status with Order
-            self.order.save()
-        super().save(*args, **kwargs)
+        super().save(*args, **kwargs)  # Save payment first
+
+        # If any completed payments exist, mark order as completed
+        if self.order.payments.filter(payment_status='Completed').exists():
+            self.order.status = 'Completed'
+        else:
+            self.order.status = 'Pending'
+        
+        self.order.save() # Update order status
 
     def __str__(self):
         return f"Payment {self.id} - Order {self.order.id} ({self.payment_method})"
@@ -96,6 +112,10 @@ class OrderedItem(models.Model):
         self.subtotal = self.quantity * self.dish.price
         super().save(*args, **kwargs)
         self.order.update_total_price()  # ✅ Auto-update order total
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        self.order.update_total_price() # ✅ Auto-update order total
 
     def __str__(self):
         return f"{self.quantity} x {self.dish.name} (Order {self.order.id})"

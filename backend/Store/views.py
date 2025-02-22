@@ -11,6 +11,11 @@ from django.db import IntegrityError
 def get_payment_methods(request):
     return Response({"payment_methods": PAYMENT_METHODS})
 
+@api_view(["GET"])
+@permission_classes([permissions.AllowAny])
+def get_reviews_by_dish(request, dish_id):
+    reviews = Reviews.objects.filter(dish=dish_id)
+
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategorySerializers
     permission_classes = [permissions.AllowAny]
@@ -111,3 +116,14 @@ class CartViewSet(viewsets.ModelViewSet):
             existing_cart_item.quantity += 1
             existing_cart_item.save()
             serializer.instance = existing_cart_item
+            
+class ReviewViewSet(viewsets.ModelViewSet):
+    serializer_class = ReviewSerializers
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        return Reviews.objects.filter(customer=self.request.user)
+
+    def perform_create(self, serializer):
+        customer = self.request.user
+        serializer.save(customer=customer)

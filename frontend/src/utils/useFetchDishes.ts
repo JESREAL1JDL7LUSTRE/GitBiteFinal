@@ -4,6 +4,7 @@ import api from "../api/api";
 
 // Dish type in useFetchDishes.ts or wherever it's defined
 export interface Dish {
+  featured: unknown;
   id: number;
   name: string;
   description: string;

@@ -1,11 +1,15 @@
 from django.contrib import admin
-from .models import Dish, Order, OrderedItem, Payment, Category, Cart
+from .models import Dish, Order, OrderedItem, Payment, Category, Cart, Reviews
 from django import forms
 
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
     filter_horizontal = ('category',)
     list_display = [field.name for field in Dish._meta.fields]  # Shows all fields
+
+@admin.register(Reviews)
+class ReviewsAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Reviews._meta.fields]
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):

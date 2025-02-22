@@ -9,9 +9,12 @@ Customer = get_user_model()
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ["id", "email", "first_name", "last_name", "username", "phone_number", "password", "address"]
-        extra_kwargs = {"password": {"write_only": True}}  # Hide password in responses
-
+        fields = ["id", "email", "first_name", "last_name", "username", "phone_number", "password", "address", "image", "created_at", "updated_at"]
+        extra_kwargs = {
+            "password": {"write_only": True},  # Hide password in responses
+            "image": {"required": False}  # Correct spelling of "required"
+        }
+        
     def create(self, validated_data):
         password = validated_data.pop("password", None)  # Remove password from validated data
         customer = Customer(**validated_data)

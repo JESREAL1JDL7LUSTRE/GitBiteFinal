@@ -12,8 +12,9 @@ class DishSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Dish
-        fields = ["id", "name", "description", "recipes", "category_name", "available", "image", "price"]
-
+        fields = ["id", "name", "description", "recipes", "category_name", "available", "image", "price", "created_at", "updated_at", "featured"]
+        extra_kwargs = {"image": {"required": False}}
+        
     def get_category_name(self, obj):
         # If category is ManyToManyField, this returns all related categories as a list of names
         if obj.category.exists():  # For ManyToManyField
@@ -105,5 +106,12 @@ class PaymentSerializers(serializers.ModelSerializer):
         validated_data["transaction_id"] = transaction_id
         return super().create(validated_data)
 
-
-
+class ReviewSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Reviews
+        fields = "__all__"
+        extra_kwargs = {"customer": {"read_only": True}}
+        
+    def create(self, validated_data):
+        validated_data["customer"] = self.context["request"].user
+        return super().create(validated_data)
