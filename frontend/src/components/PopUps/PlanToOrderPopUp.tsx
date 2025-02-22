@@ -23,10 +23,10 @@ function PlanToOrderPopUp() {
 
   return (
     <div className="sticky top-16 bg-white border p-4 shadow-md rounded-lg">
-      <h2 className="text-lg font-bold mb-4">Planned Orders</h2>
+      <h2 className="text-lg font-bold mb-4">Cart</h2>
 
       {planToOrderList.length === 0 ? (
-        <p className="text-gray-500">No dishes planned yet.</p>
+        <p className="text-gray-500">Cart Empty</p>
       ) : (
         <ul className="space-y-2 ">
           {planToOrderList.map((dish) => (
@@ -59,7 +59,7 @@ function PlanToOrderPopUp() {
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Clear All Planned Orders?</AlertDialogTitle>
+            <AlertDialogTitle>Clear Cart?</AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to clear all the planned dishes? This action cannot be undone.
             </AlertDialogDescription>

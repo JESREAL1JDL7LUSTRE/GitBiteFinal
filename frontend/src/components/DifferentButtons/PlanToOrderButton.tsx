@@ -10,7 +10,7 @@ function PlanToOrderButton({ dish }: PlanToOrderButtonProps) {
 
   return (
     <div>
-      <button onClick={() => addToPlanToOrder(dish)}>Add to Order</button>
+      <button onClick={() => addToPlanToOrder(dish)}>Add to Cart</button>
     </div>
   );
 }

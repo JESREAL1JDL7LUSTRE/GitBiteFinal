@@ -14,7 +14,7 @@ const Cart = () => {
 
   return (
     <div>
-      <h2>Cart Items</h2>
+      <h2>Wishlist</h2>
       <ul>
         {cart.length > 0 ? (
           cart.map((item: CartItem) => (

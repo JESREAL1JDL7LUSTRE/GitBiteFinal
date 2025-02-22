@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 import IsSignInOrNot from "../Sign/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
 import SearchFunction from "../SearchFunction";
@@ -51,7 +51,7 @@ const Navbar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
 
           {/* Cart and User */}
           <Button onClick={() => nav("/cart")} variant="outline">
-            <ShoppingCart className="w-6 h-6" />
+            <Heart className="w-6 h-6" />
           </Button>
 
           <IsSignInOrNot />

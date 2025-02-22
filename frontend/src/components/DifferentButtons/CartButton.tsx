@@ -11,7 +11,7 @@ const CartButton: React.FC<CartButtonProps> = ({ dishId }) => {
   return (
     <div>
       <button onClick={() => addToCart(dishId)} disabled={loading}>
-        {loading ? "Adding..." : "Add to Cart"}
+        {loading ? "Adding..." : "Add to Wishlist"}
       </button>
       {error && <p className="text-red-500">{error}</p>}
     </div>
