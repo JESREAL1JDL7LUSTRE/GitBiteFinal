@@ -1,5 +1,5 @@
 import React from "react";
-import useFetchOrders from "../utils/useFetchOrders";
+import useFetchOrders from "../utils/Hooks/FetchHooks/useFetchOrders";
 
 const Order = () => {
   const { orders, loading, error } = useFetchOrders();

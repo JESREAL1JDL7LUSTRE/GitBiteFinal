@@ -56,7 +56,7 @@ class CartSerializers(serializers.ModelSerializer):
 
     def get_dish_data(self, obj):  # Renamed to avoid conflict
         request = self.context.get("request")
-        image_url = obj.dish.image.url if obj.dish.image else None
+        image_url = obj.dish.image if obj.dish.image else None
 
         if image_url and request:
             image_url = request.build_absolute_uri(image_url)

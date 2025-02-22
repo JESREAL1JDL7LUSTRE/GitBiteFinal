@@ -1,4 +1,7 @@
-import useFetchDishes, { Dish } from "../utils/useFetchDishes";
+import useFetchDishes, { Dish } from "../utils/Hooks/FetchHooks/useFetchDishes";
+import CartButton from "./DifferentButtons/CartButton";
+import PlanToOrderButton from "./DifferentButtons/PlanToOrderButton";
+import PaymentButton from "./PopUps/Payment";
 
 function FeaturedDish() {
   const { dishes, loading, error } = useFetchDishes();
@@ -26,6 +29,9 @@ function FeaturedDish() {
                     <div className="flex justify-center">
                       {item.image && <img src={item.image} alt={item.name} className="size-60" />}
                     </div>
+                    <PaymentButton order={{ id: item.id, total_price: item.price }} dishDetails={[item]} />
+                    <CartButton dishId={item.id} />
+                    <PlanToOrderButton dish={item} />
                   </li>
                 </div>
               ))

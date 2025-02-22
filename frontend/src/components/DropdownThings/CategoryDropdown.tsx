@@ -6,7 +6,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu";
-  import useFetchCategory from "../../utils/useFetchCategory";
+  import useFetchCategory from "../../utils/Hooks/FetchHooks/useFetchCategory";
   
   interface CategoryDropdownProps {
     setSearchQuery: (query: string) => void; // Accept setSearchQuery as a prop

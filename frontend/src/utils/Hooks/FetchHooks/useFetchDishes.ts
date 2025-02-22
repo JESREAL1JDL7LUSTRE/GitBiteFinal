@@ -1,6 +1,6 @@
 // src/hooks/useFetchDishes.ts
 import { useEffect, useState } from "react";
-import api from "../api/api";
+import api from "../../../api/api";
 
 // Dish type in useFetchDishes.ts or wherever it's defined
 export interface Dish {

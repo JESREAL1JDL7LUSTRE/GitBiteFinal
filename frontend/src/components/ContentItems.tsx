@@ -1,5 +1,5 @@
-import { Dish } from "../utils/useFetchDishes";
-import useFetchDishes from "../utils/useFetchDishes";
+import { Dish } from "../utils/Hooks/FetchHooks/useFetchDishes";
+import useFetchDishes from "../utils/Hooks/FetchHooks/useFetchDishes";
 import CartButton from "./DifferentButtons/CartButton";
 import PlanToOrderButton from "./DifferentButtons/PlanToOrderButton";
 import PaymentButton from "./PopUps/Payment";

@@ -1,5 +1,5 @@
 
-import useFetchProfile from "../utils/useFetchProfile"; // Import the custom hook
+import useFetchProfile from "../utils/Hooks/FetchHooks/useFetchProfile"; // Import the custom hook
 
 const Profile = () => {
   const { profile, loading, error } = useFetchProfile(); // Use the custom hook

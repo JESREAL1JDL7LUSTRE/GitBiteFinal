@@ -6,7 +6,7 @@ import { ACCESS_TOKEN, REFRECH_TOKEN } from '@/api/constant';
 import SignOut from './SignOut';
 import NavbarMenu from '../Navbar/NavbarMenu';
 import { Button } from '../ui/button';
-import useFetchProfile from "../../utils/useFetchProfile"; // Import the custom hook
+import useFetchProfile from "../../utils/Hooks/FetchHooks/useFetchProfile"; // Import the custom hook
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem(REFRECH_TOKEN);

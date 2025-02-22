@@ -1,5 +1,5 @@
-import useFetchPayments from "../utils/useFetchPayments"; // Import the custom hook
-import useFetchOrders from "../utils/useFetchOrders";
+import useFetchPayments from "../utils/Hooks/FetchHooks/useFetchPayments"; // Import the custom hook
+import useFetchOrders from "../utils/Hooks/FetchHooks/useFetchOrders";
 
 const PreviousOrders = () => {
   const { orders, loading: ordersLoading, error: ordersError } = useFetchOrders();

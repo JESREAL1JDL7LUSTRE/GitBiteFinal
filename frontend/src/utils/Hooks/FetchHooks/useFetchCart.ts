@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../api/api"; // Ensure this is the correct path for your API
+import api from "../../../api/api"; // Ensure this is the correct path for your API
 
 export interface Dish {
   id: number;

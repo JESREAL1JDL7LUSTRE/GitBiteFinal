@@ -1,5 +1,5 @@
 
-import useFetchPayments, { PaymentItem } from "../utils/useFetchPayments"; // Import the custom hook
+import useFetchPayments, { PaymentItem } from "../utils/Hooks/FetchHooks/useFetchPayments"; // Import the custom hook
 
 const PreviousPayment = () => {
   const { payments, loading, error } = useFetchPayments(); // Use the custom hook

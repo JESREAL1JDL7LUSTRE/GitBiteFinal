@@ -1,5 +1,5 @@
 
-import useFetchCart, { CartItem } from "../utils/useFetchCart"; // Import the custom hook
+import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchCart"; // Import the custom hook
 
 const Cart = () => {
   const { cart, loading, error } = useFetchCart(); // Use the custom hook
