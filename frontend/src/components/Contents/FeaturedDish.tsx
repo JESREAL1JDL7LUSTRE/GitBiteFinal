@@ -1,7 +1,7 @@
 import useFetchDishes, { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
-import CartButton from "../Buttons/CartButton";
-import PlanToOrderButton from "../Buttons/PlanToOrderButton";
-import PaymentButton from "../PopUps/Payment";
+import WishlistButton from "../Buttons/WishlistButton";
+import PlanToOrderButton from "../Buttons/CartButton";
+import PaymentButton from "../Buttons/PaymentButton";
 
 function FeaturedDish() {
   const { dishes, loading, error } = useFetchDishes();
@@ -30,7 +30,7 @@ function FeaturedDish() {
                       {item.image && <img src={item.image} alt={item.name} className="size-60" />}
                     </div>
                     <PaymentButton order={{ id: item.id, total_price: item.price }} dishDetails={[item]} />
-                    <CartButton dishId={item.id} />
+                    <WishlistButton dishId={item.id} />
                     <PlanToOrderButton dish={item} />
                   </li>
                 </div>

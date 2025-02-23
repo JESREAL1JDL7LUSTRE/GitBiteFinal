@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 import IsSignInOrNot from "../User/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
 import SearchFunction from "./SearchFunction";
@@ -27,9 +27,9 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
         </Link>
 
         {/* Main Navigation */}
-        <div className="flex-1 flex items-center justify-end gap-1 md:gap-6">
+        <div className="flex-1 flex items-center justify-end gap-3 md:gap-6">
 
-          <div className="flex-1 min-w-[100px] md:min-w-[100px] max-w-[250px] md:max-w-[300px]">
+          <div className="flex justify-end min-w-[100px] md:min-w-[100px] max-w-[250px] md:max-w-[300px]">
             <SearchFunction searchQuery={searchQuery} onSearch={setSearchQuery} />
           </div>
 
@@ -40,7 +40,7 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
             variant="outline"
             className="p-2 md:p-3"
           >
-            <ShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
+            <Heart className="w-5 h-5 md:w-6 md:h-6" />
           </Button>
 
           <IsSignInOrNot />

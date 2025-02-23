@@ -1,21 +1,19 @@
 import React from "react";
-import usePostCart from "../../utils/Hooks/PostHooks/usePostCart";
+import { usePlanToOrder } from "../PopUps/Context/PlanToOrderContext"; // Fixed import path
+import { Button } from "../ui/button";
 
-interface CartButtonProps {
-  dishId: number;
+interface PlanToOrderButtonProps {
+  dish: { id: number; name: string; price: number }; // Ensure the required properties are passed
 }
 
-const CartButton: React.FC<CartButtonProps> = ({ dishId }) => {
-  const { addToCart, loading, error } = usePostCart();
+function CartButton({ dish }: PlanToOrderButtonProps) {
+  const { addToPlanToOrder } = usePlanToOrder();
 
   return (
     <div>
-      <button onClick={() => addToCart(dishId)} disabled={loading}>
-        {loading ? "Adding..." : "Add to Cart"}
-      </button>
-      {error && <p className="text-red-500">{error}</p>}
+      <Button className="bg-green-500" onClick={() => addToPlanToOrder(dish)}>Add to Cart</Button>
     </div>
   );
-};
+}
 
 export default CartButton;

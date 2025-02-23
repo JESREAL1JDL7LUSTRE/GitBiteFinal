@@ -1,7 +1,7 @@
 
-import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchCart"; // Import the custom hook
+import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchWishlist"; // Import the custom hook
 
-const Cart = () => {
+const Wishlist = () => {
   const { cart, loading, error } = useFetchCart(); // Use the custom hook
 
   if (loading) {
@@ -14,7 +14,7 @@ const Cart = () => {
 
   return (
     <div>
-      <h2>Cart Items</h2>
+      <h2>Wishlist</h2>
       <ul>
         {cart.length > 0 ? (
           cart.map((item: CartItem) => (
@@ -38,4 +38,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Wishlist;

@@ -1,9 +1,8 @@
 import './App.css'
-import ContentItems from './components/Contents/ContentItems'
 import FeaturedDish from './components/Contents/FeaturedDish';
+import Layout from './components/Contents/Layout';
+import Products from './components/Contents/Products';
 import { PlanToOrderProvider } from './components/PopUps/Context/PlanToOrderContext'
-import ProductGrid from './components/Contents/ProductGrid';
-import PlanToOrderPopUp from './components/PopUps/PlanToOrderPopUp'
 
 interface AppProps {
   searchQuery: string;
@@ -12,10 +11,11 @@ interface AppProps {
 
 function App({ searchQuery }: AppProps) {
   return (
+    
     <PlanToOrderProvider>
-      <ProductGrid />
-      <FeaturedDish />
-      <ContentItems searchQuery={searchQuery} />
+      <Layout>
+        <Products searchQuery={searchQuery} />
+      </Layout>
     </PlanToOrderProvider>
   )
 }

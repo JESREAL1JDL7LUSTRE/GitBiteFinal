@@ -11,6 +11,7 @@ interface PlanToOrderContextType {
   planToOrderList: Dish[];
   addToPlanToOrder: (dish: Dish) => void;
   clearPlanToOrder: () => void;
+  isSideCartOpen: boolean;
 }
 
 const PlanToOrderContext = createContext<PlanToOrderContextType | undefined>(undefined);
@@ -25,17 +26,20 @@ export function usePlanToOrder() {
 
 export const PlanToOrderProvider = ({ children }: { children: React.ReactNode }) => {
   const [planToOrderList, setPlanToOrderList] = useState<Dish[]>([]);
+  const [isSideCartOpen, setIsSideCartOpen] = useState<boolean>(false);
 
   const addToPlanToOrder = (dish: Dish) => {
     setPlanToOrderList((prev) => [...prev, dish]);
+    setIsSideCartOpen(true); // Open SideCart when adding an item
   };
 
   const clearPlanToOrder = () => {
-    setPlanToOrderList([]);  // Clears the list
+    setPlanToOrderList([]);  
+    setIsSideCartOpen(false);
   };
 
   return (
-    <PlanToOrderContext.Provider value={{ planToOrderList, addToPlanToOrder, clearPlanToOrder  }}>
+    <PlanToOrderContext.Provider value={{ planToOrderList, addToPlanToOrder, clearPlanToOrder, isSideCartOpen  }}>
       {children}
     </PlanToOrderContext.Provider>
   );
