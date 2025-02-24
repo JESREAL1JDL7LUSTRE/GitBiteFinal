@@ -29,6 +29,9 @@ const PreviousOrders = () => {
                   order.ordered_items.map((item) => (
                     <li key={item.id}>
                       <p>{item.quantity} x {item.dish_name} - ${item.subtotal.toFixed(2)}</p>
+
+                      {/* ✅ Pass the dish ID to AddReview */}
+                      <AddReview dishId={item.dishId} />
                     </li>
                   ))
                 ) : (
@@ -50,7 +53,6 @@ const PreviousOrders = () => {
               ) : (
                 <p>No payment records found.</p>
               )}
-              <AddReview />
             </li>
           ))
         ) : (

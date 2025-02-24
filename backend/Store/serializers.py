@@ -22,11 +22,12 @@ class DishSerializers(serializers.ModelSerializer):
         return obj.category.name  # For ForeignKey
 
 class OrderedItemSerializers(serializers.ModelSerializer):
-    dish_name = serializers.CharField(source="dish.name", read_only=True)  # ✅ Include dish name
+    dish_name = serializers.CharField(source="dish.name", read_only=True)
+    dishId = serializers.IntegerField(source="dish.id", read_only=True)
 
     class Meta:
         model = OrderedItem
-        fields = ["id", "dish_name", "quantity", "subtotal"]  # ✅ Only relevant fields
+        fields = ["id", "dish_name", "quantity", "subtotal", "dishId"]  # ✅ Only relevant fields
         extra_kwargs = {"subtotal": {"read_only": True}}
 
 class OrderSerializers(serializers.ModelSerializer):
@@ -111,7 +112,7 @@ class ReviewSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Reviews
-        fields = ['id', 'dish', 'customer', 'rating', 'review', 'created_at', 'updated_at', 'customer_email']
+        fields = ['id', 'dish', 'rating', 'review', 'created_at', 'updated_at', 'customer_email']
 
     def get_customer_email(self, obj):
         return obj.customer.email if obj.customer else "N/A"

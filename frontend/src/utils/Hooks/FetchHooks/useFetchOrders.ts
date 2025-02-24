@@ -6,6 +6,7 @@ interface OrderedItem {
   dish_name: string;
   quantity: number;
   subtotal: number;
+  dishId: number;
 }
 
 export interface Order {
