@@ -10,9 +10,10 @@ const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
   const filteredDishes = safeSearchQuery
     ? (Array.isArray(dishes) ? dishes.filter((dish: Dish) => {
         return (
-          dish.name?.toLowerCase().includes(safeSearchQuery) ||
-          dish.category_name?.toLowerCase().includes(safeSearchQuery) ||
-          dish.price?.toString().includes(safeSearchQuery)
+          (dish.name ? dish.name.toLowerCase().includes(safeSearchQuery) : false) ||
+          (dish.recipes ? dish.recipes.toLowerCase().includes(safeSearchQuery) : false) ||
+          (dish.category_name ? dish.category_name.toString().toLowerCase().includes(safeSearchQuery) : false) ||
+          (dish.price ? dish.price.toString().includes(safeSearchQuery) : false)
         );
       }) : [])
     : dishes;
