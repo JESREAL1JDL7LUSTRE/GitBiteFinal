@@ -10,6 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { AlertDialogDescription } from '@radix-ui/react-alert-dialog';
+import StarRatingShow from './StarRatingShow';
+
 
 
 function ReviewsForDish({ dishId }: { dishId: number }) {
@@ -32,9 +34,12 @@ function ReviewsForDish({ dishId }: { dishId: number }) {
           <ul>
             {reviews.length > 0 ? (
               reviews.map((review) => (
-                <li key={review.id}>
+                <li key={review.id} className="border-b pb-2 mb-2">
                   <p>{review.customer_email}</p>
-                  <p>Rating: {review.rating ?? "N/A"}</p>
+                  <div className="flex items-center">
+                    <span className="mr-2">Rating:</span>
+                    <StarRatingShow rating={review.rating} />
+                  </div>
                   <p>Review: {review.review ?? "N/A"}</p>
                 </li>
               ))
