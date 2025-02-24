@@ -52,7 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
       <CardFooter className="flex flex-col gap-2 p-4">
         <StarRatingShow rating={averageRating} /> {/* Show average rating */}
         <CartButton dish={dish} />
-        <PaymentButton order={{ id: dish.id, total_price: dish.price }} dishDetails={[dish]} />
+        <PaymentButton dishDetails={[dish]} />
         <ReviewsForDish dishId={dish.id} />
       </CardFooter>
     </Card>

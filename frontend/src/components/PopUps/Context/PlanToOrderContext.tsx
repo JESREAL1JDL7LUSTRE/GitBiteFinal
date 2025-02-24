@@ -1,4 +1,4 @@
-// Example: PlanToOrderContext.tsx
+
 import { createContext, useContext, useState } from "react";
 
 interface Dish {
