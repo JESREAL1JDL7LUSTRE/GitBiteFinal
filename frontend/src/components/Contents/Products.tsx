@@ -29,6 +29,7 @@ const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
                 <div key={dish.id} className="p-6">
                 <ProductCard dish={dish} />
                 </div>
+                
             ))
             ) : (
             <p>No dishes found</p>

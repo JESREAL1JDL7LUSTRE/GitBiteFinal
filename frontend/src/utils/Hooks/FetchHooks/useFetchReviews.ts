@@ -1,38 +1,39 @@
-// src/hooks/useFetchPayments.ts
 import { useState, useEffect } from "react";
 import api from "../../../api/api"; // Ensure this is the correct path for your API
 
 export interface ReviewsItem {
-    id: number;
-    dish: string;
-    customer_detail: [string, string];
-    rating: number;
-    review: string;
+  id: number;
+  dish: string;
+  customer: number;
+  customer_email: string;
+  rating: number;
+  review: string;
 }
 
-const useFetchreviews = () => {
-  const [reviews, setreviews] = useState<ReviewsItem[]>([]);
+const useFetchReviews = (dish_id: number | null) => {
+  const [reviews, setReviews] = useState<ReviewsItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getreviews = async () => {
+    if (!dish_id) return; // Prevent API call if dish_id is null or undefined
+
+    const fetchReviews = async () => {
       setLoading(true);
       try {
-        const res = await api.get<ReviewsItem[]>("/api/reviews/");
-        setreviews(res.data);
-      } catch (err) {
-        setError("Failed to fetch reviews details");
-        console.error(err);
+        const res = await api.get<ReviewsItem[]>(`/api/reviews/dish/${dish_id}/`);
+        setReviews(res.data);
+      } catch {
+        setError("Failed to fetch reviews");
       } finally {
         setLoading(false);
       }
     };
 
-    getreviews();
-  }, []);
+    fetchReviews();
+  }, [dish_id]); // Re-fetch when dish_id changes
 
   return { reviews, loading, error };
 };
 
-export default useFetchreviews;
+export default useFetchReviews;

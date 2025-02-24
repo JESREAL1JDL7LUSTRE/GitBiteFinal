@@ -5,18 +5,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import StarRating from "../Reviews/StarRating";
 
-const ItemPage: React.FC = () => {
+const AddReview: React.FC = () => {
   const [rating, setRating] = useState(0);
 
   useEffect(() => {
-    axios.get("/api/ratings/1/").then((response) => {
+    axios.get("/api/reviews/").then((response) => {
       setRating(response.data.stars);
     });
   }, []);
 
   const handleRate = async (newRating: number) => {
     setRating(newRating);
-    await axios.post("/api/ratings/", { item: 1, stars: newRating }); // Replace `1` with dynamic item ID
+    await axios.post("/api/reviews/", { item: 1, stars: newRating }); // Replace `1` with dynamic item ID
   };
 
   return (
@@ -27,4 +27,4 @@ const ItemPage: React.FC = () => {
   );
 };
 
-export default ItemPage;
+export default AddReview;

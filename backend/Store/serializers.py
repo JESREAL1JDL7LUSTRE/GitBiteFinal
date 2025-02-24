@@ -107,10 +107,14 @@ class PaymentSerializers(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class ReviewSerializers(serializers.ModelSerializer):
+    customer_email = serializers.SerializerMethodField()
+
     class Meta:
         model = Reviews
-        fields = "__all__"
-        extra_kwargs = {"customer": {"read_only": True}}
+        fields = ['id', 'dish', 'customer', 'rating', 'review', 'created_at', 'updated_at', 'customer_email']
+
+    def get_customer_email(self, obj):
+        return obj.customer.email if obj.customer else "N/A"
         
     def create(self, validated_data):
         validated_data["customer"] = self.context["request"].user

@@ -1,5 +1,6 @@
 import useFetchPayments from "../utils/Hooks/FetchHooks/useFetchPayments"; // Import the custom hook
 import useFetchOrders from "../utils/Hooks/FetchHooks/useFetchOrders";
+import AddReview from "@/components/Reviews/AddReview";
 
 const PreviousOrders = () => {
   const { orders, loading: ordersLoading, error: ordersError } = useFetchOrders();
@@ -49,6 +50,7 @@ const PreviousOrders = () => {
               ) : (
                 <p>No payment records found.</p>
               )}
+              <AddReview />
             </li>
           ))
         ) : (

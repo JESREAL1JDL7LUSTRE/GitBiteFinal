@@ -13,4 +13,5 @@ router.register('reviews', ReviewViewSet, basename='review')
 urlpatterns = [
     path('', include(router.urls)),
     path('payment-methods/', get_payment_methods, name='payment-methods'),
+    path("reviews/dish/<int:dish_id>/", get_reviews_by_dish, name="get_reviews_by_dish"),
 ]

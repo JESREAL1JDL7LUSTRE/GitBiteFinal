@@ -15,6 +15,8 @@ def get_payment_methods(request):
 @permission_classes([permissions.AllowAny])
 def get_reviews_by_dish(request, dish_id):
     reviews = Reviews.objects.filter(dish=dish_id)
+    serializer = ReviewSerializers(reviews, many=True)
+    return Response(serializer.data)
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategorySerializers

@@ -8,6 +8,7 @@ import {
 import WishlistButton from '../Buttons/WishlistButton';
 import PaymentButton from '../Buttons/PaymentButton';
 import CartButton from '../Buttons/CartButton';
+import ReviewsForDish from '../Reviews/ReviewsForDish';
 
 interface ProductCardProps {
   dish: {
@@ -42,6 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
       <CardFooter className="flex flex-col gap-2 p-4">
         <CartButton dish={dish} />
         <PaymentButton order={{ id: dish.id, total_price: dish.price }} dishDetails={[dish]} />
+        <ReviewsForDish dishId={dish.id}/>
       </CardFooter>
     </Card>
   );
