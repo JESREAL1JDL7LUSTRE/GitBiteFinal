@@ -49,9 +49,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
           <div className="flex flex-col justify-between space-y-4">
             {/* Header */}
             <CardHeader className="p-0 space-y-2">
-              <h1 className="text-xl font-bold text-start">{dish.name}</h1>
+              <h1 className="text-xl font-bold py-2 text-start">{dish.name}</h1>
               <span className="bg-green-200 text-green-800 px-3 py-1 text-xs font-medium rounded-md w-max">
-                # {dish.category_name}
+                {dish.category_name}
               </span>
               <p className="text-2xl font-bold text-start">${dish.price}</p>
               <p className="text-gray-500 text-start">{dish.description}</p>
@@ -82,7 +82,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
               reviews.map((review) => (
                 <Card key={review.id} className="p-4 shadow-lg border rounded-lg">
                   <div className="text-start font-semibold"><StarRatingShow rating={review.rating} /></div>
-                  <div className="flex items-center mt-2 text-start">Review: {review.review ?? "N/A"}
+                  <div className="flex items-center mt-2">Review: {review.review ?? "N/A"}
                   </div>
                   <p className="text-start mt-2 text-gray-700">
                     <span className="font-medium"></span>  {review.customer_email}

@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import { Button } from "../ui/button";
 import usePostOrder from "@/utils/Hooks/PostHooks/usePostOrder";
+import { useNavigate } from "react-router-dom";
 
 interface PaymentButtonProps {
-  dishDetails: { id: number; name: string; price: number }[];
+  dishDetails: { id: number; name: string; price: number; quantity: number}[];
 }
 
 function PaymentButton({ dishDetails }: PaymentButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [order, setOrder] = useState<{ id: number; total_price: number } | null>(null);
   const { createOrder, loading, error } = usePostOrder(); // ⬅️ No `processPayment` here
+  const navigate = useNavigate();
+
 
   const handleCreateOrder = async () => {
     try {
@@ -23,7 +26,8 @@ function PaymentButton({ dishDetails }: PaymentButtonProps) {
       setIsOpen(true); // ✅ Open payment popup
     } catch (err) {
       console.error("❌ Order Error:", err);
-      alert("Failed to create order. Please try again.");
+      alert("Failed to create order. Please try again or Please sign in");
+      navigate("/signin");
     }
   };
 

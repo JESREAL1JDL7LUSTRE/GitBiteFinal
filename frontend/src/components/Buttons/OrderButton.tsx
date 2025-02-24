@@ -3,8 +3,15 @@ import { Button } from "../ui/button";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import usePostOrder from "../../utils/Hooks/PostHooks/usePostOrder2";
 
+interface DishDetails {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 interface OrderButtonProps {
-  dishDetails: { id: number; name: string; price: number }[];
+  dishDetails: DishDetails[];
 }
 
 const OrderButton: React.FC<OrderButtonProps> = ({ dishDetails }) => {
@@ -12,6 +19,9 @@ const OrderButton: React.FC<OrderButtonProps> = ({ dishDetails }) => {
   const [isOrderSuccessful, setIsOrderSuccessful] = useState(false);
 
   const handleOrder = async () => {
+    if (dishDetails.length === 0) return;
+    console.log(dishDetails);
+
     const newOrder = await createOrder(dishDetails);
     if (newOrder) setIsOrderSuccessful(true);
   };
@@ -20,7 +30,7 @@ const OrderButton: React.FC<OrderButtonProps> = ({ dishDetails }) => {
 
   return (
     <div>
-      <Button onClick={handleOrder} disabled={loading}>
+      <Button onClick={handleOrder} disabled={loading || dishDetails.length === 0}>
         {loading ? "Processing..." : "Buy Now"}
       </Button>
 
@@ -29,7 +39,7 @@ const OrderButton: React.FC<OrderButtonProps> = ({ dishDetails }) => {
           isOpen={isOrderSuccessful}
           onClose={closePaymentPopUp}
           order={order}
-          dishDetails={dishDetails} // ✅ Pass dish details correctly
+          dishDetails={dishDetails} // ✅ Now correctly includes quantity
         />
       )}
     </div>

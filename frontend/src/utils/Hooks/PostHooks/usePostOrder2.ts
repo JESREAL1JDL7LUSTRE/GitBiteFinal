@@ -13,15 +13,18 @@ const usePostOrder = () => {
   const [error, setError] = useState<string | null>(null);
   const nav = useNavigate();
 
-  const createOrder = async (dishDetails: { id: number }[]) => {
+  const createOrder = async (dishDetails: { id: number; quantity: number }[]) => {
     setLoading(true);
     setError(null);
-
+  
     try {
-      const dishesToOrder = dishDetails.map(dish => ({ dish_id: dish.id }));
-
+      const dishesToOrder = dishDetails.map(dish => ({ 
+        dish_id: dish.id, 
+        quantity: dish.quantity // ✅ Include quantity
+      }));
+  
       const res = await api.post("/api/order/", { dishes: dishesToOrder });
-
+  
       setOrder({ id: res.data.id, total_price: res.data.total_price });
       return res.data; // Return order data for further use
     } catch (error) {
@@ -33,6 +36,7 @@ const usePostOrder = () => {
       setLoading(false);
     }
   };
+  
 
   return { createOrder, order, loading, error };
 };
