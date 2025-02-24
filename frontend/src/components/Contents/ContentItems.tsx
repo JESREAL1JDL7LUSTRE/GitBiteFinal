@@ -44,7 +44,8 @@ const ContentItems = ({ searchQuery = "" }: { searchQuery: string }) => {
                     <p>Price: ${item.price}</p>
                     <div className="flex justify-center">
                       {item.image && <img src={item.image} alt={item.name} className="size-60" />}
-                    </div><PaymentButton order={{ id: item.id, total_price: item.price }} dishDetails={[item]} />
+                    </div>
+                    <PaymentButton dishDetails={[item]} />
                     <WishlistButton dishId={item.id} />
                     <PlanToOrderButton dish={item} />
                   </li>
