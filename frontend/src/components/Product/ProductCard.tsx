@@ -32,7 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
       : 0;
 
   return (
-    <Card className="w-64 h-auto flex flex-col shadow-md rounded-lg overflow-hidden">
+    <Card className="w-full h-auto flex flex-col shadow-md rounded-lg overflow-hidden cursor-pointer">
       <CardHeader className="relative">
         <img
           src={dish.image || "/placeholder.png"}
@@ -40,23 +40,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
           className="object-cover aspect-square w-full rounded-lg"
         />
         <div className="absolute top-3 right-3">
-          <WishlistButton dishId={dish.id} />
+          <button onClick={(e) => e.stopPropagation()}>
+            <WishlistButton dishId={dish.id} />
+          </button>
         </div>
       </CardHeader>
 
-      <CardContent className="p-1">
-        <h1 className="text-s font-bold">{dish.name}</h1>
+      <CardContent className="p-1 flex flex-col gap-1 mx-5 text-start">
+        <h1 className="text-s font-bold truncate">{dish.name}</h1>
         <p className="text-gray-500 text-sm">${dish.price.toFixed(2)}</p>
       </CardContent>
 
       <CardFooter className="flex flex-col gap-2 p-4">
-        <StarRatingShow rating={averageRating} /> {/* Show average rating */}
-        <CartButton dish={dish} />
-        <PaymentButton dishDetails={[dish]} />
-        <ReviewsForDish dishId={dish.id} />
+        <StarRatingShow rating={averageRating} />
+        <button onClick={(e) => e.stopPropagation()}>
+          <CartButton dish={dish} />
+        </button>
+        <button onClick={(e) => e.stopPropagation()}>
+          <PaymentButton dishDetails={[dish]} />
+        </button>
       </CardFooter>
     </Card>
   );
 };
+
 
 export default ProductCard;

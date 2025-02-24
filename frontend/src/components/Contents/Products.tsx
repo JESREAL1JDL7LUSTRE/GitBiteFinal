@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
 import useFetchDishes from "../../utils/Hooks/FetchHooks/useFetchDishes";
 import ProductCard from "../Product/ProductCard";
+import ProductDetails from "../Product/ProductDetails";
 
 const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
   const { dishes, loading, error } = useFetchDishes();
+  const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
 
   const safeSearchQuery = typeof searchQuery === "string" ? searchQuery.trim().toLowerCase() : "";
 
@@ -15,7 +18,7 @@ const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
           (dish.category_name ? dish.category_name.toString().toLowerCase().includes(safeSearchQuery) : false) ||
           (dish.price ? dish.price.toString().includes(safeSearchQuery) : false)
         );
-      }) : [])
+      }) : [] )
     : dishes;
 
   if (loading) return <p>Loading...</p>;
@@ -23,18 +26,21 @@ const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
 
   return (
     <div className="flex justify-center">
-        <div className="grid grid-cols-auto-fit gap-6 w-full">
-            {filteredDishes.length > 0 ? (
+      {selectedDish ? (
+        <ProductDetails dish={selectedDish} onBack={() => setSelectedDish(null)} />
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center mx-3">
+          {filteredDishes.length > 0 ? (
             filteredDishes.map((dish: Dish) => (
-                <div key={dish.id} className="p-6">
+              <div key={dish.id} className="p-3 cursor-pointer" onClick={() => setSelectedDish(dish)}>
                 <ProductCard dish={dish} />
-                </div>
-                
+              </div>
             ))
-            ) : (
+          ) : (
             <p>No dishes found</p>
-            )}
+          )}
         </div>
+      )}
     </div>
   );
 };

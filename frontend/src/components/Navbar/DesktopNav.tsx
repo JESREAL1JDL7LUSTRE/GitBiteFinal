@@ -11,7 +11,7 @@ const DesktopNav = ({ setSearchQuery }: DesktopNavProps) => {
         setSearchQuery(category);
       };
   return (
-    <ul className="hidden md:flex items-center gap-4 text-xs font-medium md:text-sm lg:text-base whitespace-nowrap">
+    <ul className="hidden md:flex items-center gap-6 text-xs font-medium md:text-sm lg:text-base whitespace-nowrap">
         <li ><Link to="/" className="hover:text-gray-600">Home</Link></li>
         <CategoryDropdown setSearchQuery={handleCategorySelect} />
         <li ><Link to="/previousorder" className="hover:text-gray-600">Your Orders</Link></li>

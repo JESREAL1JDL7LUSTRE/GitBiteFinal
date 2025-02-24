@@ -3,8 +3,9 @@ import { usePlanToOrder } from "./Context/PlanToOrderContext";
 import OrderButton from "../Buttons/OrderButton";
 import { Button } from "../ui/button"; // Adjust according to your setup
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"; // Customize if needed
+import { ShoppingCartIcon } from "lucide-react";
 
-function PlanToOrderPopUp() {
+function CartPopUp() {
   const { planToOrderList, clearPlanToOrder } = usePlanToOrder();
   const [isDialogOpen, setIsDialogOpen] = useState(false); // Dialog state
 
@@ -22,18 +23,25 @@ function PlanToOrderPopUp() {
   };
 
   return (
-    <div className="sticky top-16 bg-white border p-4 shadow-md rounded-lg">
-      <h2 className="text-lg font-bold mb-4">Cart</h2>
+    <div className="sticky top-16 bg-white border p-4 px-2 shadow-md rounded-lg">
+      <div className="flex justify-start gap-4">
+        <ShoppingCartIcon />
+        <h2 className="text-s font-bold ">Your Cart</h2>
+      </div>
 
       {planToOrderList.length === 0 ? (
         <p className="text-gray-500">Cart Empty</p>
       ) : (
-        <ul className="space-y-2 ">
+        <ul className="p-2 ">
           {planToOrderList.map((dish) => (
-            <li key={dish.id} className="border-b py-2 flex justify-center items-center">
-              <div>
-                <p className="font-semibold">{dish.name}</p>
-                <p className="text-gray-600">Price: ${dish.price}</p>
+            <li key={dish.id} className="border-b p-3 flex justify-start">
+              <div className="flex">
+              <img src={dish.image} alt={dish.name} className="w-24 h-24 " />
+                <div className="p-2 flex flex-col">
+                <p className="text-md">{dish.name}</p>
+                <p className="text-sm text-start text-gray-600">Price: ${dish.price}</p>
+                </div>
+                
               </div>
             </li>
           ))}
@@ -76,4 +84,4 @@ function PlanToOrderPopUp() {
   );
 }
 
-export default PlanToOrderPopUp;
+export default CartPopUp;

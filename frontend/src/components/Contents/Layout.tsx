@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* SideCart - Show only when open */}
       {isSideCartOpen && (
-        <aside className="w-72 fixed top-[64px] right-0 h-[calc(100vh-64px)] overflow-y-auto">
+        <aside className="w-80 fixed top-[64px] right-0 h-[calc(100vh-64px)] overflow-y-auto">
           <div className="p-2">
             <SideCart />
           </div>

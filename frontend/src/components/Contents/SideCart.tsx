@@ -1,5 +1,5 @@
 import React from "react";
-import PlanToOrderPopUp from "../PopUps/PlanToOrderPopUp";
+import CartPopUp from "../PopUps/CartPopUp";
 import { usePlanToOrder } from "../PopUps/Context/PlanToOrderContext"; // ✅ Import context
 
 const SideCart = () => {
@@ -9,7 +9,7 @@ const SideCart = () => {
 
   return (
     <div className="sticky">
-      <PlanToOrderPopUp />
+      <CartPopUp />
     </div>
   );
 };
