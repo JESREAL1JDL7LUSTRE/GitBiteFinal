@@ -5,16 +5,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isSideCartOpen } = usePlanToOrder();
 
   return (
-    <div className={`grid h-screen ${isSideCartOpen ? "grid-cols-[1fr_17rem]" : "grid-cols-[1fr]"}`}>
+    <div className={`grid ${isSideCartOpen ? "grid-cols-[1fr_18rem]" : "grid-cols-1"} overflow-hidden`}>
       {/* Main Content */}
       <main className="p-2 overflow-auto">{children}</main>
 
-      {/* SideCart - Show only when open */}
+      {/* Side Cart - Properly placed inside the grid */}
       {isSideCartOpen && (
-        <aside className="w-80 fixed top-[64px] right-0 h-[calc(100vh-64px)] overflow-y-auto">
-          <div className="p-2">
-            <SideCart />
-          </div>
+          <aside className="w-80 h-screen fixed top-20 right-0 overflow-y-auto p-2">
+          <SideCart />
         </aside>
       )}
     </div>

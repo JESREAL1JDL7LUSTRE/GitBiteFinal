@@ -76,30 +76,26 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
           </CardContent>
         </Card>
 
-        <Card className="mt-8">
-          <CardHeader className="text-lg font-bold">Reviews</CardHeader>
-          <CardContent>
-            <ul className="space-y-4">
-              {reviews.length > 0 ? (
-                reviews.map((review) => (
-                  <li key={review.id} className="border-b pb-2 mb-2">
-                    <p className="text-start">{review.customer_email}</p>
-                    <div className="flex">
-                      <span className="mr-2">Rating:</span>
-                      <StarRatingShow rating={review.rating} />
-                    </div>
-                    <p className="text-start">Review: {review.review ?? "N/A"}</p>
-                  </li>
-                ))
-              ) : (
-                <p>No reviews found</p>
-              )}
-            </ul>
-          </CardContent>
-        </Card>
+        <div className="mt-10 text-start font-bold text-lg">Latest Reviews</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {reviews.length > 0 ? (
+              reviews.map((review) => (
+                <Card key={review.id} className="p-4 shadow-lg border rounded-lg">
+                  <div className="text-start font-semibold"><StarRatingShow rating={review.rating} /></div>
+                  <div className="flex items-center mt-2 text-start">Review: {review.review ?? "N/A"}
+                  </div>
+                  <p className="text-start mt-2 text-gray-700">
+                    <span className="font-medium"></span>  {review.customer_email}
+                  </p>
+                </Card>
+              ))
+            ) : (
+              <Card className="p-4 shadow-lg border rounded-lg">
+                <p className="text-center text-gray-500">No reviews found</p>
+              </Card>
+            )}
+          </div>
         
-
-
       </div>
     );
   }    

@@ -47,8 +47,8 @@ const SearchFunction = ({ searchQuery, onSearch }: SearchProps) => {
 
       {/* Expanding Search Input */}
       <div
-        className={`absolute right-0 flex items-center border rounded-md bg-white shadow-md transition-all duration-300 overflow-hidden ${
-          isOpen ? "w-48 opacity-100 px-2 py-1" : "w-0 opacity-0"
+        className={`absolute right-0 flex items-center border rounded-full bg-white shadow-md transition-all duration-300 overflow-hidden ${
+          isOpen ? "w-56 opacity-100 px-2 py-1" : "w-0 opacity-0"
         }`}
       >
         <Search className="w-5 h-5 p-1 text-gray-500" />

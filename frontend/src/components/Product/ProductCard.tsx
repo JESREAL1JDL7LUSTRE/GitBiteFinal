@@ -51,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
         <p className="text-gray-500 text-sm">${dish.price.toFixed(2)}</p>
       </CardContent>
 
-      <CardFooter className="flex flex-col gap-2 p-4">
+      <CardFooter className="flex flex-col gap-2 px-2">
         <StarRatingShow rating={averageRating} />
         <button onClick={(e) => e.stopPropagation()}>
           <CartButton dish={dish} />

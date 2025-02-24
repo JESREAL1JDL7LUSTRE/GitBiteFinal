@@ -23,7 +23,7 @@ function CartPopUp() {
   };
 
   return (
-    <div className="sticky top-16 bg-white border p-4 px-2 shadow-md rounded-lg">
+    <div className="sticky top-16 bg-white border p-4 px-4 shadow-md rounded-lg">
       <div className="flex justify-start gap-4">
         <ShoppingCartIcon />
         <h2 className="text-s font-bold ">Your Cart</h2>
@@ -34,12 +34,12 @@ function CartPopUp() {
       ) : (
         <ul className="p-2 ">
           {planToOrderList.map((dish) => (
-            <li key={dish.id} className="border-b p-3 flex justify-start">
+            <li key={dish.id} className="border-b py-3 flex justify-start">
               <div className="flex">
               <img src={dish.image} alt={dish.name} className="w-24 h-24 " />
                 <div className="p-2 flex flex-col">
-                <p className="text-md">{dish.name}</p>
-                <p className="text-sm text-start text-gray-600">Price: ${dish.price}</p>
+                  <p className="text-sm text-start">{dish.name}</p>
+                  <p className="text-sm text-start text-gray-600">Price: ${dish.price}</p>
                 </div>
                 
               </div>

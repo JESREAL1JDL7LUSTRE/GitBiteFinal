@@ -7,6 +7,7 @@ interface OrderedItem {
   quantity: number;
   subtotal: number;
   dishId: number;
+  image?: string;
 }
 
 export interface Order {
