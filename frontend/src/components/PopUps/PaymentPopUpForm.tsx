@@ -16,7 +16,7 @@ interface PaymentPopUpFormProps {
   isOpen: boolean;
   onClose: () => void;
   order: { id: number; total_price: number };
-  dishDetails: { name: string; price: number }[];
+  dishDetails: { name: string; price: number; quantity: number}[];
 }
 
 function PaymentPopUpForm({ isOpen, onClose, order, dishDetails }: PaymentPopUpFormProps) {
@@ -46,7 +46,7 @@ function PaymentPopUpForm({ isOpen, onClose, order, dishDetails }: PaymentPopUpF
           <h3 className="font-semibold">Your Order:</h3>
           {dishDetails.map((dish, index) => (
             <div key={index} className="mb-2">
-              <p>{dish.name} - Price: ${dish.price.toFixed(2)}</p>
+              <p>{dish.name} - Price: ${dish.price.toFixed(2)} Quantity: {dish.quantity}</p>
             </div>
           ))}
         </div>

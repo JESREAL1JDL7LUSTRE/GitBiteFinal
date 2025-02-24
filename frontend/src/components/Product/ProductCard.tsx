@@ -8,7 +8,6 @@ import {
 import WishlistButton from "../Buttons/WishlistButton";
 import PaymentButton from "../Buttons/PaymentButton";
 import CartButton from "../Buttons/CartButton";
-import ReviewsForDish from "../Reviews/ReviewsForDish";
 import useFetchReviews from '@/utils/Hooks/FetchHooks/useFetchReviews';
 import StarRatingShow from "../Reviews/StarRatingShow";
 
