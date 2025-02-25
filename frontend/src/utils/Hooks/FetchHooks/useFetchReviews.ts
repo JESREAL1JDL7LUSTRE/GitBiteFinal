@@ -3,7 +3,7 @@ import api from "../../../api/api"; // Ensure this is the correct path for your 
 
 export interface ReviewsItem {
   id: number;
-  dish: string;
+  dish: number;
   customer: number;
   customer_email: string;
   rating: number;
@@ -16,7 +16,7 @@ const useFetchReviews = (dish_id: number | null) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!dish_id) return; // Prevent API call if dish_id is null or undefined
+    if (!dish_id) return;
 
     const fetchReviews = async () => {
       setLoading(true);
