@@ -1,10 +1,12 @@
 import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchWishlist";
 import usePostCart from "../utils/Hooks/PostHooks/usePostCart";
 import OrderButton from "@/components/Buttons/OrderButton";
+import CartDelButton from "@/components/Buttons/DeleteButtons/CartDelButton";
 
 const Wishlist = () => {
   const { cart, loading, error } = useFetchCart(); // Fetch wishlist items
   const { updateDishQuantity } = usePostCart();
+  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -16,7 +18,7 @@ const Wishlist = () => {
         {cart.length > 0 ? (
           cart.map((item: CartItem) => (
             <li key={item.id} className="border p-4 rounded-md shadow-md mb-4">
-                <h3 className="text-lg font-semibold">{item.dish.name}</h3>
+                <h3 className="text-lg font-semibold">{item.dish.name}</h3> <CartDelButton cartId={item.id} />
                 <p className="text-gray-600">{item.dish.description}</p>
                 <p className="text-gray-500">Recipes: {item.dish.recipes}</p>
                 <p className="text-gray-500">Category: {item.dish.category}</p>
