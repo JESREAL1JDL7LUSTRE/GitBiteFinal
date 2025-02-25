@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import AddReview from "@/components/Reviews/AddReview";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
+import OrderDelButton from "../Buttons/DeleteButtons/OrderDelButton";
 
 interface OrderedItem {
   id: number;
@@ -97,6 +98,9 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
           <div className="mt-2 flex">
             {firstDish && <AddReview dishId={firstDish.dishId} />}
           </div>
+        </div>
+        <div className="flex flex-col items-start gap-1">
+          <OrderDelButton OrderId={order.id} />
         </div>
         
       </div>
