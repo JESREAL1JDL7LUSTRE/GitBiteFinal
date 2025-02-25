@@ -45,10 +45,9 @@ const usePostCart = () => {
 
     try {
       const response = await api.put(`/api/cart/${dishId}/`, {
-        quantityChange, // Send only quantity change
+        quantityChange,
       });
 
-      // Update the cart state
       setCart((prevCart) =>
         prevCart.map((item) =>
           item.dish.id === dishId ? { ...item, quantity: item.quantity + quantityChange } : item

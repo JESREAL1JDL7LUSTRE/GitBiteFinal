@@ -16,14 +16,26 @@ const Wishlist = () => {
         {cart.length > 0 ? (
           cart.map((item: CartItem) => (
             <li key={item.id} className="border p-4 rounded-md shadow-md mb-4">
-              <h3 className="text-lg font-semibold">{item.dish.name}</h3>
-              <p className="text-gray-600">{item.dish.description}</p>
-              <p className="text-gray-500">Price: {item.dish.price}</p>
+                <h3 className="text-lg font-semibold">{item.dish.name}</h3>
+                <p className="text-gray-600">{item.dish.description}</p>
+                <p className="text-gray-500">Recipes: {item.dish.recipes}</p>
+                <p className="text-gray-500">Category: {item.dish.category}</p>
+                <p className="text-gray-500">Available: {item.dish.available ? "Yes" : "No"}</p>
+                <p className="text-gray-500">Price: {item.dish.price}</p>
+
+                {item.dish.image && (
+                  <img
+                    src={item.dish.image}
+                    alt={item.dish.name}
+                    width="100"
+                    className="rounded-md mt-2"
+                  />
+                )}
 
               <div className="flex items-center gap-2 mt-2">
                 <button
                   className="bg-red-500 px-2 py-1 rounded"
-                  onClick={() => updateDishQuantity(item.dish.id, -1)}
+                  onClick={() => updateDishQuantity(item.id, -1)}
                   disabled={item.quantity <= 1}
                 >
                   -
@@ -31,7 +43,7 @@ const Wishlist = () => {
                 <p className="text-md">{item.quantity}</p>
                 <button
                   className="bg-green-500 px-2 py-1 rounded"
-                  onClick={() => updateDishQuantity(item.dish.id, 1)}
+                  onClick={() => updateDishQuantity(item.id, 1)}
                 >
                   +
                 </button>
