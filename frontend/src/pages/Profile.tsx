@@ -21,7 +21,11 @@ const Profile = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-xl font-bold text-white">
-              {profile?.first_name ? profile.first_name.charAt(0).toUpperCase() : "?"}
+              {profile?.image ? (
+                  <img src={profile.image} alt="profile" className="w-full h-full rounded-full object-cover" />
+                ) : (
+                  profile?.first_name?.charAt(0).toUpperCase() || "?"
+                )}
               </div>
               <div>
                 <p className="text-lg font-semibold text-gray-800">{profile.first_name} {profile.last_name}</p>

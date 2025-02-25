@@ -71,9 +71,12 @@ function IsSignInOrNot() {
   return isLoggedInState ? (
     <DropdownMenu>
       <DropdownMenuTrigger className="w-9 h-9 bg-gray-300 rounded-full flex items-center justify-center text-lg font-bold text-white cursor-pointer">
-        {profile?.first_name ? profile.first_name.charAt(0).toUpperCase() : "?"}
+        {profile?.image ? (
+          <img src={profile.image} alt="profile" className="w-full h-full rounded-full object-cover" />
+        ) : (
+          profile?.first_name?.charAt(0).toUpperCase() || "?"
+        )}
       </DropdownMenuTrigger>
-      
       <DropdownMenuContent className="w-20 mt-2 bg-white shadow-md rounded-lg">
         <DropdownMenuItem className="flex justify-center" onClick={() => nav("/profile")}>View Profile</DropdownMenuItem>
         <DropdownMenuItem className="flex justify-center"><SignOut /></DropdownMenuItem>
