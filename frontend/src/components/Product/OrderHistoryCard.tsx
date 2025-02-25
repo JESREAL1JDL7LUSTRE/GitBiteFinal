@@ -57,7 +57,8 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
         <p className="font-semibold">
           Status: <span className="text-blue-600">{order.status}</span>
         </p>
-        <p className="font-semibold">
+        <p className="font-bold text-start">Ordered Items: {order.ordered_items.map((item) => item.dish_name).join(", ")}</p>
+        <p className="font-semibold text-gray-600">
           Total Price: <span className="text-green-600">${order.total_price.toFixed(2)}</span>
         </p>
         <p className="text-gray-500">
@@ -74,10 +75,12 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
         ) : (
           <p className="text-gray-500">No payment records found.</p>
         )}
-
-        <div className="mt-2">
-          {firstDish && <AddReview dishId={firstDish.dishId} />}
+        <div className="flex ">
+          <div className="mt-2 flex">
+            {firstDish && <AddReview dishId={firstDish.dishId} />}
+          </div>
         </div>
+        
       </div>
     </Card>
   );

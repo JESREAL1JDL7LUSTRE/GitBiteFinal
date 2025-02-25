@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Menu, X, Heart } from "lucide-react";
+import { Menu, X, Heart, ShoppingCartIcon } from "lucide-react";
 import IsSignInOrNot from "../User/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
 import SearchFunction from "./SearchFunction";

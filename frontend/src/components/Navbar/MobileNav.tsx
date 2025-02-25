@@ -26,12 +26,16 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
     setOpen(false);
   };
 
+  const handleCategorySelect = (category: string) => {
+      setSearchQuery(category);
+    };
+
   return (
     open && (
       <div id="mobile-menu" className="absolute top-full left-0 w-full bg-white shadow-md flex justify-center font-medium py-4 z-50">
         <div className="flex flex-row items-center gap-10">
           <button onClick={() => handleNavClick("/")} className="hover:text-gray-600">Home</button>
-          <CategoryDropdown setSearchQuery={setSearchQuery} />
+          <CategoryDropdown setSearchQuery={handleCategorySelect} />
           <button onClick={() => handleNavClick("/previousorder")} className="hover:text-gray-600">Your Orders</button>
           <button onClick={() => handleNavClick("/about")} className="hover:text-gray-600">About Us</button>
         </div>
