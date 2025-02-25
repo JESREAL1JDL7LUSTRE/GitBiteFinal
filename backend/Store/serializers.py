@@ -72,6 +72,8 @@ class CartSerializers(serializers.ModelSerializer):
             "category": category_name,
             "available": obj.dish.available,
             "image": image_url,
+            "price": obj.dish.price,
+            "created_at": obj.dish.created_at,
         }
 
 

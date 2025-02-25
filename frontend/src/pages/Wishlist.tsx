@@ -1,16 +1,15 @@
-
-import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchWishlist"; // Import the custom hook
+import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchWishlist";
+import usePostCart from "../utils/Hooks/PostHooks/usePostCart";
+import OrderButton from "@/components/Buttons/OrderButton";
+import CartDelButton from "@/components/Buttons/DeleteButtons/CartDelButton";
 
 const Wishlist = () => {
-  const { cart, loading, error } = useFetchCart(); // Use the custom hook
+  const { cart, loading, error } = useFetchCart(); // Fetch wishlist items
+  const { updateDishQuantity } = usePostCart();
+  
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
@@ -18,20 +17,56 @@ const Wishlist = () => {
       <ul>
         {cart.length > 0 ? (
           cart.map((item: CartItem) => (
-            <li key={item.id}>
-              <h3>{item.dish.name}</h3>
-              <p>{item.dish.description}</p>
-              <p>Recipes: {item.dish.recipes}</p>
-              <p>Category: {item.dish.category}</p>
-              <p>Available: {item.dish.available ? "Yes" : "No"}</p>
-              <p>Quantity: {item.quantity}</p>
-              {item.dish.image && (
-                <img src={item.dish.image} alt={item.dish.name} width="100" />
-              )}
+            <li key={item.id} className="border p-4 rounded-md shadow-md mb-4">
+                <h3 className="text-lg font-semibold">{item.dish.name}</h3> <CartDelButton cartId={item.id} />
+                <p className="text-gray-600">{item.dish.description}</p>
+                <p className="text-gray-500">Recipes: {item.dish.recipes}</p>
+                <p className="text-gray-500">Category: {item.dish.category}</p>
+                <p className="text-gray-500">Available: {item.dish.available ? "Yes" : "No"}</p>
+                <p className="text-gray-500">Price: {item.dish.price}</p>
+
+                {item.dish.image && (
+                  <img
+                    src={item.dish.image}
+                    alt={item.dish.name}
+                    width="100"
+                    className="rounded-md mt-2"
+                  />
+                )}
+
+              <div className="flex items-center gap-2 mt-2">
+                <button
+                  className="bg-red-500 px-2 py-1 rounded"
+                  onClick={() => updateDishQuantity(item.id, -1)}
+                  disabled={item.quantity <= 1}
+                >
+                  -
+                </button>
+                <p className="text-md">{item.quantity}</p>
+                <button
+                  className="bg-green-500 px-2 py-1 rounded"
+                  onClick={() => updateDishQuantity(item.id, 1)}
+                >
+                  +
+                </button>
+              </div>
+
+              <button onClick={(e) => e.stopPropagation()} className="mt-3">
+                <OrderButton
+                  dishDetails={[
+                    {
+                      id: item.dish.id,
+                      name: item.dish.name,
+                      price: item.dish.price,
+                      quantity: item.quantity,
+                    },
+                  ]}
+                />
+              </button>
             </li>
           ))
         ) : (
-          <p>No items in the cart</p>
+          <p className="text-gray-500">No items in the wishlist</p>
         )}
       </ul>
     </div>

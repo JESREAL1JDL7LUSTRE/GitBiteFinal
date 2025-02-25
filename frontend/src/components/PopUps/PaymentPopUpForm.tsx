@@ -46,7 +46,7 @@ function PaymentPopUpForm({ isOpen, onClose, order, dishDetails }: PaymentPopUpF
           <h3 className="font-semibold">Your Order:</h3>
           {dishDetails.map((dish, index) => (
             <div key={index} className="mb-2">
-              <p>{dish.name} - Price: ${dish.price.toFixed(2)} Quantity: {dish.quantity}</p>
+              <p>{dish.name} - Price: ${dish.price.toFixed(2)} Quantity: {dish.quantity || 1}</p>
             </div>
           ))}
         </div>

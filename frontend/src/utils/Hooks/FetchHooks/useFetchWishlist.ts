@@ -9,6 +9,7 @@ export interface Dish {
   category: string;
   available: boolean;
   image?: string;
+  price: number;
 }
 
 export interface CartItem {
@@ -20,30 +21,42 @@ export interface CartItem {
 const useFetchCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
 
   useEffect(() => {
     const getCartItems = async () => {
       setLoading(true);
       try {
         const res = await api.get("/api/cart/");
+        console.log("Cart API Response:", res.data);
     
         if (!Array.isArray(res.data)) {
           throw new Error("Invalid cart data format received");
         }
     
         const formattedCart = res.data.map((item) => {
-    
+          if (!item.dish_data) {
+            throw new Error(`Missing dish data for cart item with id ${item.id}`);
+          }
+          
           return {
             id: item.id,
             quantity: item.quantity,
-            dish: item.dish_data ?? {}, 
+            dish: {
+              id: item.dish_data.id ?? 0, // Default values to prevent crashes
+              name: item.dish_data.name ?? "Unknown Dish",
+              description: item.dish_data.description ?? "",
+              recipes: item.dish_data.recipes ?? 0,
+              category: item.dish_data.category ?? "Uncategorized",
+              available: item.dish_data.available ?? false,
+              image: item.dish_data.image ?? "",
+              price: item.dish_data.price ?? 0,
+            },
           };
         });
 
         setCart(formattedCart);
       } catch (err) {
-        setError("Failed to fetch cart items");
         console.error("Fetch Cart Error:", err);
       } finally {
         setLoading(false);

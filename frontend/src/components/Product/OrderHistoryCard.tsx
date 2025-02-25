@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import AddReview from "@/components/Reviews/AddReview";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
+import OrderDelButton from "../Buttons/DeleteButtons/OrderDelButton";
 
 interface OrderedItem {
   id: number;
@@ -87,6 +88,10 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
             {isExpanded ? "Hide Order Details" : "View Order Details"}
             {isExpanded ? <ChevronUp className="ml-2 w-4 h-4" /> : <ChevronDown className="ml-2 w-4 h-4" />}
           </Button>
+
+          <div className="flex flex-col items-start gap-1">
+          <OrderDelButton OrderId={order.id} />
+          </div>
 
           {/* Payment Popup */}
           
