@@ -15,6 +15,7 @@ import Navbar from './components/Navbar/NavBar.tsx';
 import About from './pages/About.tsx';
 import PreviousOrders from './pages/PreviousOrders.tsx';
 import AddReview from './components/Reviews/AddReview.tsx';
+import EditProfile from './pages/EditProfile.tsx';
 
 const Layout = () => {
   const location = useLocation();
@@ -46,6 +47,7 @@ const Layout = () => {
         <Route path='/previousorder' element={<ProtectedRoute><PreviousOrders/></ProtectedRoute>} />
         <Route path='*' element={<NotFound />} />
         <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
+        <Route path='/editProfile' element={<ProtectedRoute><EditProfile/></ProtectedRoute>} />
       </Routes>
     </>
   );

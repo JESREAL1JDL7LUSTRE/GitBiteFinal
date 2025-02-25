@@ -27,9 +27,10 @@ class CustomerTokenObtainView(TokenViewBase):
     serializer_class = CustomerTokenObtainSerializer
 
 
-class CustomerProfileView(generics.RetrieveAPIView):
+class CustomerProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = CustomerSerializer
     permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ["get", "put", "patch"]
 
     def get_object(self):
         return self.request.user

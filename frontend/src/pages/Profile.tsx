@@ -1,9 +1,12 @@
 
+import { Button } from "@/components/ui/button";
 import useFetchProfile from "../utils/Hooks/FetchHooks/useFetchProfile"; // Import the custom hook
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { profile, loading, error } = useFetchProfile(); // Use the custom hook
-
+  const navigate = useNavigate();
+  
   if (loading) {
     return <p>Loading profile...</p>;
   }
@@ -37,6 +40,11 @@ const Profile = () => {
               <p><strong className="text-gray-600">Email:</strong> {profile.email}</p>
               <p><strong className="text-gray-600">Phone:</strong> {profile.phone_number}</p>
               <p><strong className="text-gray-600">Address:</strong> {profile.address}</p>
+              <Button
+                onClick={() => navigate("/editProfile")}
+                variant="outline"
+                className="p-2 md:p-3"
+                >Edit Profile</Button>
             </div>
           </div>
         ) : (
