@@ -9,6 +9,7 @@ export interface ProfileData {
   email: string;
   phone_number: string;
   address: string;
+  image: string;
 }
 
 const useFetchProfile = () => {

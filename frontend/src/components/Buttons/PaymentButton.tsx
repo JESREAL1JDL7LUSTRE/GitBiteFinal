@@ -13,10 +13,6 @@ function PaymentButton({ dishDetails }: PaymentButtonProps) {
   const [order, setOrder] = useState<{ id: number; total_price: number } | null>(null);
   const { createOrder, loading, error } = usePostOrder(); // ⬅️ No `processPayment` here
   const navigate = useNavigate();
-
-  console.log("Dish Details:", dishDetails);
-
-
   const handleCreateOrder = async () => {
     try {
       const newOrder = await createOrder(dishDetails);
