@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import AddReview from "@/components/Reviews/AddReview";
+import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 
 interface OrderedItem {
   id: number;
@@ -32,12 +33,19 @@ interface OrderProps {
 }
 
 const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
+  const [isOpen, setIsOpen] = useState(payments.length === 0); // Open popup if no payments
   const orderPayments = payments.filter((payment) => payment.order === order.id);
-  const firstDish = order.ordered_items[0]; // ✅ Get first dish (if available)
+  const firstDish = order.ordered_items[0];
+
+  // Extract dish details from ordered items
+  const dishDetails = order.ordered_items.map((item) => ({
+    name: item.dish_name,
+    price: item.subtotal / item.quantity,
+    quantity: item.quantity,
+  }));
 
   return (
     <Card className="w-full shadow-md rounded-lg p-4 flex items-center gap-6">
-
       {firstDish?.image ? (
         <img
           src={firstDish.image}
@@ -72,7 +80,17 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
             </span>
           </p>
         ) : (
-          <p className="text-gray-500">No payment records found.</p>
+          <div>
+            <button
+              className="text-white bg-blue-500 px-4 py-2 rounded-md"
+              onClick={() => setIsOpen(true)}>Pay unPaid Order</button>
+            <PaymentPopUpForm
+              isOpen={isOpen}
+              onClose={() => setIsOpen(false)}
+              order={order} // ✅ Pass created order
+              dishDetails={dishDetails} // ✅ Pass extracted dish details
+            />
+          </div>
         )}
 
         <div className="mt-2">
