@@ -119,6 +119,25 @@ class CartViewSet(viewsets.ModelViewSet):
             existing_cart_item.save()
             serializer.instance = existing_cart_item
             
+    def update(self, request, *args, **kwargs):
+        customer = self.request.user
+        cart_item = self.get_object()
+
+        quantity_change = request.data.get("quantityChange", None)
+
+        if quantity_change is None:
+            return Response({"error": "quantityChange field is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Update quantity
+        cart_item.quantity += int(quantity_change)
+        if cart_item.quantity < 1:
+            cart_item.quantity = 1  # Prevent negative or zero quantity
+
+        cart_item.save()
+
+        serializer = self.get_serializer(cart_item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+            
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializers
     permission_classes = [permissions.IsAuthenticated]

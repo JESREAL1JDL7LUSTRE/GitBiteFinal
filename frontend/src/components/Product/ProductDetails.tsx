@@ -40,16 +40,17 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
               alt={dish.name}
               className="object-cover w-full aspect-square rounded-lg shadow-md"
             />
-            {/* Wishlist Button */}
-            <div className="absolute top-3 right-3">
-              <WishlistButton dishId={dish.id} />
-            </div>
           </div>
     
           <div className="flex flex-col justify-between space-y-4">
             {/* Header */}
             <CardHeader className="p-0 space-y-2">
-              <h1 className="text-xl font-bold py-2 text-start">{dish.name}</h1>
+              <div className="flex justify-between items-center">
+                <h1 className="text-xl font-bold py-2 text-start">{dish.name}</h1>
+                <p><WishlistButton dishId={dish.id} /></p>
+
+              </div>
+              
               <span className="bg-green-200 text-green-800 px-3 py-1 text-xs font-medium rounded-md w-max">
                 {dish.category_name}
               </span>
@@ -81,12 +82,16 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
             {reviews.length > 0 ? (
               reviews.map((review) => (
                 <Card key={review.id} className="p-4 shadow-lg border rounded-lg">
-                  <div className="text-start font-semibold"><StarRatingShow rating={review.rating} /></div>
-                  <div className="flex items-center mt-2">Review: {review.review ?? "N/A"}
+                  <div className="text-start">
+                    <div className="font-semibold"><StarRatingShow rating={review.rating} /></div>
+                    <div className="flex items-start mt-2 font-semibold">Review: {review.review ?? "N/A"}
+                    </div>
+                    <p className="text-start mt-2 text-gray-700">
+                      <span className="font-medium"></span>  {review.customer_email}
+                    </p>
+
                   </div>
-                  <p className="text-start mt-2 text-gray-700">
-                    <span className="font-medium"></span>  {review.customer_email}
-                  </p>
+
                 </Card>
               ))
             ) : (
