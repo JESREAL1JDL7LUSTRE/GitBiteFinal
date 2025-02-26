@@ -12,12 +12,15 @@ const PreviousOrders = () => {
   if (ordersError) return <p>{ordersError}</p>;
   if (paymentsError) return <p>{paymentsError}</p>;
 
+  // ✅ Sort orders from newest to oldest based on `created_at`
+  const sortedOrders = [...orders].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
   return (
     <div className="w-full p-10">
       <h2 className="text-2xl font-bold mb-4">Order History</h2>
-      {orders.length > 0 ? (
+      {sortedOrders.length > 0 ? (
         <div className="grid gap-4">
-          {orders.map((order) => (
+          {sortedOrders.map((order) => (
             <OrderHistoryCard key={order.id} order={order} payments={payments} />
           ))}
         </div>
