@@ -26,7 +26,7 @@ interface Payment {
 interface OrderProps {
   order: {
     id: number;
-    customer: string;
+    customer: number;
     status: string;
     total_price: number;
     created_at: string;
@@ -37,6 +37,7 @@ interface OrderProps {
 
 const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded2, setIsExpanded2] = useState(false);
   const orderPayments = payments.filter((payment) => payment.order === order.id);
   const [isPayOpen, setIsPayOpen] = useState(payments.length === 0);
 
@@ -76,9 +77,25 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
 
         {/* Buttons: Expand Order Details & Payment Popup */}
         <div className="flex items-center gap-3">
-        <Button className="text-white bg-blue-500 px-4 py-2 rounded-md"
-            onClick={() => setIsPayOpen(true)}>Pay Unpaid Order
-                  </Button>
+        {orderPayments?.length > 0 ? (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsExpanded2(!isExpanded2)}
+              className="flex items-center"
+              aria-expanded={isExpanded}
+            >
+              {isExpanded ? "Hide Payment Details" : "View Payment Details"}
+              {isExpanded ? <ChevronUp className="ml-2 w-4 h-4" /> : <ChevronDown className="ml-2 w-4 h-4" />}
+            </Button>
+          ) : (
+            <Button 
+              className="text-white bg-blue-500 px-4 py-2 rounded-md"
+              onClick={() => setIsPayOpen(true)}
+            >
+              Pay Unpaid Order
+            </Button>
+          )}
           <Button
             variant="outline"
             size="sm"
@@ -94,7 +111,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
           </div>
 
           {/* Payment Popup */}
-          
+
           <PaymentPopUpForm
             isOpen={isPayOpen}
             onClose={() => setIsPayOpen(false)}
@@ -103,8 +120,43 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
           />
         </div>
       </div>
-
+      
       {/* Collapsible Order Items List */}
+      {isExpanded2 && (
+        <div className="mt-4">
+              {payments
+            .filter((payment) => payment.order === order.id) // Filter payments for this order
+            .map((payment) => (
+            <div key={payment.id} className="flex items-start gap-4 border-b py-4">
+              <div className="flex-1">
+                <div className="flex justify-between">
+                  <h3 className="font-semibold text-lg">Payment ID: {payment.id}</h3>
+                  <p className="text-gray-600 text-sm">Amount: ${payment.amount.toFixed(2)}</p>
+                </div>
+
+                <p className="text-md">
+                  <span className="font-semibold">Payment Method:</span>{" "}
+                  {payment.payment_method ? payment.payment_method : "Not Provided"}
+                </p>
+
+                <p className="text-md">
+                  <span className="font-semibold">Transaction ID:</span>{" "}
+                  {payment.transaction_id ? payment.transaction_id : "N/A"}
+                </p>
+
+                <div className="flex items-center justify-between mt-2">
+                  <div className="flex gap-2">
+                    <h1 className="text-blue-500 text-md font-semibold">Order Status:</h1>
+                    <p>{order.status}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+
       {isExpanded && (
         <div className="mt-4">
           {order.ordered_items.map((item) => (
@@ -132,6 +184,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
             </div>
           ))}
         </div>
+        
       )}
     </Card>
   );
