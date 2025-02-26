@@ -93,7 +93,6 @@ function Featured() {
                         <div className="flex items-center justify-between">
                           <span className="text-2xl font-bold">${dish.price}</span>
                           <PaymentButton dishDetails={[dish]} />
-                         
                         </div>
                       </div>
                     </div>
