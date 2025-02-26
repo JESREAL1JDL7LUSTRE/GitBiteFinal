@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Menu, X, Heart, ShoppingCartIcon } from "lucide-react";
+import logoName from "../../assets/logo.png";
+import { Menu, X, Heart } from "lucide-react";
 import IsSignInOrNot from "../User/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
 import SearchFunction from "./SearchFunction";
@@ -22,8 +23,8 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
       <div className="flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="logo" className="h-10 cursor-pointer" />
-          <p className="font-medium text-base md:text-s">GitCook</p>
+          <img src={logo} alt="logo" className="h-12 cursor-pointer" />
+          <img src={logoName} alt="logo name" className="h-12 cursor-pointer" />
         </Link>
 
         {/* Main Navigation */}
