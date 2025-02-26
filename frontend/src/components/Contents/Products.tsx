@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
 import useFetchDishes from "../../utils/Hooks/FetchHooks/useFetchDishes";
 import ProductCard from "../Product/ProductCard";
-import ProductDetails from "../Product/ProductDetailsCard";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 
 const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
   const { dishes, loading, error } = useFetchDishes();
-  const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
+  const navigate = useNavigate(); // ✅ Initialize useNavigate
 
   const safeSearchQuery = typeof searchQuery === "string" ? searchQuery.trim().toLowerCase() : "";
 
@@ -25,21 +25,19 @@ const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="flex justify-center">
-      {selectedDish ? (
-        <ProductDetails dish={selectedDish} onBack={() => setSelectedDish(null)} />
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center mx-3">
+      {filteredDishes.length > 0 ? ( // ✅ Fixed: Use filteredDishes instead of dishes
+        filteredDishes.map((dish) => (
+          <div 
+            key={dish.id} 
+            className="p-3 cursor-pointer"
+            onClick={() => navigate(`/product/${dish.id}`)} // ✅ Now navigate works
+          >
+            <ProductCard dish={dish} />
+          </div>
+        ))
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center mx-3">
-          {filteredDishes.length > 0 ? (
-            filteredDishes.map((dish: Dish) => (
-              <div key={dish.id} className="p-3 cursor-pointer" onClick={() => setSelectedDish(dish)}>
-                <ProductCard dish={dish} />
-              </div>
-            ))
-          ) : (
-            <p>No dishes found</p>
-          )}
-        </div>
+        <p>No dishes found</p>
       )}
     </div>
   );
