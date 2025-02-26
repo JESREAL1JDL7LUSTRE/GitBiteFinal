@@ -50,7 +50,7 @@ function Featured() {
   }
 
   return (
-    <div className=" bg-gray-50 border-emerald-500">
+    <div className=" bg-gray-50 border-emerald-500 rounded-lg">
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -93,7 +93,6 @@ function Featured() {
                         <div className="flex items-center justify-between">
                           <span className="text-2xl font-bold">${dish.price}</span>
                           <PaymentButton dishDetails={[dish]} />
-                         
                         </div>
                       </div>
                     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import name from "../../assets/name.png";
+import name from "../../assets/logoName.png";
 import { Menu, X, Heart } from "lucide-react";
 import IsSignInOrNot from "../User/IsSignInOrNot";
 import { Button } from "@/components/ui/button";
