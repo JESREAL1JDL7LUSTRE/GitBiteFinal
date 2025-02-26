@@ -1,3 +1,4 @@
+import React from "react";
 import SideCart from "./SideCart";
 import { usePlanToOrder } from "../PopUps/Context/PlanToOrderContext";
 
@@ -5,16 +6,24 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isSideCartOpen } = usePlanToOrder();
 
   return (
-    <div className={`grid ${isSideCartOpen ? "grid-cols-[1fr_18rem]" : "grid-cols-1"} overflow-hidden`}>
+    <div className="relative min-h-screen">
       {/* Main Content */}
-      <main className="p-2 overflow-auto">{children}</main>
+      <main 
+        className={`transition-all duration-300 ${
+          isSideCartOpen ? 'mr-[320px]' : ''
+        }`}
+      >
+        {children}
+      </main>
 
-      {/* Side Cart - Properly placed inside the grid */}
-      {isSideCartOpen && (
-          <aside className="w-80 h-screen fixed top-20 right-0 overflow-y-auto p-2">
-          <SideCart />
-        </aside>
-      )}
+      {/* Side Cart */}
+      <aside 
+        className={`fixed top-20 right-0 w-[320px] h-[calc(90vh-5rem)] md:h-[calc(100vh-5rem)] bg-white shadow-2xl transform transition-transform duration-300 ${
+          isSideCartOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <SideCart />
+      </aside>
     </div>
   );
 };

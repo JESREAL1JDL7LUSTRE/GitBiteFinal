@@ -24,44 +24,58 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
   const { reviews } = useFetchReviews(dish.id);
 
-  // Calculate average rating
   const averageRating =
     reviews.length > 0
       ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
       : 0;
 
   return (
-    <Card className="w-full h-auto flex flex-col shadow-md rounded-lg overflow-hidden cursor-pointer">
-      <CardHeader className="relative">
-        <img
-          src={dish.image || "/placeholder.png"}
-          alt={dish.name}
-          className="object-cover aspect-square w-full rounded-lg"
-        />
-        <div className="absolute top-3 right-3">
-          <button onClick={(e) => e.stopPropagation()}>
-            <WishlistButton dishId={dish.id} />
-          </button>
+<Card className="group w-full h-full flex flex-col shadow-lg rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] bg-white">
+      <CardHeader className="relative p-0">
+        <div className="relative overflow-hidden aspect-square">
+          <img
+            src={dish.image || "/placeholder.png"}
+            alt={dish.name}
+            className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-100"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute top-3 right-3">
+            <button 
+              onClick={(e) => e.stopPropagation()}
+              className="transition-transform hover:scale-110"
+            >
+              <WishlistButton dishId={dish.id} />
+            </button>
+          </div>
         </div>
       </CardHeader>
-
-      <CardContent className="p-1 flex flex-col gap-1 mx-5 text-start">
-        <h1 className="text-s font-bold truncate">{dish.name}</h1>
-        <p className="text-gray-500 text-sm">${dish.price.toFixed(2)}</p>
+      <CardContent className="p-4 flex flex-col gap-2">
+        <div className="flex flex-col text-start">
+          <h1 className="font-bold text-lg text-gray-800 line-clamp-1">{dish.name}</h1>
+          <p className="font-medium">${dish.price.toFixed(2)}</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <StarRatingShow rating={averageRating} />
+          <span className="text-xs text-gray-500">
+            ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
+          </span>
+        </div>
       </CardContent>
-
-      <CardFooter className="flex flex-col gap-2 px-2">
-        <StarRatingShow rating={averageRating} />
-        <button onClick={(e) => e.stopPropagation()}>
+      <CardFooter className="p-4 pt-0 mt-auto flex flex-col sm:flex-row gap-2 ">
+        <button 
+          onClick={(e) => e.stopPropagation()}
+          className="w-full sm:flex-1"
+        >
           <CartButton dish={dish} />
         </button>
-        <button onClick={(e) => e.stopPropagation()}>
+        <button 
+          onClick={(e) => e.stopPropagation()}
+          className="w-full sm:flex-1"
+        >
           <PaymentButton dishDetails={[dish]} />
         </button>
       </CardFooter>
-    </Card>
-  );
+    </Card>  );
 };
-
 
 export default ProductCard;

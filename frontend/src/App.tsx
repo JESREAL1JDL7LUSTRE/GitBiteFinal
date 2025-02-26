@@ -1,7 +1,8 @@
 import './App.css'
+import Featured from './components/Contents/Featured';
 import Layout from './components/Contents/Layout';
 import Products from './components/Contents/Products';
-import { PlanToOrderProvider } from './components/PopUps/Context/PlanToOrderContext'
+import { PlanToOrderProvider } from './components/PopUps/Context/PlanToOrderContext';
 
 interface AppProps {
   searchQuery: string;
@@ -13,6 +14,7 @@ function App({ searchQuery }: AppProps) {
 
     <PlanToOrderProvider>
       <Layout>
+        <Featured />
         <Products searchQuery={searchQuery} />
       </Layout>
     </PlanToOrderProvider>

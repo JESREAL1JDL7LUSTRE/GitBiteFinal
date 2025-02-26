@@ -15,21 +15,21 @@ const StarRatingShow: React.FC<StarRatingShowProps> = ({ rating }) => {
         return (
           <div key={star} className="relative w-5 h-5">
             {/* Full Star (Gray Background) */}
-            <Star size={20} className="text-gray-300 absolute" />
+            <Star size={16} className="text-gray-300 absolute" />
             
             {/* Filled Star */}
-            {full && <Star size={20} className="text-yellow-500 absolute" fill="currentColor" />}
+            {full && <Star size={16} className="text-yellow-500 absolute" fill="currentColor" />}
             
             {/* Half Star (Uses Clipping) */}
             {half && (
               <div className="absolute overflow-hidden w-2.5">
-                <Star size={20} className="text-yellow-500" fill="currentColor" />
+                <Star size={16} className="text-yellow-500" fill="currentColor" />
               </div>
             )}
           </div>
         );
       })}
-      <span className="ml-2 text-gray-500">({rating.toFixed(1)})</span>
+      <span className=" ml-1 text-xs text-gray-500">({rating.toFixed(1)})</span>
     </div>
   );
 };
