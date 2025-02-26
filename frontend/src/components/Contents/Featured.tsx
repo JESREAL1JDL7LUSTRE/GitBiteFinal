@@ -1,8 +1,7 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight, Clock, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import useFetchDishes, { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
-import CartButton from '../Buttons/CartButton';
 import PaymentButton from '../Buttons/PaymentButton';
 
 function Featured() {
@@ -51,7 +50,7 @@ function Featured() {
   }
 
   return (
-    <div className="bg-gray-50 border-emerald-500">
+    <div className="min-h-screen bg-gray-50 border-emerald-500">
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -87,12 +86,6 @@ function Featured() {
                       <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                         <div className="flex items-center space-x-4 mb-2">
                           <span className="flex items-center">
-                            <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                            <span className="ml-1">{dish.rating}</span>
-                          </span>
-                          <span className="flex items-center">
-                            <Clock className="w-5 h-5" />
-                            <span className="ml-1">{dish.prepTime}</span>
                           </span>
                         </div>
                         <h2 className="text-3xl font-bold mb-2">{dish.name}</h2>
