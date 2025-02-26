@@ -54,7 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
           <h1 className="font-bold text-lg text-gray-800 line-clamp-1">{dish.name}</h1>
           <p className="font-medium">${dish.price.toFixed(2)}</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-col sm:flex-row">
           <StarRatingShow rating={averageRating} />
           <span className="text-xs text-gray-500">
             ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})

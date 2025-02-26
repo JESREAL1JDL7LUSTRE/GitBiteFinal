@@ -48,9 +48,9 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
   }));
 
   return (
-    <Card className="w-2/2  mx-auto shadow-md rounded-lg p-5 border bg-white">
+    <Card className="w-full mx-auto shadow-md rounded-lg p-5 border bg-white">
       {/* Order Summary Header */}
-      <div className="flex justify-between items-center border-b pb-4 gap-6">
+      <div className="md:flex justify-between items-center border-b pb-4 gap-6"> 
   {/* Order Number */}
         <div>
           <p className="text-gray-500 text-sm">Order Number</p>
@@ -76,7 +76,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
         </div>
 
         {/* Buttons: Expand Order Details & Payment Popup */}
-        <div className="flex items-center gap-3">
+        <div className="md:flex grid-col items-center gap-3 space-y-2 md:space-y-0">
         {orderPayments?.length > 0 ? (
             <Button
               variant="outline"

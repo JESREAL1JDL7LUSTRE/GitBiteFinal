@@ -19,7 +19,7 @@ const PreviousOrders = () => {
     <div className="bg-gray-50 p-5">
       <h2 className="text-2xl font-bold mb-4">Order History</h2>
       {sortedOrders.length > 0 ? (
-        <div className="grid gap-4 ">
+        <div className="grid gap-4">
           {sortedOrders.map((order) => (
             <OrderHistoryCard key={order.id} order={order} payments={payments} />
           ))}
