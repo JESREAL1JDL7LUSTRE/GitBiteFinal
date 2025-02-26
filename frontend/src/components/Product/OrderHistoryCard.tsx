@@ -160,6 +160,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
       {isExpanded && (
         <div className="mt-4">
           {order.ordered_items.map((item) => (
+            console.log(item),
             <div key={item.id} className="flex items-start gap-4 border-b py-4">
               <img
                 src={item.image || "/placeholder.jpg"}

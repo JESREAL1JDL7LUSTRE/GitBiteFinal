@@ -24,11 +24,13 @@ class DishSerializers(serializers.ModelSerializer):
 class OrderedItemSerializers(serializers.ModelSerializer):
     dish_name = serializers.CharField(source="dish.name", read_only=True)
     dishId = serializers.IntegerField(source="dish.id", read_only=True)
-
+    image = serializers.URLField(source="dish.image", read_only=True)
+    
     class Meta:
         model = OrderedItem
-        fields = ["id", "dish_name", "quantity", "subtotal", "dishId"]  # ✅ Only relevant fields
+        fields = ["id", "dish_name", "quantity", "subtotal", "dishId", "image"]  # ✅ Only relevant fields
         extra_kwargs = {"subtotal": {"read_only": True}}
+
 
 class OrderSerializers(serializers.ModelSerializer):
     ordered_items = OrderedItemSerializers(many=True, read_only=True)  # ✅ Include related items
