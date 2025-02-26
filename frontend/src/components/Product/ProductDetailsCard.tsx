@@ -1,6 +1,4 @@
 import { Card, CardHeader, CardFooter, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react";
 import WishlistButton from "../Buttons/WishlistButton";
 import PaymentButton from "../Buttons/PaymentButton";
 import PlanToOrderButton from "../Buttons/CartButton";
@@ -22,7 +20,7 @@ interface ProductDetailsProps {
 }
 
 
-const ProductDetails: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
+const ProductDetailsCard: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
   const { reviews } = useFetchReviews(dish.id);
   const averageRating =
     reviews.length > 0 ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length : 0;
@@ -104,4 +102,4 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
       </div>
     );
   }    
-export default ProductDetails;
+export default ProductDetailsCard;
