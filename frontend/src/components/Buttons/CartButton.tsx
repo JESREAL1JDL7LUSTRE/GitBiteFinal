@@ -12,7 +12,7 @@ function CartButton({ dish }: PlanToOrderButtonProps) {
 
   return (
     <div>
-      <Button className="bg-green-500" onClick={() => addToPlanToOrder({ ...dish, quantity: 1 })}><ShoppingCartIcon /></Button>
+      <Button className="bg-green-400" onClick={() => addToPlanToOrder({ ...dish, quantity: 1 })}>Add to Cart</Button>
     </div>
   );
 }
