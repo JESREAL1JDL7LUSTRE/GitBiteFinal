@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function EditProfile() {
   const { profile, loading: fetching, error: fetchError } = useFetchProfile();
   const { postProfile, loading: updating, error: updateError } = usePostProfile();
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     first_name: "",
@@ -49,6 +51,7 @@ function EditProfile() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await postProfile(formData);
+    navigate("/profile");
   };
 
   return (
