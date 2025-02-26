@@ -48,9 +48,8 @@ const Layout = () => {
         <Route path='/previousorder' element={<ProtectedRoute><PreviousOrders/></ProtectedRoute>} />
         <Route path='*' element={<NotFound />} />
         <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
-        <Route path='/editProfile' element={<ProtectedRoute><EditProfile/>
+        <Route path='/editProfile' element={<ProtectedRoute><EditProfile/></ProtectedRoute>} />
         <Route path="/product/:id" element={<ProductDetailsCard />} />
-        </ProtectedRoute>} />
       </Routes>
     </>
   );
