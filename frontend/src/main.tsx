@@ -51,7 +51,6 @@ const Layout = () => {
         <Route path='*' element={<NotFound />} />
         <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
         <Route path='/editProfile' element={<ProtectedRoute><EditProfile/></ProtectedRoute>} />
-        <Route path="/" element={<ProtectedRoute><Products /></ProtectedRoute> } />
         <Route path="/product/:id" element={<ProtectedRoute> <ProductDetailPage /> </ProtectedRoute> } />
       </Routes>
     </>

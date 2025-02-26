@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Package } from "lucide-react";
 import AddReview from "@/components/Reviews/AddReview";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import OrderDelButton from "../Buttons/DeleteButtons/OrderDelButton";
@@ -48,14 +48,18 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
   }));
 
   return (
-    <Card className="w-2/2  mx-auto shadow-md rounded-lg p-5 border bg-white">
+    <Card className="w-full shadow-md rounded-lg border p-4 flex items-center justify-between transition-all duration-200 hover:shadow-lg">
       {/* Order Summary Header */}
-      <div className="flex justify-between items-center border-b pb-4 gap-6">
-  {/* Order Number */}
-        <div>
-          <p className="text-gray-500 text-sm">Order Number</p>
-          <p className="font-medium text-lg">{order.id}</p>
-        </div>
+
+      <div className="flex-1 flex-row grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 ">
+        
+          <div className="flex items-center gap-1">
+              <Package className="h-5 w-5 text-green-600" />
+              <div>
+                <p className="text-sm text-gray-500">Order Number</p>
+                <p className="font-medium">{order.id}</p>
+              </div>
+          </div>
 
         {/* Date Placed */}
         <div>
@@ -96,6 +100,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
               Pay Unpaid Order
             </Button>
           )}
+          
           <Button
             variant="outline"
             size="sm"
@@ -123,7 +128,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
       
       {/* Collapsible Order Items List */}
       {isExpanded2 && (
-        <div className="mt-4">
+        <div className="mt-4 max-h-[400px] overflow-auto">
               {payments
             .filter((payment) => payment.order === order.id) // Filter payments for this order
             .map((payment) => (
