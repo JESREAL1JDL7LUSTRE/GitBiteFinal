@@ -40,6 +40,15 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
 
   const [isSideCartOpen, setIsSideCartOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (planToOrderList.length > 0) {
+      setIsSideCartOpen(true);
+    } else {
+      setIsSideCartOpen(false);
+    }
+  }, [planToOrderList.length]);
+  
+
   // ✅ Listen for storage changes (Shared storage approach)
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
