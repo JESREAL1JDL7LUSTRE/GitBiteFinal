@@ -20,4 +20,5 @@ const DesktopNav = ({ setSearchQuery }: DesktopNavProps) => {
   );
 };
 
+
 export default DesktopNav;

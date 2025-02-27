@@ -29,6 +29,7 @@ import {
             <button onClick={() => setSearchQuery("")}>All</button>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          <div className="h-52 overflow-y-auto">
           {categories.map((category) => (
             <DropdownMenuItem
               key={category}
@@ -39,6 +40,7 @@ import {
               {category}
             </DropdownMenuItem>
           ))}
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     );
