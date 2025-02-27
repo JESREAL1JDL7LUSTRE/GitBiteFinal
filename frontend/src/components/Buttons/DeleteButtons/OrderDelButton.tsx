@@ -37,7 +37,7 @@ function CartDelButton({ OrderId }: CartDelButtonProps) {
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
           <Button variant="destructive" disabled={loading}>
-            {loading ? <Loader2 className="animate-spin" size={18} /> : "Delete Cart"}
+            {loading ? <Loader2 className="animate-spin" size={18} /> : "Delete Order"}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>

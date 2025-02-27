@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useFetchPaymentMethods from "../../utils/Hooks/FetchHooks/useFetchPaymentMethod";
-import usePostPayment from "../../utils/Hooks/PostHooks/usePostPayment"; // ✅ Import new hook
+import usePostPayment from "../../utils/Hooks/PostHooks/usePostPayment";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -16,13 +16,13 @@ interface PaymentPopUpFormProps {
   isOpen: boolean;
   onClose: () => void;
   order: { id: number; total_price: number };
-  dishDetails: { name: string; price: number; quantity: number}[];
-} 
+  dishDetails: { name: string; price: number; quantity: number }[];
+}
 
 function PaymentPopUpForm({ isOpen, onClose, order, dishDetails }: PaymentPopUpFormProps) {
   const [paymentMethod, setPaymentMethod] = useState("Card");
   const { paymentMethods, loading: methodsLoading, error: fetchError } = useFetchPaymentMethods();
-  const { postPayment, loading: postLoading, error: postError } = usePostPayment(); // ✅ Use new hook
+  const { postPayment, loading: postLoading, error: postError } = usePostPayment();
 
   const handlePayment = async () => {
     await postPayment({
@@ -36,26 +36,32 @@ function PaymentPopUpForm({ isOpen, onClose, order, dishDetails }: PaymentPopUpF
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
-      <AlertDialogContent>
+      <AlertDialogContent className="p-6 rounded-lg shadow-lg">
         <AlertDialogHeader>
-          <AlertDialogTitle>Payment Form</AlertDialogTitle>
-          <AlertDialogDescription>Pay for your food order</AlertDialogDescription>
+          <AlertDialogTitle className="text-2xl font-bold text-gray-800 text-center">Confirm Payment</AlertDialogTitle>
+          <AlertDialogDescription className="text-gray-600 text-center">
+            Complete your payment for the order
+          </AlertDialogDescription>
         </AlertDialogHeader>
 
-        <div>
-          <h3 className="font-semibold">Your Order:</h3>
-          {dishDetails.map((dish, index) => (
-            <div key={index} className="mb-2">
-              <p>{dish.name} - Price: ${dish.price.toFixed(2)} Quantity: {dish.quantity || 1}</p>
+          <div className="mt-4">
+            <h3 className="font-semibold text-lg text-gray-700 mb-2">Your Order:</h3>
+            <div className=" max-h-60 overflow-y-auto p-1 border rounded-md">
+              {dishDetails.map((dish, index) => (
+                <div key={index} className="mb-4 p-3 border rounded-md shadow-sm bg-gray-50">
+                  <p className="font-bold">
+                    {dish.name} - <span className="font-medium">${dish.price.toFixed(2)}</span>
+                  </p>
+                  <p className="text-gray-600">Quantity: {dish.quantity || 1}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div>
-          <label>
-            Select Payment Method:
+          <div className="mt-4">
+            <label className="block text-gray-700 font-medium mb-2">Select Payment Method:</label>
             {methodsLoading ? (
-              <p>Loading payment methods...</p>
+              <p className="text-gray-500">Loading payment methods...</p>
             ) : fetchError ? (
               <p className="text-red-500">{fetchError}</p>
             ) : (
@@ -63,6 +69,7 @@ function PaymentPopUpForm({ isOpen, onClose, order, dishDetails }: PaymentPopUpF
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
                 disabled={postLoading}
+                className="w-full p-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {paymentMethods.map((method) => (
                   <option key={method.value} value={method.value}>
@@ -71,14 +78,19 @@ function PaymentPopUpForm({ isOpen, onClose, order, dishDetails }: PaymentPopUpF
                 ))}
               </select>
             )}
-          </label>
-        </div>
+          </div>
 
-        {postError && <p className="text-red-500">{postError}</p>} {/* ✅ Show payment errors */}
+        {postError && <p className="text-red-500 mt-3">{postError}</p>}
 
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>
-          <Button onClick={handlePayment} disabled={postLoading || !paymentMethod}>
+        <AlertDialogFooter className="mt-6">
+          <AlertDialogCancel onClick={onClose} className="border rounded-md px-4 py-2 text-gray-700">
+            Cancel
+          </AlertDialogCancel>
+          <Button
+            onClick={handlePayment}
+            disabled={postLoading || !paymentMethod}
+            className="bg-green-500 text-white rounded-md px-4 py-2 ml-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             {postLoading ? "Processing..." : "Pay"}
           </Button>
         </AlertDialogFooter>
