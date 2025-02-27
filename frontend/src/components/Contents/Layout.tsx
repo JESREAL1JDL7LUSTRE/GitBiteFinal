@@ -1,12 +1,13 @@
 import React from "react";
 import SideCart from "./SideCart";
-import { usePlanToOrder } from "../PopUps/Context/PlanToOrderContext";
+import { usePlanToOrderStore } from "../PopUps/Context/PlanToOrderContext";
 
 const Layout2 = ({ children }: { children: React.ReactNode }) => {
-  const { isSideCartOpen } = usePlanToOrder();
+  
+    const isSideCartOpen = usePlanToOrderStore((state) => state.isSideCartOpen);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative max-h-screen">
       {/* Main Content */}
       <main 
         className={`transition-all duration-300 ${

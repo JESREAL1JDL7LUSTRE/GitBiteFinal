@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { usePlanToOrder } from "../PopUps/Context/PlanToOrderContext";
 import { ShoppingCartIcon, Minus, Plus, Trash2 } from "lucide-react";
 import {
   AlertDialog,
@@ -13,14 +12,17 @@ import {
 import { Button } from "@/components/ui/button";
 import OrderButton from "../Buttons/OrderButton";
 import SideCartButton from "../Buttons/SideCartButton";
+import { usePlanToOrderStore } from "../PopUps/Context/PlanToOrderContext";
 
 const SideCart = () => {
-  const { planToOrderList, isSideCartOpen, clearPlanToOrder, updateDishQuantity } = usePlanToOrder();
+  const planToOrderList = usePlanToOrderStore((state) => state.planToOrderList);
+  const isSideCartOpen = usePlanToOrderStore((state) => state.isSideCartOpen);
+  const clearPlanToOrder = usePlanToOrderStore((state) => state.clearPlanToOrder);
+  const updateDishQuantity = usePlanToOrderStore((state) => state.updateDishQuantity);
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const deselectedItemsRef = useRef<Set<number>>(new Set());
-
-
 
   useEffect(() => {
     setSelectedItems((prevSelected) => {

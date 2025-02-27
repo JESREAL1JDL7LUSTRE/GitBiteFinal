@@ -1,18 +1,19 @@
 import { ShoppingCartIcon, X } from "lucide-react";
-import { usePlanToOrder } from "../PopUps/Context/PlanToOrderContext";
 import { Button } from "@/components/ui/button";
+import { usePlanToOrderStore } from "../PopUps/Context/PlanToOrderContext";
 
 interface CartButtonProps {
   type: "open" | "close";
 }
 
 const SideCartButton = ({ type }: CartButtonProps) => {
-  const { openCart, closeCart } = usePlanToOrder();
+  const openSideCart = usePlanToOrderStore((state) => state.openSideCart);
+  const closeSideCart = usePlanToOrderStore((state) => state.closeSideCart);
 
   return (
-    <Button className="bg-white border-black shadow-md" onClick={type === "open" ? openCart : closeCart}>
+    <Button onClick={type === "open" ? openSideCart : closeSideCart}>
       {type === "open" ? (
-        <ShoppingCartIcon color="black" className="w-5 h-5 md:w-6 md:h-6 " />
+        <ShoppingCartIcon className="w-5 h-5 md:w-6 md:h-6" />
       ) : (
         <X color="black" className="w-4 h-4" />
       )}
