@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Package } from "lucide-react";
 import AddReview from "@/components/Reviews/AddReview";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import OrderDelButton from "../Buttons/DeleteButtons/OrderDelButton";
@@ -96,6 +96,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
               Pay Unpaid Order
             </Button>
           )}
+          
           <Button
             variant="outline"
             size="sm"
@@ -123,7 +124,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
       
       {/* Collapsible Order Items List */}
       {isExpanded2 && (
-        <div className="mt-4">
+        <div className="mt-4 max-h-[400px] overflow-auto">
               {payments
             .filter((payment) => payment.order === order.id) // Filter payments for this order
             .map((payment) => (

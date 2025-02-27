@@ -16,7 +16,7 @@ const PreviousOrders = () => {
   const sortedOrders = [...orders].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
   return (
-    <div className="bg-gray-50 p-5">
+    <div className="bg-gray-50 p-5 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Order History</h2>
       {sortedOrders.length > 0 ? (
         <div className="grid gap-4">

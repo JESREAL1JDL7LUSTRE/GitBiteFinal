@@ -11,8 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react"; // Import a loader icon for visual feedback
+import { Heart, Loader2 } from "lucide-react"; // Import a loader icon for visual feedback
 import { useNavigate } from "react-router-dom";
 
 interface CartDelButtonProps {
@@ -33,13 +32,13 @@ function CartDelButton({ cartId }: CartDelButtonProps) {
 
   return (
     <>
-      {error && <p className="text-red-500">{error}</p>} {/* Show error if any */}
+      {error && <p className="">{error}</p>} {/* Show error if any */}
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" disabled={loading}>
-            {loading ? <Loader2 className="animate-spin" size={18} /> : "Delete Cart"}
-          </Button>
-        </AlertDialogTrigger>
+          <button className="rounded-full shadow-md p-2 transition-colors duration-300 bg-white"  disabled={loading}> 
+            {loading ? <Loader2 className="" /> : <Heart fill="red" color="red" size={18} />}
+          </button>
+        </AlertDialogTrigger> 
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
