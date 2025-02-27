@@ -64,7 +64,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
       <CardFooter className="p-4 pt-0 mt-auto flex flex-col sm:flex-row gap-2 ">
         <button 
           onClick={(e) => e.stopPropagation()}
-          className="w-full sm:flex-1"
+          className="w-full sm:flex-1 "
         >
           <CartButton dish={dish} />
         </button>

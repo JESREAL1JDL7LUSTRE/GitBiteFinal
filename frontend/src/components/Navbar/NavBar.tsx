@@ -39,14 +39,6 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
 
           <DesktopNav setSearchQuery={setSearchQuery} />
 
-          <Button
-            onClick={() => navigate("/cart")}
-            variant="outline"
-            className="p-2 md:p-3"
-          >
-            <Heart className="w-5 h-5 md:w-6 md:h-6" />
-          </Button>
-
           <SideCartButton type="open" />
 
           <IsSignInOrNot />

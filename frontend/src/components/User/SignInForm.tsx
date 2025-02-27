@@ -38,11 +38,10 @@ function SignInForm({ route }: SignInFormProps) {
     };
 
     return (
-        <div className="flex items-center justify-center bg-gray-100 h-screen">
                 
-                <Card className="w-full max-w-sm shadow-lg p-6">
+                <Card className="w-full max-w-sm shadow-lg p-3">
                     <CardHeader>
-                        <CardTitle className="text-2xl font-semibold text-center">Sign In</CardTitle>
+                        <CardTitle className="text-2xl font-semibold text-center">Welcome Back!</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -52,7 +51,6 @@ function SignInForm({ route }: SignInFormProps) {
                         value={email_or_username}
                         onChange={(e) => setemail_or_username(e.target.value)}
                         />
-
                         <Input
                         type="password"
                         placeholder="Password"
@@ -67,18 +65,17 @@ function SignInForm({ route }: SignInFormProps) {
                     </CardContent>
                     <CardFooter className="text-center text-sm">
                         <div className="">
-                            <span className="text-gray-600 gap-2 justify-center">Need an account?</span>{" "}
+                            <span className="text-gray-600 gap-2 justify-center">Dont't have an account?</span>{" "}
                             <span 
-                                className="text-blue-600 cursor-pointer hover:underline"
+                                className="text-[#a0c878] cursor-pointer hover:underline"
                                 onClick={() => nav("/signup")}
                             >
-                                Register
+                                Create an account here
                             </span>
                         </div>        
 
             </CardFooter>
         </Card>
-    </div>
 
     );
 }
