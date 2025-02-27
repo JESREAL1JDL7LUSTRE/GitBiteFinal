@@ -25,8 +25,8 @@ import {
         <DropdownMenuContent>
           <DropdownMenuLabel>Select a Category</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <button onClick={() => setSearchQuery("")}>All</button>
+          <DropdownMenuItem onClick={() => setSearchQuery("")}>
+            All
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <div className="h-52 overflow-y-auto">
