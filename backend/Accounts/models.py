@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 
 class Customer(AbstractUser):
-    password = models.CharField(max_length=10000, null=False, default=make_password("password123"))
+    password = models.CharField(max_length=10000, null=False)
     email = models.EmailField(unique=True, max_length=225)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     address = models.CharField(max_length=255, null=True)

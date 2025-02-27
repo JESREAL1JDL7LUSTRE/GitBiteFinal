@@ -5,6 +5,7 @@ from rest_framework import viewsets, permissions, mixins, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from django.db import IntegrityError
+from rest_framework.pagination import PageNumberPagination
 
 @api_view(["GET"])
 @permission_classes([permissions.AllowAny])
@@ -18,16 +19,26 @@ def get_reviews_by_dish(request, dish_id):
     serializer = ReviewSerializers(reviews, many=True)
     return Response(serializer.data)
 
+class CustomPagination(PageNumberPagination):
+    page_size = 10 
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+    
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategorySerializers
     permission_classes = [permissions.AllowAny]
     queryset = Category.objects.all()
 
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
-class DishViewSet(viewsets.ReadOnlyModelViewSet):  # Allows only GET requests
+class DishViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = DishSerializers
     permission_classes = [permissions.AllowAny]
     queryset = Dish.objects.all()
+    pagination_class = CustomPagination
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'recipes', 'category_name', 'price']
 
     def get_serializer_context(self):
         return {"request": self.request}  # Pass request context

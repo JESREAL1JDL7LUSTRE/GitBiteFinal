@@ -1,8 +1,6 @@
-// src/hooks/useFetchDishes.ts
 import { useEffect, useState } from "react";
 import api from "../../../api/api";
 
-// Dish type in useFetchDishes.ts or wherever it's defined
 export interface Dish {
   featured: unknown;
   id: number;
@@ -11,34 +9,39 @@ export interface Dish {
   recipes: string;
   category_name: string;
   available: boolean;
-  price: number;        // Add the price field
-  image?: string;       // Optional field for the image
+  price: number;
+  image?: string;
 }
 
-
-const useFetchDishes = () => {
+const useFetchDishes = (searchQuery = "") => {
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [nextPage, setNextPage] = useState<string | null>(`/api/dish/?search=${searchQuery}`);
+
+  const fetchDishes = async () => {
+    if (!nextPage) return;
+
+    setLoading(true);
+    try {
+      const res = await api.get(nextPage);
+      setDishes(prev => [...prev, ...res.data.results]); // Append paginated data
+      setNextPage(res.data.next); // Store next page URL
+    } catch (err) {
+      setError("Failed to fetch dishes");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const getDish = async () => {
-      setLoading(true);
-      try {
-        const res = await api.get<Dish[]>("/api/dish/");
-        setDishes(res.data);
-      } catch (err) {
-        setError("Failed to fetch dishes");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    setDishes([]); // Reset when search query changes
+    setNextPage(`/api/dish/?search=${searchQuery}`);
+    fetchDishes();
+  }, [searchQuery]);
 
-    getDish();
-  }, []);
-
-  return { dishes, loading, error };
+  return { dishes, loading, error, fetchDishes, nextPage };
 };
 
 export default useFetchDishes;

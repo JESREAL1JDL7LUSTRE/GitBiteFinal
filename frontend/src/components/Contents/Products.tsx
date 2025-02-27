@@ -1,43 +1,81 @@
-
-import { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
-import useFetchDishes from "../../utils/Hooks/FetchHooks/useFetchDishes";
+import { useState } from "react";
+import useFetchDishes from "../../utils/Hooks/FetchHooks/useFetchDish2";
 import ProductCard from "../Product/ProductCard";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
-const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
-  const { dishes, loading, error } = useFetchDishes();
-  const navigate = useNavigate(); // ✅ Initialize useNavigate
-
-  const safeSearchQuery = typeof searchQuery === "string" ? searchQuery.trim().toLowerCase() : "";
-
-  const filteredDishes = safeSearchQuery
-    ? (Array.isArray(dishes) ? dishes.filter((dish: Dish) => {
-        return (
-          (dish.name ? dish.name.toLowerCase().includes(safeSearchQuery) : false) ||
-          (dish.recipes ? dish.recipes.toLowerCase().includes(safeSearchQuery) : false) ||
-          (dish.category_name ? dish.category_name.toString().toLowerCase().includes(safeSearchQuery) : false) ||
-          (dish.price ? dish.price.toString().includes(safeSearchQuery) : false)
-        );
-      }) : [] )
-    : dishes;
+const Products = () => {
+  const [page, setPage] = useState(1);
+  const { dishes, loading, error, totalPages } = useFetchDishes(page);
+  const navigate = useNavigate();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center mx-3">
-      {filteredDishes.length > 0 ? ( // ✅ Fixed: Use filteredDishes instead of dishes
-        filteredDishes.map((dish) => (
-          <div 
-            key={dish.id} 
-            className="p-3 cursor-pointer"
-            onClick={() => navigate(`/product/${dish.id}`)} // ✅ Now navigate works
-          >
-            <ProductCard dish={dish} />
-          </div>
-        ))
-      ) : (
-        <p>No dishes found</p>
+    <div className="mx-3">
+      {/* Dishes Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center">
+        {dishes.length > 0 ? (
+          dishes.map((dish) => (
+            <div key={dish.id} className="p-3 cursor-pointer" onClick={() => navigate(`/product/${dish.id}`)}>
+              <ProductCard dish={dish} />
+            </div>
+          ))
+        ) : (
+          <p>No dishes found</p>
+        )}
+      </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+            <PaginationPrevious
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                if (page > 1) setPage(page - 1);
+              }}
+              className={page === 1 ? "pointer-events-none opacity-50" : ""} // Disable interaction when on first page
+            />
+            </PaginationItem>
+
+            {[...Array(totalPages)].map((_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  href="#"
+                  isActive={page === index + 1}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(index + 1);
+                  }}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+            <PaginationNext
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                if (page < totalPages) setPage(page + 1);
+              }}
+              className={page === totalPages ? "pointer-events-none opacity-50" : ""} // Disable interaction when on last page
+            />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       )}
     </div>
   );
