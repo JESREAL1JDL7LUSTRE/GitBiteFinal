@@ -48,18 +48,14 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
   }));
 
   return (
-    <Card className="w-full shadow-md rounded-lg border p-4 flex items-center justify-between transition-all duration-200 hover:shadow-lg">
+    <Card className="w-full mx-auto shadow-md rounded-lg p-5 border bg-white">
       {/* Order Summary Header */}
-
-      <div className="flex-1 flex-row grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 ">
-        
-          <div className="flex items-center gap-1">
-              <Package className="h-5 w-5 text-green-600" />
-              <div>
-                <p className="text-sm text-gray-500">Order Number</p>
-                <p className="font-medium">{order.id}</p>
-              </div>
-          </div>
+      <div className="md:flex justify-between items-center border-b pb-4 gap-6"> 
+  {/* Order Number */}
+        <div>
+          <p className="text-gray-500 text-sm">Order Number</p>
+          <p className="font-medium text-lg">{order.id}</p>
+        </div>
 
         {/* Date Placed */}
         <div>
@@ -80,7 +76,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
         </div>
 
         {/* Buttons: Expand Order Details & Payment Popup */}
-        <div className="flex items-center gap-3">
+        <div className="md:flex grid-col items-center gap-3 space-y-2 md:space-y-0">
         {orderPayments?.length > 0 ? (
             <Button
               variant="outline"
