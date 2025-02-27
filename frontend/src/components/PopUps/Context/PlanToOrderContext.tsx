@@ -1,17 +1,17 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 interface Dish {
   id: number;
   name: string;
   price: number;
-  quantity: number; // Added quantity
+  quantity: number;
 }
 
 interface PlanToOrderContextType {
   planToOrderList: Dish[];
   addToPlanToOrder: (dish: Dish) => void;
   clearPlanToOrder: () => void;
-  updateDishQuantity: (id: number, changeAmount: number) => void; // New function
+  updateDishQuantity: (id: number, changeAmount: number) => void;
   isSideCartOpen: boolean;
 }
 
@@ -26,8 +26,18 @@ export function usePlanToOrder() {
 }
 
 export const PlanToOrderProvider = ({ children }: { children: React.ReactNode }) => {
-  const [planToOrderList, setPlanToOrderList] = useState<Dish[]>([]);
+  const [planToOrderList, setPlanToOrderList] = useState<Dish[]>(() => {
+    // Load from localStorage on mount
+    const storedCart = localStorage.getItem("planToOrderList");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
   const [isSideCartOpen, setIsSideCartOpen] = useState<boolean>(false);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("planToOrderList", JSON.stringify(planToOrderList));
+  }, [planToOrderList]);
 
   const addToPlanToOrder = (dish: Dish) => {
     setPlanToOrderList((prev) => {
@@ -40,7 +50,7 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
         return [...prev, { ...dish, quantity: 1 }];
       }
     });
-    setIsSideCartOpen(true); // Open SideCart when adding an item
+    setIsSideCartOpen(true);
   };
 
   const updateDishQuantity = (id: number, changeAmount: number) => {
@@ -49,12 +59,13 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
         .map((item) =>
           item.id === id ? { ...item, quantity: item.quantity + changeAmount } : item
         )
-        .filter((item) => item.quantity > 0) // Remove items if quantity becomes 0
+        .filter((item) => item.quantity > 0)
     );
   };
 
   const clearPlanToOrder = () => {
     setPlanToOrderList([]);
+    localStorage.removeItem("planToOrderList");
     setIsSideCartOpen(false);
   };
 
@@ -64,7 +75,7 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
         planToOrderList,
         addToPlanToOrder,
         clearPlanToOrder,
-        updateDishQuantity, // Provide update function
+        updateDishQuantity,
         isSideCartOpen,
       }}
     >
