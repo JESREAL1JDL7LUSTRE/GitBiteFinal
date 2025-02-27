@@ -63,14 +63,14 @@ function SignInForm({ route }: SignInFormProps) {
                         </Button>
                         </form>
                     </CardContent>
-                    <CardFooter className="text-center text-sm">
+                    <CardFooter className="text-start text-xs">
                         <div className="">
                             <span className="text-gray-600 gap-2 justify-center">Dont't have an account?</span>{" "}
                             <span 
                                 className="text-[#a0c878] cursor-pointer hover:underline"
                                 onClick={() => nav("/signup")}
                             >
-                                Create an account here
+                                Register!
                             </span>
                         </div>        
 

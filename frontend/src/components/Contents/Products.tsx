@@ -25,7 +25,7 @@ const Products = ({ searchQuery = "" }: { searchQuery: string }) => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center mx-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center mx-3">
       {filteredDishes.length > 0 ? ( // ✅ Fixed: Use filteredDishes instead of dishes
         filteredDishes.map((dish) => (
           <div 

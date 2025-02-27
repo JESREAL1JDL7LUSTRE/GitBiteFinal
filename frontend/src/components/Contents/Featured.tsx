@@ -55,8 +55,8 @@ function Featured() {
     <div className=" bg-gray-50 border-[#a0c878] rounded-lg">
       
       <div className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center mb-12">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
+          <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Delicious Food,
               <span className="text-[#a0c878]"> Delivered Fresh</span>
