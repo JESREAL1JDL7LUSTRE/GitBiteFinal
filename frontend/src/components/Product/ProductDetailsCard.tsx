@@ -10,7 +10,7 @@ interface ProductDetailsProps {
     id: number;
     name: string;
     description: string;
-    category_name: string;
+    category_name: string[];
     price: number;
     image?: string;
     recipes?: string;
@@ -46,6 +46,7 @@ const ProductDetailsCard: React.FC<ProductDetailsProps> = ({ dish, onBack }) => 
         <div className="flex flex-col justify-between space-y-4">
           {/* Header */}
           <CardHeader className="p-0 space-y-2">
+          <StarRatingShow rating={averageRating} />
             <div className="flex justify-between items-center">
               <h1 className="text-xl font-bold py-2 text-start">{dish.name}</h1>
               <p>
@@ -53,9 +54,18 @@ const ProductDetailsCard: React.FC<ProductDetailsProps> = ({ dish, onBack }) => 
               </p>
             </div>
 
-            <span className="bg-green-200 text-green-800 px-3 py-1 text-xs font-medium rounded-md w-max">
-              {dish.category_name || "Uncategorized"} {/* ✅ Default text */}
-            </span>
+            <div className="flex gap-2">
+              {dish.category_name?.map((category, index) => (
+                <span
+                  key={index}
+                  className="bg-green-200 text-green-800 px-3 py-1 text-xs font-medium rounded-md"
+                >
+                  {category}
+                </span>
+              )) || <span className="bg-gray-200 text-gray-800 px-3 py-1 text-xs font-medium rounded-md">Uncategorized</span>}
+            </div>
+
+
             <p className="text-2xl font-bold text-start">${dish.price.toFixed(2)}</p>
             <p className="text-gray-500 text-start">{dish.description || "No description available."}</p>
           </CardHeader>

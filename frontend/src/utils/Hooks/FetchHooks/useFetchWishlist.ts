@@ -28,7 +28,6 @@ const useFetchCart = () => {
       setLoading(true);
       try {
         const res = await api.get("/api/cart/");
-        console.log("Cart API Response:", res.data);
     
         if (!Array.isArray(res.data)) {
           throw new Error("Invalid cart data format received");
