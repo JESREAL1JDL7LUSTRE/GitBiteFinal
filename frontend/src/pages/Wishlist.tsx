@@ -13,7 +13,7 @@ const Wishlist = () => {
   return (
     <div className="bg-gray-50 p-6 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Wishlist</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         {cart.length > 0 ? (
           cart.map((item: CartItem) => (
             <div
