@@ -1,13 +1,11 @@
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import WishlistButton from "../Buttons/WishlistButton";
 import PaymentButton from "../Buttons/PaymentButton";
-import CartButton from "../Buttons/CartButton";
 import useFetchReviews from '@/utils/Hooks/FetchHooks/useFetchReviews';
 import StarRatingShow from "../Reviews/StarRatingShow";
 import CartDelButton from "../Buttons/DeleteButtons/CartDelButton";
-import { Button } from "../ui/button";
-import { Heart } from "lucide-react";
+import useFetchDishes, { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
+
 
 interface WishlistCardProps {
   dish: {
