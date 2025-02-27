@@ -14,9 +14,10 @@ interface PlanToOrderContextType {
   updateDishQuantity: (id: number, changeAmount: number) => void;
   isSideCartOpen: boolean;
   closeCart: () => void;
+  openCart: () => void;
 }
 
-const PlanToOrderContext = createContext<PlanToOrderContextType | undefined>(undefined);
+export const PlanToOrderContext = createContext<PlanToOrderContextType | undefined>(undefined);
 
 export function usePlanToOrder() {
   const context = useContext(PlanToOrderContext);
@@ -26,7 +27,7 @@ export function usePlanToOrder() {
   return context;
 }
 
-export const PlanToOrderProvider = ({ children }: { children: React.ReactNode }) => {
+export const PlanToOrderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // ✅ Load from sessionStorage on mount
   const [planToOrderList, setPlanToOrderList] = useState<Dish[]>(() => {
     try {
@@ -39,15 +40,6 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
   });
 
   const [isSideCartOpen, setIsSideCartOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (planToOrderList.length > 0) {
-      setIsSideCartOpen(true);
-    } else {
-      setIsSideCartOpen(false);
-    }
-  }, [planToOrderList.length]);
-  
 
   // ✅ Listen for storage changes (Shared storage approach)
   useEffect(() => {
@@ -109,9 +101,13 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
     setIsSideCartOpen(false);
   };
 
-  // ✅ Close the side cart
   const closeCart = () => {
     setIsSideCartOpen(false);
+  };
+
+  const openCart = () => {
+    setIsSideCartOpen(true);
+    console.log("openCart");
   };
 
   return (
@@ -123,6 +119,7 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
         updateDishQuantity,
         isSideCartOpen,
         closeCart,
+        openCart
       }}
     >
       {children}
