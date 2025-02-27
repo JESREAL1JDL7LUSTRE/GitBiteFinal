@@ -38,54 +38,45 @@ function SignInForm({ route }: SignInFormProps) {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="flex w-full p-12 m-12 shadow-xl bg-green-400 overflow-hidden border rounded-xl">
-                <div className="w-2/3 bg-cover bg-center" style={{ backgroundImage: "url('/path-to-your-image.jpg')" }}>
-                    {/* Image Section */}
-                </div>
-                <div className="w-1/2 p-8">
-                    <Card className="w-full shadow-lg">
-                        <CardHeader>
-                        </CardHeader>
-                        <CardContent>
-                            <h1 className="text-start py-1">Email or Username</h1>
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                                <Input
-                                    type="text"
-                                    placeholder="Username or Email"
-                                    value={email_or_username}
-                                    onChange={(e) => setemail_or_username(e.target.value)}
-                                />
-                            </form>
-                            <h1 className="p-2 text-start px-6"></h1>
-                            <h1 className="text-start py-2">Password</h1>
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-4">    
-                                <Input
-                                    type="password"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                                <Button type="submit" disabled={loading} className="w-full">
-                                    {loading ? "Signing in..." : "Sign In"}
-                                </Button>
-                            </form>
-                        </CardContent>
-                        <CardFooter className="text-center text-sm">
-                            <div className="mtp-2">
-                                <span className="text-gray-600 gap-2 justify-center">Don't have an account?</span>{" "}
-                                <span
-                                    className="text-blue-600 cursor-pointer hover:underline"
-                                    onClick={() => nav("/signup")}
-                                >
-                                    Create an account here
-                                </span>
-                            </div>
-                        </CardFooter>
-                    </Card>
-                </div>
-            </div>
-        </div>
+                
+                <Card className="w-full max-w-sm shadow-lg p-3">
+                    <CardHeader>
+                        <CardTitle className="text-2xl font-semibold text-center">Welcome Back!</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                        <Input
+                        type="text"
+                        placeholder="Username or Email"
+                        value={email_or_username}
+                        onChange={(e) => setemail_or_username(e.target.value)}
+                        />
+                        <Input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        />
+
+                        <Button type="submit" disabled={loading} className="w-full">
+                        {loading ? "Signing in..." : "Sign In"}
+                        </Button>
+                        </form>
+                    </CardContent>
+                    <CardFooter className="text-center text-sm">
+                        <div className="">
+                            <span className="text-gray-600 gap-2 justify-center">Dont't have an account?</span>{" "}
+                            <span 
+                                className="text-[#a0c878] cursor-pointer hover:underline"
+                                onClick={() => nav("/signup")}
+                            >
+                                Create an account here
+                            </span>
+                        </div>        
+
+            </CardFooter>
+        </Card>
+
     );
 }
 

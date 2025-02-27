@@ -50,14 +50,14 @@ function Featured() {
   }
 
   return (
-    <div className=" bg-gray-50 border-emerald-500 rounded-lg">
+    <div className=" bg-gray-50 border-[#a0c878] rounded-lg">
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Delicious Food,
-              <span className="text-emerald-600"> Delivered Fresh</span>
+              <span className="text-[#a0c878]"> Delivered Fresh</span>
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Experience the finest cuisine
@@ -106,13 +106,13 @@ function Featured() {
               onClick={prevSlide}
               className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
             >
-              <ChevronLeft className="w-6 h-6 text-emerald-600" />
+              <ChevronLeft className="w-6 h-6 text-[#a0c878]" />
             </button>
             <button 
               onClick={nextSlide}
               className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
             >
-              <ChevronRight className="w-6 h-6 text-emerald-600" />
+              <ChevronRight className="w-6 h-6 text-[#a0c878]" />
             </button>
 
             {/* Dots */}
@@ -123,7 +123,7 @@ function Featured() {
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   className={`w-2 h-2 rounded-full transition-all ${
-                    currentSlide === index ? 'bg-emerald-500 w-6' : 'bg-white/50'
+                    currentSlide === index ? 'bg-[#a0c878] w-6' : 'bg-white/50'
                   }`}
                 />
               ))}

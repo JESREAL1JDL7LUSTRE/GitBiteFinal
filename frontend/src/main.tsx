@@ -53,6 +53,7 @@ const Layout = () => {
         <Route path="/product/:id" element={<ProtectedRoute><Layout2><ProductDetailPage /></Layout2></ProtectedRoute>} />
       </Routes>
     </>
+    
   );
 };
 
