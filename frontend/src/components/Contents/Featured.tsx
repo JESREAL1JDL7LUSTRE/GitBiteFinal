@@ -3,11 +3,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import useFetchDishes, { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
 import PaymentButton from '../Buttons/PaymentButton';
+import { useNavigate } from "react-router-dom"; 
 
 function Featured() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { dishes, loading, error } = useFetchDishes();
   const featuredDishes = dishes.filter((dish) => dish.featured);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -51,10 +53,10 @@ function Featured() {
 
   return (
     <div className=" bg-gray-50 border-[#a0c878] rounded-lg">
-      {/* Hero Section */}
+      
       <div className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="text-center mb-12">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
+          <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Delicious Food,
               <span className="text-[#a0c878]"> Delivered Fresh</span>
@@ -64,7 +66,6 @@ function Featured() {
             </p>
           </div>
 
-          {/* Featured Dishes Carousel */}
           <div className="relative max-w-5xl mx-auto">
             <div className="overflow-hidden rounded-2xl shadow-2xl">
               <div 

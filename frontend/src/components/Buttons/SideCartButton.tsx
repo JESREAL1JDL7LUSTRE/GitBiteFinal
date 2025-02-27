@@ -15,7 +15,7 @@ const SideCartButton = ({ type }: CartButtonProps) => {
       {type === "open" ? (
         <ShoppingCartIcon className="w-5 h-5 md:w-6 md:h-6" />
       ) : (
-        <X className="w-4 h-4" />
+        <X color="black" className="w-4 h-4" />
       )}
     </Button>
   );

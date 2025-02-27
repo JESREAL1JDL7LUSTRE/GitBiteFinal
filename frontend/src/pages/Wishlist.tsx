@@ -1,11 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchWishlist";
-import WishlistCard from "@/components/Product/WishlistCard"; // Import the WishlistCard component
+import WishlistCard from "@/components/Product/WishlistCard"; 
 
 const Wishlist = () => {
-  const { cart, loading, error } = useFetchCart(); // Fetch wishlist items
-  const navigate = useNavigate(); // Initialize useNavigate
+  const { cart, loading, error } = useFetchCart(); 
+  const navigate = useNavigate(); 
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -19,7 +19,7 @@ const Wishlist = () => {
             <div
               key={item.id}
               className="cursor-pointer"
-              onClick={() => navigate(`/product/${item.dish.id}`)} // Navigate to product details
+              onClick={() => navigate(`/product/${item.dish.id}`)} 
             >
               <WishlistCard
                 dish={{
