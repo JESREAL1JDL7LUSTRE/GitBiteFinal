@@ -16,7 +16,6 @@ import About from './pages/About.tsx';
 import PreviousOrders from './pages/PreviousOrders.tsx';
 import AddReview from './components/Reviews/AddReview.tsx';
 import EditProfile from './pages/EditProfile.tsx';
-import Products from './components/Contents/Products.tsx';
 import ProductDetailPage from "../../frontend/src/pages/ProductDetails.tsx";
 import { PlanToOrderProvider } from './components/PopUps/Context/PlanToOrderContext.tsx';
 import Layout2 from './components/Contents/Layout';
@@ -25,16 +24,15 @@ const Layout = () => {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState(""); // Store search input
 
-  
   // Define routes where the navbar should NOT be displayed
   const hideNavbarRoutes = ['*'];
-  
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (
     <>
       {shouldShowNavbar && (
         <>
+          {/* Remove the extra PlanToOrderProvider here */}
           <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         </>
       )}
@@ -52,14 +50,14 @@ const Layout = () => {
         <Route path='*' element={<NotFound />} />
         <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
         <Route path='/editProfile' element={<ProtectedRoute><EditProfile/></ProtectedRoute>} />
-        <Route path="/" element={<ProtectedRoute><Products /></ProtectedRoute> } />
-        <Route path="/product/:id" element={<ProtectedRoute><Layout2><ProductDetailPage /></Layout2> </ProtectedRoute> } />
+        <Route path="/product/:id" element={<ProtectedRoute><Layout2><ProductDetailPage /></Layout2></ProtectedRoute>} />
       </Routes>
     </>
   );
 };
 
 createRoot(document.getElementById('root')!).render(
+  // Single Provider at the top level
   <PlanToOrderProvider>
     <BrowserRouter>
       <Layout />

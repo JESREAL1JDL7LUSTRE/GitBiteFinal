@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import SearchFunction from "./SearchFunction";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
+import SideCartButton from "../Buttons/SideCartButton";
 
 interface NavbarProps {
   searchQuery: string;
@@ -17,6 +18,7 @@ interface NavbarProps {
 const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
 
   return (
     <nav className="sticky top-0 right-0 bg-white shadow-md w-full z-50">
@@ -44,6 +46,8 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
           >
             <Heart className="w-5 h-5 md:w-6 md:h-6" />
           </Button>
+
+          <SideCartButton type="open" />
 
           <IsSignInOrNot />
 
