@@ -6,7 +6,7 @@ const Layout2 = ({ children }: { children: React.ReactNode }) => {
   const { isSideCartOpen } = usePlanToOrder();
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative max-h-screen">
       {/* Main Content */}
       <main 
         className={`transition-all duration-300 ${

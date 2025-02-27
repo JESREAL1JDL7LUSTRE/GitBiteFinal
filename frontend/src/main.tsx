@@ -36,22 +36,24 @@ const Layout = () => {
           <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         </>
       )}
-      <Routes>
-        <Route path='/' element={<App searchQuery={searchQuery} setSearchQuery={setSearchQuery} />} />
-        <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path='/signin' element={<SignIn />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/payment' element={<ProtectedRoute><PreviousPayment /></ProtectedRoute>} />
-        <Route path='/order' element={<ProtectedRoute><Order /></ProtectedRoute>} />
-        <Route path='/cart' element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-        <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path='/about' element={<About/>} />
-        <Route path='/previousorder' element={<ProtectedRoute><PreviousOrders/></ProtectedRoute>} />
-        <Route path='*' element={<NotFound />} />
-        <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
-        <Route path='/editProfile' element={<ProtectedRoute><EditProfile/></ProtectedRoute>} />
-        <Route path="/product/:id" element={<ProtectedRoute><Layout2><ProductDetailPage /></Layout2></ProtectedRoute>} />
-      </Routes>
+      <div className="min-h-screen">
+        <Routes>
+          <Route path='/' element={<App searchQuery={searchQuery} setSearchQuery={setSearchQuery} />} />
+          <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path='/signin' element={<SignIn />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='/payment' element={<ProtectedRoute><PreviousPayment /></ProtectedRoute>} />
+          <Route path='/order' element={<ProtectedRoute><Order /></ProtectedRoute>} />
+          <Route path='/cart' element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+          <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path='/about' element={<About/>} />
+          <Route path='/previousorder' element={<ProtectedRoute><PreviousOrders/></ProtectedRoute>} />
+          <Route path='*' element={<NotFound />} />
+          <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
+          <Route path='/editProfile' element={<ProtectedRoute><EditProfile/></ProtectedRoute>} />
+          <Route path="/product/:id" element={<ProtectedRoute><Layout2><ProductDetailPage /></Layout2></ProtectedRoute>} />
+        </Routes>
+      </div>
     </>
   );
 };
