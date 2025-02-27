@@ -15,7 +15,9 @@ const DesktopNav = ({ setSearchQuery }: DesktopNavProps) => {
         <li ><Link to="/" className="hover:text-gray-600">Home</Link></li>
         <CategoryDropdown setSearchQuery={handleCategorySelect} />
         <li ><Link to="/previousorder" className="hover:text-gray-600">Your Orders</Link></li>
+        <li ><Link to="/cart" className="hover:text-gray-600">Wishlist</Link></li>
         <li ><Link to="/about" className="hover:text-gray-600">About Us</Link></li>
+
     </ul>
   );
 };
