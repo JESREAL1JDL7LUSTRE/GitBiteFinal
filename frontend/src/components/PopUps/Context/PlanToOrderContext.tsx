@@ -1,18 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 interface Dish {
   id: number;
   name: string;
   price: number;
-  quantity: number; // Added quantity
+  quantity: number;
 }
 
 interface PlanToOrderContextType {
   planToOrderList: Dish[];
   addToPlanToOrder: (dish: Dish) => void;
   clearPlanToOrder: () => void;
-  updateDishQuantity: (id: number, changeAmount: number) => void; // New function
+  updateDishQuantity: (id: number, changeAmount: number) => void;
   isSideCartOpen: boolean;
+  closeCart: () => void;
 }
 
 const PlanToOrderContext = createContext<PlanToOrderContextType | undefined>(undefined);
@@ -26,35 +27,90 @@ export function usePlanToOrder() {
 }
 
 export const PlanToOrderProvider = ({ children }: { children: React.ReactNode }) => {
-  const [planToOrderList, setPlanToOrderList] = useState<Dish[]>([]);
+  // ✅ Load from sessionStorage on mount
+  const [planToOrderList, setPlanToOrderList] = useState<Dish[]>(() => {
+    try {
+      const storedCart = sessionStorage.getItem("planToOrderList");
+      return storedCart ? JSON.parse(storedCart) : [];
+    } catch (error) {
+      console.error("Error parsing sessionStorage data:", error);
+      return [];
+    }
+  });
+
   const [isSideCartOpen, setIsSideCartOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (planToOrderList.length > 0) {
+      setIsSideCartOpen(true);
+    } else {
+      setIsSideCartOpen(false);
+    }
+  }, [planToOrderList.length]);
+  
+
+  // ✅ Listen for storage changes (Shared storage approach)
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "planToOrderList") {
+        try {
+          const newCart = event.newValue ? JSON.parse(event.newValue) : [];
+          setPlanToOrderList(newCart);
+        } catch (error) {
+          console.error("Error updating from storage event:", error);
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  // ✅ Update sessionStorage whenever the cart changes
+  useEffect(() => {
+    sessionStorage.setItem("planToOrderList", JSON.stringify(planToOrderList));
+  }, [planToOrderList]);
+
+  // ✅ Add a dish to the cart (handles duplicates properly)
   const addToPlanToOrder = (dish: Dish) => {
     setPlanToOrderList((prev) => {
-      const existingDish = prev.find((item) => item.id === dish.id);
-      if (existingDish) {
-        return prev.map((item) =>
-          item.id === dish.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prev, { ...dish, quantity: 1 }];
-      }
+      const updatedList = prev.some((item) => item.id === dish.id)
+        ? prev.map((item) =>
+            item.id === dish.id ? { ...item, quantity: item.quantity + 1 } : item
+          )
+        : [...prev, { ...dish, quantity: 1 }];
+
+      sessionStorage.setItem("planToOrderList", JSON.stringify(updatedList));
+      window.dispatchEvent(new StorageEvent("storage", { key: "planToOrderList", newValue: JSON.stringify(updatedList) })); // ✅ Broadcast update
+      return updatedList;
     });
-    setIsSideCartOpen(true); // Open SideCart when adding an item
+
+    setIsSideCartOpen(true);
   };
 
+  // ✅ Update the quantity of a dish in the cart
   const updateDishQuantity = (id: number, changeAmount: number) => {
     setPlanToOrderList((prev) =>
       prev
         .map((item) =>
           item.id === id ? { ...item, quantity: item.quantity + changeAmount } : item
         )
-        .filter((item) => item.quantity > 0) // Remove items if quantity becomes 0
+        .filter((item) => item.quantity > 0)
     );
   };
 
+  // ✅ Fully clear the cart (state + sessionStorage)
   const clearPlanToOrder = () => {
     setPlanToOrderList([]);
+    sessionStorage.removeItem("planToOrderList");
+    window.dispatchEvent(new StorageEvent("storage", { key: "planToOrderList", newValue: null })); // ✅ Broadcast update
+    setIsSideCartOpen(false);
+  };
+
+  // ✅ Close the side cart
+  const closeCart = () => {
     setIsSideCartOpen(false);
   };
 
@@ -64,8 +120,9 @@ export const PlanToOrderProvider = ({ children }: { children: React.ReactNode })
         planToOrderList,
         addToPlanToOrder,
         clearPlanToOrder,
-        updateDishQuantity, // Provide update function
+        updateDishQuantity,
         isSideCartOpen,
+        closeCart,
       }}
     >
       {children}

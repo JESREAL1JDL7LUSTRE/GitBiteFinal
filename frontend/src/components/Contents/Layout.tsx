@@ -2,7 +2,7 @@ import React from "react";
 import SideCart from "./SideCart";
 import { usePlanToOrder } from "../PopUps/Context/PlanToOrderContext";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout2 = ({ children }: { children: React.ReactNode }) => {
   const { isSideCartOpen } = usePlanToOrder();
 
   return (
@@ -28,4 +28,4 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default Layout;
+export default Layout2;

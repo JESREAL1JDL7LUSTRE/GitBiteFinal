@@ -27,6 +27,7 @@ const useFetchDishes = () => {
       try {
         const res = await api.get<Dish[]>("/api/dish/");
         setDishes(res.data);
+        console.log(res.data);
       } catch (err) {
         setError("Failed to fetch dishes");
         console.error(err);
