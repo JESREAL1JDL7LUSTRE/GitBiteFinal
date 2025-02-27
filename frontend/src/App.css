@@ -1,14 +1,9 @@
 #root {
   max-width: screen;
-  margin: 0 auto;
   text-align: center;
   max-height: screen;
   align-items: center;
   justify-content: center;
-}
-
-body{
-  padding-top: 60px;
 }
 
 .logo {
