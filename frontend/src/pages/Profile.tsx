@@ -23,7 +23,7 @@ const Profile = () => {
     email: "",
     phone_number: "",
     address: "",
-    image: undefined as string | File | undefined,
+    image: undefined as File | undefined | string,
   });
 
   // Update formData when profile is fetched
@@ -36,7 +36,7 @@ const Profile = () => {
         email: profile.email || "",
         phone_number: profile.phone_number || "",
         address: profile.address || "",
-        image: profile.image || "",
+        image: profile.image || undefined,
       });
       setImagePreview(typeof profile.image === "string" ? profile.image : null);
     }
