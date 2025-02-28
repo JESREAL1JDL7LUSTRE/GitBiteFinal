@@ -23,7 +23,7 @@ const Products = ({ searchQuery }: { searchQuery: string }) => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="mx-3">
+    <div className="mx-3" id="menu-section">
       {/* Dishes Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center">
         {filteredDishes.length > 0 ? (
