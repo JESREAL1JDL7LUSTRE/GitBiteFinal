@@ -21,7 +21,7 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
 
 
   return (
-    <nav className="fixed top-0 right-0 bg-white shadow-md w-full z-50 h-20">
+    <nav className="fixed top-0 right-0 bg-white shadow-md w-full z-20 h-20">
       <div className="flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center g">

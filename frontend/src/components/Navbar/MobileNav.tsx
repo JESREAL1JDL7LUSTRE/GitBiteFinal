@@ -37,7 +37,7 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
           <button onClick={() => handleNavClick("/")} className="hover:text-gray-600">Home</button>
           <CategoryDropdown setSearchQuery={handleCategorySelect} />
           <button onClick={() => handleNavClick("/previousorder")} className="hover:text-gray-600">Your Orders</button>
-          <li ><Link to="/cart" className="hover:text-gray-600">Wishlist</Link></li>
+          <Link to="/cart" className="hover:text-gray-600">Wishlist</Link>
           <button onClick={() => handleNavClick("/about")} className="hover:text-gray-600">About Us</button>
           
         </div>
