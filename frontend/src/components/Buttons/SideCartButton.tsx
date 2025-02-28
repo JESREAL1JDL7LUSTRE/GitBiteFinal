@@ -11,7 +11,7 @@ const SideCartButton = ({ type }: CartButtonProps) => {
   const closeSideCart = usePlanToOrderStore((state) => state.closeSideCart);
 
   return (
-    <Button onClick={type === "open" ? openSideCart : closeSideCart}>
+    <Button variant="outline" className="" onClick={type === "open" ? openSideCart : closeSideCart}>
       {type === "open" ? (
         <ShoppingCartIcon className="w-5 h-5 md:w-6 md:h-6" />
       ) : (
