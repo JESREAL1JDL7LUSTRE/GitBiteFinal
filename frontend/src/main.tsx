@@ -13,7 +13,6 @@ import Navbar from './components/Navbar/NavBar.tsx';
 import About from './pages/About.tsx';
 import PreviousOrders from './pages/PreviousOrders.tsx';
 import AddReview from './components/Reviews/AddReview.tsx';
-import EditProfile from './pages/EditProfile.tsx';
 import ProductDetailPage from "../../frontend/src/pages/ProductDetails.tsx";
 import Layout2 from './components/Contents/Layout';
 
@@ -42,7 +41,6 @@ const Layout = () => {
             <Route path='/previousorder' element={<ProtectedRoute><div className='mt-20'><PreviousOrders/></div></ProtectedRoute>} />
             <Route path='*' element={<div className='mt-20'><NotFound /></div>} />
             <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
-            <Route path='/editProfile' element={<ProtectedRoute><div className='mt-20'><EditProfile/></div></ProtectedRoute>} />
             <Route path="/product/:id" element={<ProtectedRoute><Layout2> <div className='mt-20'><ProductDetailPage /></div></Layout2></ProtectedRoute>} />
             <Route path='/signin' element={ <div className=''><SignIn /></div>} />
             <Route path='/signup' element={<SignUp />} />
