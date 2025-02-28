@@ -1,5 +1,5 @@
 import useDeleteCart from "@/utils/Hooks/PostHooks/usePostCartDel";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
