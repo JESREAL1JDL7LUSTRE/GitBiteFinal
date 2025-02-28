@@ -105,7 +105,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             </div>
           </div>
 
-          <div className="mt-6 flex justify-center">
+          <div className="mt-3 flex justify-center">
             <Button
               onClick={() => setIsEditing(!isEditing)}
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-2 rounded-full flex items-center gap-2"
@@ -115,7 +115,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             </Button>
           </div>
 
-          <div className="px-12 py-2">
+          <div className="px-12 py-8">
             {isEditing ? (
               <form onSubmit={handleSubmit} className="space-y-3">
                 
@@ -141,16 +141,14 @@ const handleSubmit = async (e: React.FormEvent) => {
                   </Button>
                 </div>
 
-                <div className="flex flex-row justify-between items-center">
-                  <div className="text-start"> 
+                <div className="text-start">
                     <Label className="text-start" htmlFor="first_name">First Name</Label>
-                    <Input className="size-100" type="text" name="first_name" value={formData.first_name} onChange={handleChange} required />
-                  </div>
-                  <div className="text-start">
-                    <Label htmlFor="last_name">Last Name</Label>
-                    <Input type="text" name="last_name" value={formData.last_name} onChange={handleChange} required />
-                  </div>
-                  
+                    <Input type="text" name="first_name" value={formData.first_name} onChange={handleChange} required />
+                </div>
+
+                <div className="text-start">
+                  <Label htmlFor="last_name">Last Name</Label>
+                  <Input type="text" name="last_name" value={formData.last_name} onChange={handleChange} required />
                 </div>
 
                 <div className="text-start">
