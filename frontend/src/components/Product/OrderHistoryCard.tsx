@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Package } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import AddReview from "@/components/Reviews/AddReview";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import OrderDelButton from "../Buttons/DeleteButtons/OrderDelButton";

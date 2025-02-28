@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useFetchDishes from "../../utils/Hooks/FetchHooks/useFetchDish2"; // Ensure this path is correct
 import ProductCard from "../Product/ProductCard";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,10 +9,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import useFetchDish2 from "@/utils/Hooks/FetchHooks/useFetchDish2";
 
-const Products = () => {
+const Products = ({ searchQuery }: { searchQuery: string }) => {
   const [page, setPage] = useState(1);
-  const { dishes, loading, error, totalPages } = useFetchDishes(page);
+  const { dishes, loading, error, totalPages } = useFetchDish2(page, searchQuery);
   const navigate = useNavigate();
 
   // Ensure dishes is an array before filtering
@@ -23,7 +23,7 @@ const Products = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="mx-3">
+    <div className="mx-3" id="menu-section">
       {/* Dishes Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center">
         {filteredDishes.length > 0 ? (

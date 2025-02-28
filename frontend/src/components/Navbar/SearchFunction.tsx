@@ -24,6 +24,16 @@ const SearchFunction = ({ searchQuery, onSearch }: SearchProps) => {
     onSearch(newQuery.trim());
   };
 
+  // Auto-scroll when user types
+  useEffect(() => {
+    if (query.trim() !== "") {
+      const targetSection = document.getElementById("menu-section");
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [query]); // Runs when query changes
+
   // Closes search when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -58,7 +68,7 @@ const SearchFunction = ({ searchQuery, onSearch }: SearchProps) => {
           placeholder="Search..."
           value={query}
           onChange={handleSearch}
-          className=" focus:outline-none w-full"
+          className="focus:outline-none w-full"
           autoFocus
         />
         <X
