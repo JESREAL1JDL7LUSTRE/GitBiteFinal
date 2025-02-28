@@ -6,8 +6,6 @@ import Profile from './pages/Profile.tsx';
 import SignIn from './pages/SignIn.tsx';
 import SignUp from './pages/SignUp.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
-import PreviousPayment from './pages/PreviousPayment.tsx';
-import Order from './pages/Order.tsx';
 import NotFound from './pages/NotFound.tsx';
 import Cart from './pages/Wishlist.tsx';
 import { useState } from 'react';
@@ -38,8 +36,6 @@ const Layout = () => {
           <Routes>
             <Route path='/' element={<div className='mt-20'> <App searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> </div>} />
             <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path='/payment' element={<ProtectedRoute><div className='mt-20'><PreviousPayment /></div></ProtectedRoute>} />
-            <Route path='/order' element={<ProtectedRoute><div className='mt-20'><Order /></div></ProtectedRoute>} />
             <Route path='/cart' element={<ProtectedRoute><div className='mt-20'><Cart /></div></ProtectedRoute>} />
             <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path='/about' element={<div className='mt-20'><About/></div>} />
