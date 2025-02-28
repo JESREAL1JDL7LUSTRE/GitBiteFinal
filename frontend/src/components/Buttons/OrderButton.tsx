@@ -1,47 +1,36 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
-import usePostOrder from "../../utils/Hooks/PostHooks/usePostOrder2";
+import { usePlanToOrderStore } from "../PopUps/Context/PlanToOrderContext"; // ✅ Bulk order store
+import { useAddToOrderWhenPayingStore } from "@/lib/AddToOrderWhenPayingStore";
 
-interface DishDetails {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
+const OrderButton: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { setDishDetails } = useAddToOrderWhenPayingStore(); // ✅ Zustand store for checkout
+  const planToOrderList = usePlanToOrderStore((state) => state.planToOrderList); // ✅ Get selected items from cart
 
-interface OrderButtonProps {
-  dishDetails: DishDetails[];
-}
+  const handleProceedToPayment = () => {
+    if (planToOrderList.length === 0) return;
+    
+    // ✅ Ensure quantity is passed correctly
+    const selectedDishes = planToOrderList.map((dish) => ({
+      id: dish.id,
+      name: dish.name,
+      price: dish.price,
+      quantity: dish.quantity ?? 1, // ✅ Ensure quantity is set
+    }));
 
-const OrderButton: React.FC<OrderButtonProps> = ({ dishDetails }) => {
-  const { createOrder, order, loading } = usePostOrder();
-  const [isOrderSuccessful, setIsOrderSuccessful] = useState(false);
-
-  const handleOrder = async () => {
-    if (dishDetails.length === 0) return;
-    console.log(dishDetails);
-
-    const newOrder = await createOrder(dishDetails);
-    if (newOrder) setIsOrderSuccessful(true);
+    setDishDetails(selectedDishes);
+    setIsOpen(true);
   };
-
-  const closePaymentPopUp = () => setIsOrderSuccessful(false);
 
   return (
     <div>
-      <Button onClick={handleOrder} disabled={loading || dishDetails.length === 0}>
-        {loading ? "Processing..." : "Buy Now"}
+      <Button onClick={handleProceedToPayment} disabled={planToOrderList.length === 0}>
+        Buy Now
       </Button>
 
-      {isOrderSuccessful && order && (
-        <PaymentPopUpForm
-          isOpen={isOrderSuccessful}
-          onClose={closePaymentPopUp}
-          order={order}
-          dishDetails={dishDetails} // ✅ Now correctly includes quantity
-        />
-      )}
+      {isOpen && <PaymentPopUpForm isOpen={isOpen} onClose={() => setIsOpen(false)} />}
     </div>
   );
 };

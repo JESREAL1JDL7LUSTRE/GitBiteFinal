@@ -4,7 +4,6 @@ import { jwtDecode } from 'jwt-decode';
 import api from "../../api/api";
 import { ACCESS_TOKEN, REFRECH_TOKEN } from '@/api/constant';
 import SignOut from './SignOut';
-import NavbarMenu from '../Navbar/Dropdowns/ProfileDropDown';
 import { Button } from '../ui/button';
 import useFetchProfile from "../../utils/Hooks/FetchHooks/useFetchProfile"; // Import the custom hook
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -48,7 +47,6 @@ const isLoggedIn = async () => {
 
 function IsSignInOrNot() {
   const [isLoggedInState, setIsLoggedInState] = useState<boolean | null>(null);
-  const [showDropdown, setShowDropdown] = useState(false);
   const { profile, loading } = useFetchProfile(); // ✅ Correct usage
   const nav = useNavigate();
 

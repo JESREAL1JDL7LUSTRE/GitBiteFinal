@@ -4,7 +4,6 @@ import PaymentButton from "../Buttons/PaymentButton";
 import useFetchReviews from '@/utils/Hooks/FetchHooks/useFetchReviews';
 import StarRatingShow from "../Reviews/StarRatingShow";
 import CartDelButton from "../Buttons/DeleteButtons/CartDelButton";
-import useFetchDishes, { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
 
 
 interface WishlistCardProps {

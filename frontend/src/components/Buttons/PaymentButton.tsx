@@ -1,51 +1,27 @@
 import React, { useState } from "react";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import { Button } from "../ui/button";
-import usePostOrder from "@/utils/Hooks/PostHooks/usePostOrder";
-import { useNavigate } from "react-router-dom";
+import { useAddToOrderWhenPayingStore } from "@/lib/AddToOrderWhenPayingStore";
 
 interface PaymentButtonProps {
-  dishDetails: { id: number; name: string; price: number; quantity: number}[];
+  dishDetails: { id: number; name: string; price: number; quantity: number }[];
 }
 
 function PaymentButton({ dishDetails }: PaymentButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [order, setOrder] = useState<{ id: number; total_price: number } | null>(null);
-  const { createOrder, loading, error } = usePostOrder(); // ⬅️ No `processPayment` here
-  const navigate = useNavigate();
-  const handleCreateOrder = async () => {
-    try {
-      const newOrder = await createOrder(dishDetails);
-      if (!newOrder) {
-        throw new Error("Failed to create order.");
-      }
+  const { setDishDetails } = useAddToOrderWhenPayingStore(); // Zustand store
 
-      setOrder(newOrder); // ✅ Store the order
-      setIsOpen(true); // ✅ Open payment popup
-    } catch (err) {
-      console.error("❌ Order Error:", err);
-      alert("Failed to create order. Please try again or Please sign in");
-      navigate("/signin");
-    }
+  const handleProceedToPayment = () => {
+    setDishDetails(dishDetails); // ✅ Store order in Zustand
+    setIsOpen(true); // ✅ Open payment popup
   };
 
   return (
     <div>
-      <Button onClick={handleCreateOrder} disabled={loading}>
-        {loading ? "Creating Order..." : "Buy Now"}
-      </Button>
-
-      {error && <p className="text-red-500">{error}</p>}
+      <Button onClick={handleProceedToPayment}>Buy Now</Button>
 
       {/* Payment Pop-Up Form */}
-      {isOpen && order && (
-        <PaymentPopUpForm
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          order={order} // ✅ Pass created order
-          dishDetails={dishDetails}
-        />
-      )}
+      {isOpen && <PaymentPopUpForm isOpen={isOpen} onClose={() => setIsOpen(false)} />}
     </div>
   );
 }

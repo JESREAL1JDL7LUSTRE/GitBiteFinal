@@ -156,9 +156,7 @@ const SideCart = () => {
               ${totalPrice.toFixed(2)}
             </span>
             <div className="w-1/2 text-white md:hidden">
-              <OrderButton
-                    dishDetails={planToOrderList.filter((dish) => selectedItems.includes(dish.id))}
-                  />
+              <OrderButton/>
             </div>
           </div>
 
@@ -167,9 +165,7 @@ const SideCart = () => {
             {selectedItems.length > 0 && (
               <>
                 <div className="w-full text-white hidden md:block">
-                  <OrderButton
-                    dishDetails={planToOrderList.filter((dish) => selectedItems.includes(dish.id))}
-                  />
+                  <OrderButton/>
                 </div>
                 <div className="items-center justify-center flex gap-2">
                   <Button
