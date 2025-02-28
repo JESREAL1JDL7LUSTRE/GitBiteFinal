@@ -38,7 +38,7 @@ class DishViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Dish.objects.all()
     pagination_class = CustomPagination
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'recipes', 'category_name', 'price']
+    search_fields = ['name', 'recipes', 'category__name', 'price']
 
     def get_serializer_context(self):
         return {"request": self.request}  # Pass request context
