@@ -50,9 +50,9 @@ const ProductDetailsCard: React.FC<ProductDetailsProps> = ({ dish, onBack }) => 
           <StarRatingShow rating={averageRating} />
             <div className="flex justify-between items-center">
               <h1 className="text-xl font-bold py-2 text-start">{dish.name}</h1>
-              <p>
+              <div>
                 <WishlistButton dishId={dish.id} />
-              </p>
+              </div>
             </div>
 
             <div className="flex gap-2">

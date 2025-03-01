@@ -39,13 +39,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
             className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-100"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute top-3 right-3">
-            <button 
-              onClick={(e) => e.stopPropagation()}
-              className="transition-transform hover:scale-110"
-            >
-              <WishlistButton dishId={dish.id} />
-            </button>
+          <div 
+            className="absolute top-3 right-3 transition-transform hover:scale-110"
+            onClick={(e) => e.stopPropagation()} // ✅ Prevents click from propagating
+          >
+            <WishlistButton dishId={dish.id} />
           </div>
         </div>
       </CardHeader>
@@ -61,20 +59,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
           </span>
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0 mt-auto flex flex-col sm:flex-row gap-2 ">
-        <button 
-          onClick={(e) => e.stopPropagation()}
-          className="w-full sm:flex-1 "
-        >
+      <CardFooter className="p-4 pt-0 mt-auto flex flex-col sm:flex- gap-2">
+        <div onClick={(e) => e.stopPropagation()} className="w-full sm:flex-col-1">
           <CartButton dish={dish} />
-        </button>
-        <button 
-          onClick={(e) => e.stopPropagation()}
-          className="w-full sm:flex-1"
-        >
+        </div>
+        <div onClick={(e) => e.stopPropagation()} className="w-full sm:flex-col-1">
           <PaymentButton dishDetails={[dish]} />
-        </button>
+        </div>
       </CardFooter>
+
     </Card>  );
 };
 

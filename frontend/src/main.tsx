@@ -15,6 +15,8 @@ import PreviousOrders from './pages/PreviousOrders.tsx';
 import AddReview from './components/Reviews/AddReview.tsx';
 import ProductDetailPage from "../../frontend/src/pages/ProductDetails.tsx";
 import Layout2 from './components/Contents/Layout';
+import Products from './pages/Products.tsx';
+
 
 const Layout = () => {
   const location = useLocation();
@@ -41,6 +43,7 @@ const Layout = () => {
             <Route path='/previousorder' element={<ProtectedRoute><div className='mt-20'><PreviousOrders/></div></ProtectedRoute>} />
             <Route path='*' element={<div className='mt-20'><NotFound /></div>} />
             <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
+            <Route path="/products" element={<ProtectedRoute><Layout2> <div className='mt-20'><Products /></div></Layout2></ProtectedRoute>} />
             <Route path="/product/:id" element={<ProtectedRoute><Layout2> <div className='mt-20'><ProductDetailPage /></div></Layout2></ProtectedRoute>} />
             <Route path='/signin' element={ <div className=''><SignIn /></div>} />
             <Route path='/signup' element={<SignUp />} />

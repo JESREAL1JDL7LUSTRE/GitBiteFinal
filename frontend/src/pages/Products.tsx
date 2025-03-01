@@ -1,6 +1,6 @@
-import { useState } from "react";
-import ProductCard from "../Product/ProductCard";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import ProductCard from "../components/Cards/ProductCard";
 import {
   Pagination,
   PaginationContent,
@@ -11,13 +11,23 @@ import {
 } from "@/components/ui/pagination";
 import useFetchDish2 from "@/utils/Hooks/FetchHooks/useFetchDish2";
 
-const Products = ({ searchQuery }: { searchQuery: string }) => {
-  const [page, setPage] = useState(1);
-  const { dishes, loading, error, totalPages } = useFetchDish2(page, searchQuery);
+const Products = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // Ensure dishes is an array before filtering
+  // Get page number from URL, default to 1
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  const searchQuery = searchParams.get("search") || "";
+
+  const { dishes, loading, error, totalPages } = useFetchDish2(page, searchQuery);
   const filteredDishes = Array.isArray(dishes) ? dishes : [];
+
+  useEffect(() => {
+    // Ensure the page number in URL is valid
+    if (page < 1) {
+      setSearchParams({ page: "1" }, { replace: true });
+    }
+  }, [page, setSearchParams]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -25,7 +35,7 @@ const Products = ({ searchQuery }: { searchQuery: string }) => {
   return (
     <div className="mx-3" id="menu-section">
       {/* Dishes Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center">
+      <div className="my-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center">
         {filteredDishes.length > 0 ? (
           filteredDishes.map((dish) => (
             <div
@@ -50,7 +60,7 @@ const Products = ({ searchQuery }: { searchQuery: string }) => {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (page > 1) setPage(page - 1);
+                  if (page > 1) setSearchParams({ page: String(page - 1) });
                 }}
                 className={page === 1 ? "pointer-events-none opacity-50" : ""}
               />
@@ -59,11 +69,11 @@ const Products = ({ searchQuery }: { searchQuery: string }) => {
             {[...Array(totalPages)].map((_, index) => (
               <PaginationItem key={index}>
                 <PaginationLink
-                  href="#"
+                  href={`?page=${index + 1}`}
                   isActive={page === index + 1}
                   onClick={(e) => {
                     e.preventDefault();
-                    setPage(index + 1);
+                    setSearchParams({ page: String(index + 1) });
                   }}
                 >
                   {index + 1}
@@ -76,7 +86,7 @@ const Products = ({ searchQuery }: { searchQuery: string }) => {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (page < totalPages) setPage(page + 1);
+                  if (page < totalPages) setSearchParams({ page: String(page + 1) });
                 }}
                 className={page === totalPages ? "pointer-events-none opacity-50" : ""}
               />

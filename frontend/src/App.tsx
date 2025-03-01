@@ -1,7 +1,7 @@
 import './App.css'
 import Featured from './components/Contents/Featured';
 import Layout2 from './components/Contents/Layout';
-import Products from './components/Contents/Products';
+import Products from './pages/Products';
 
 interface AppProps {
   searchQuery: string;

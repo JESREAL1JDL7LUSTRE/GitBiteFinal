@@ -1,7 +1,7 @@
 import React from "react";
 import useFetchOrders from "../utils/Hooks/FetchHooks/useFetchOrders";
 import useFetchPayments from "../utils/Hooks/FetchHooks/useFetchPayments";
-import OrderHistoryCard from "@/components/Product/OrderHistoryCard";
+import OrderHistoryCard from "@/components/Cards/OrderHistoryCard";
 
 
 const PreviousOrders = () => {

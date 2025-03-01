@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Star } from "lucide-react";
 
 interface AddReviewProps {
   dishId: number; // Pass dishId when using this component
@@ -44,7 +45,8 @@ const AddReview: React.FC<AddReviewProps> = ({ dishId }) => {
   return (
     <div>
       <AlertDialog>
-        <AlertDialogTrigger className="p-2 bg-blue-500 text-white rounded-lg">Add Review</AlertDialogTrigger>
+        <AlertDialogTrigger className="flex items-center text-amber-500 hover:text-amber-600 transition-colors"><Star className="w-4 h-4 mr-1" /> <span className="text-sm">Add Review</span>
+        </AlertDialogTrigger>
         
         <AlertDialogContent>
           <AlertDialogHeader>

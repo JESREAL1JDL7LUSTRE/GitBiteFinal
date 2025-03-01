@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; 
 import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchWishlist";
-import WishlistCard from "@/components/Product/WishlistCard"; 
+import WishlistCard from "@/components/Cards/WishlistCard"; 
 
 const Wishlist = () => {
   const { cart, loading, error } = useFetchCart(); 

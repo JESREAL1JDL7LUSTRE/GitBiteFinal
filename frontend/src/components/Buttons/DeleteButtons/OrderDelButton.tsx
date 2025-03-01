@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react"; // Import a loader icon for visual feedback
+import { Loader2, Trash2 } from "lucide-react"; // Import a loader icon for visual feedback
 import { useNavigate } from "react-router-dom";
 
 interface CartDelButtonProps {
@@ -36,13 +36,15 @@ function CartDelButton({ OrderId }: CartDelButtonProps) {
       {error && <p className="text-red-500">{error}</p>} {/* Show error if any */}
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" disabled={loading}>
-            {loading ? <Loader2 className="animate-spin" size={18} /> : "Delete Order"}
-          </Button>
+          <button
+            className="rounded-md p-2 shadow-sm border bg-white text-red-500"
+           >
+            <Trash2 className="w-5 h-5" />
+          </button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>Do you want to delete this order history?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your Order
               and remove your data from our servers.

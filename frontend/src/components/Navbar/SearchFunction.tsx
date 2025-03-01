@@ -1,40 +1,55 @@
 import { Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface SearchProps {
   searchQuery: string | null | undefined;
-  onSearch: (query: string) => void;
 }
 
-const SearchFunction = ({ searchQuery, onSearch }: SearchProps) => {
+const SearchFunction = ({ searchQuery }: SearchProps) => {
   const [query, setQuery] = useState<string>(searchQuery ?? "");
   const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const location = useLocation(); 
 
+
+  useEffect(() => {
+    setQuery("");
+  }, [location.pathname]); 
+
+  
   useEffect(() => {
     if (typeof searchQuery === "string") {
       setQuery(searchQuery);
-      onSearch(searchQuery.trim());
     }
-  }, [searchQuery, onSearch]);
+  }, [searchQuery]);
+
+  
+  useEffect(() => {
+    if (query.trim() === "") return;
+
+    const delaySearch = setTimeout(() => {
+      navigate(`/products?search=${encodeURIComponent(query.trim())}`);
+    }, 500);
+     
+
+    return () => clearTimeout(delaySearch); 
+  }, [query, navigate]); 
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuery = e.target.value;
-    setQuery(newQuery);
-    onSearch(newQuery.trim());
+    setQuery(e.target.value);
+    
   };
 
-  // Auto-scroll when user types
-  useEffect(() => {
-    if (query.trim() !== "") {
-      const targetSection = document.getElementById("menu-section");
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: "smooth" });
-      }
+  
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && query.trim() !== "") {
+      navigate(`/products?search=${encodeURIComponent(query.trim())}`);
     }
-  }, [query]); // Runs when query changes
+  };
 
-  // Closes search when clicking outside
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
@@ -67,13 +82,17 @@ const SearchFunction = ({ searchQuery, onSearch }: SearchProps) => {
           type="text"
           placeholder="Search..."
           value={query}
-          onChange={handleSearch}
+          onChange={handleSearch} // ✅ Auto-search while typing
+          onKeyDown={handleKeyDown} // ✅ Search on Enter
           className="focus:outline-none w-full"
           autoFocus
         />
         <X
           className="w-5 h-5 text-gray-500 cursor-pointer"
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setQuery(""); // ✅ Clear input on close
+            setIsOpen(false);
+          }}
         />
       </div>
     </div>
