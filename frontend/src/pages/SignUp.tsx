@@ -22,9 +22,9 @@ const SignUp = () => {
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="w-full lg:w-1/2 flex items-center justify-center py-24 md:py-24 lg:py-24"
+          className="w-full lg:w-1/2 h-full flex items-center justify-center p-6 md:p-12 lg:p-16"
         >
-          <div className="w-fullh-full max-w-md">
+          <div className="w-full h-full max-w-md py-12 ">
             <SignUpForm route="/api/register/" />
           </div>
         </motion.div>
@@ -44,7 +44,7 @@ const SignUp = () => {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="text-white text-center"
             >
-              <img src={logo} alt="Logo" className="" />
+              <img src={logo} alt="Logo" className="mb-40" />
             </motion.div>
           </div>
         </motion.div>
@@ -106,20 +106,20 @@ function SignUpForm({ route }: SignUpFormProps) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-            <Card className="shadow-sm border-0 overflow-hidden bg-white">
+            <Card className="shadow-sm border-0 overflow-hidden bg-white ">
                 <CardHeader className="pb-1">
                     <motion.div
                         initial={{ y: -10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.3, duration: 0.5 }}
                     >
-                        <CardTitle className="text-2xl font-light text-center text-gray-800">Welcome to GitCook!</CardTitle>
+                        <CardTitle className="text-2xl font-bold text-center text-gray-800">Welcome to GitCook!</CardTitle>
                         <p className="text-center text-gray-500 mt-1 text-sm">
                             Fill in your information to join our platform
                         </p>
                     </motion.div>
                 </CardHeader>
-                <CardContent className="pt-3">
+                <CardContent className="pt-4">
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <motion.div
                             initial={{ y: 10, opacity: 0 }}
@@ -138,7 +138,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                                         placeholder="Enter your first name"
                                         value={firstName}
                                         onChange={(e) => setFirstName(e.target.value)}
-                                        className="h-11 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
+                                        className="h-10 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                                         required
                                     />
                                 </div>
@@ -152,7 +152,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                                         placeholder="Enter your last name"
                                         value={lastName}
                                         onChange={(e) => setLastName(e.target.value)}
-                                        className="h-11 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
+                                        className="h-10 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                                         required
                                     />
                                 </div>
@@ -168,7 +168,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                                     placeholder="Enter your email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="h-11 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
+                                    className="h-10 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                                     required
                                 />
                             </div>
@@ -183,7 +183,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                                     placeholder="Choose a username"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
-                                    className="h-11 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
+                                    className="h-10 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                                     required
                                 />
                             </div>
@@ -199,7 +199,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                                         placeholder="Create a password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="h-11 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
+                                        className="h-10 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                                         required
                                     />
                                 </div>
@@ -213,7 +213,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                                         placeholder="Confirm your password"
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
-                                        className="h-11 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
+                                        className="h-10 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                                         required
                                     />
                                 </div>
@@ -229,7 +229,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                                     placeholder="Enter your phone number"
                                     value={phoneNumber}
                                     onChange={(e) => setPhoneNumber(e.target.value)}
-                                    className="h-11 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
+                                    className="h-10 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                                     required
                                 />
                             </div>
@@ -244,7 +244,7 @@ function SignUpForm({ route }: SignUpFormProps) {
                                     placeholder="Enter your address"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
-                                    className="h-11 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
+                                    className="h-10 px-4 rounded-lg border border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                                 />
                             </div>
                             
