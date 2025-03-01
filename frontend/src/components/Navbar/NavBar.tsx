@@ -19,28 +19,27 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-
   return (
     <nav className="fixed top-0 right-0 bg-white shadow-md w-full z-20 h-20">
       <div className="flex items-center justify-between px-4 py-3">
         {/* Logo */}
-        <Link to="/" className="flex items-center g">
+        <Link to="/" className="flex items-center">
           <img src={logo} alt="logo" className="h-12 cursor-pointer" />
           <img src={name} alt="logo" className="h-12 cursor-pointer" />
-
         </Link>
 
         {/* Main Navigation */}
         <div className="flex-1 flex items-center justify-end gap-3 md:gap-6">
-
-          <div className="flex justify-end min-w-[100px] md:min-w-[100px] max-w-[250px] md:max-w-[300px]">
+          <div className="flex justify-end min-w-[100px] md:min-w-[150px] max-w-[250px] md:max-w-[300px]">
             <SearchFunction searchQuery={searchQuery} onSearch={setSearchQuery} />
           </div>
 
-          <DesktopNav setSearchQuery={setSearchQuery} />
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex">
+            <DesktopNav setSearchQuery={setSearchQuery} />
+          </div>
 
           <SideCartButton type="open" />
-
           <IsSignInOrNot />
 
           {/* Mobile Menu Button */}

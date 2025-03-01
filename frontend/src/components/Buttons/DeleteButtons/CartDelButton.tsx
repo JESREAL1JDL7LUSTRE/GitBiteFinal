@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Heart, Loader2 } from "lucide-react"; // Import a loader icon for visual feedback
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 interface CartDelButtonProps {
   cartId: number; // Accept cart ID as a prop
@@ -35,13 +36,13 @@ function CartDelButton({ cartId }: CartDelButtonProps) {
       {error && <p className="">{error}</p>} {/* Show error if any */}
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <button className="rounded-full shadow-md p-2 transition-colors duration-300 bg-white"  disabled={loading}> 
+          <Button className="rounded-full shadow-md p-3 transition-colors duration-300 bg-white"  data-tooltip="Unadd to Wishlist" disabled={loading}> 
             {loading ? <Loader2 className="" /> : <Heart fill="red" color="red" size={18} />}
-          </button>
+          </Button>
         </AlertDialogTrigger> 
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>Do you want to unadd it from you wishlist?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your cart
               and remove your data from our servers.

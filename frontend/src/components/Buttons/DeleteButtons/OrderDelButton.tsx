@@ -36,11 +36,11 @@ function CartDelButton({ OrderId }: CartDelButtonProps) {
       {error && <p className="text-red-500">{error}</p>} {/* Show error if any */}
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <button
+          <Button
             className="rounded-md p-2 shadow-sm border bg-white text-red-500"
            >
             <Trash2 className="w-5 h-5" />
-          </button>
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

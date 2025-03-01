@@ -18,7 +18,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, onRate }) => {
           className={`cursor-pointer ${
             star <= rating ? "text-yellow-500" : "text-gray-300"
           }`}
-          size={24}
+          size={20}
           onClick={() => onRate(star)}
         />
       ))}

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Home, ShoppingBag, Info, Heart } from "lucide-react"; // Import icons from lucide-react
 import CategoryDropdown from "./Dropdowns/CategoryDropdown";
 
 interface MobileNavProps {
@@ -27,19 +28,29 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
   };
 
   const handleCategorySelect = (category: string) => {
-      setSearchQuery(category);
-    };
+    setSearchQuery(category);
+  };
 
   return (
     open && (
-      <div id="mobile-menu" className="absolute top-full left-0 w-full bg-white shadow-md flex justify-center font-medium py-4">
+      <div
+        id="mobile-menu"
+        className="absolute top-full left-0 w-full bg-white shadow-md flex justify-center font-medium py-4"
+      >
         <div className="flex flex-row items-center gap-10">
-          <button onClick={() => handleNavClick("/")} className="hover:text-gray-600">Home</button>
+          <button onClick={() => handleNavClick("/")} className="hover:text-gray-600">
+            <Home className="w-6 h-6" /> 
+          </button>
           <CategoryDropdown setSearchQuery={handleCategorySelect} />
-          <button onClick={() => handleNavClick("/previousorder")} className="hover:text-gray-600">Your Orders</button>
-          <Link to="/cart" className="hover:text-gray-600">Wishlist</Link>
-          <button onClick={() => handleNavClick("/about")} className="hover:text-gray-600">About Us</button>
-          
+          <button onClick={() => handleNavClick("/previousorder")} className="hover:text-gray-600">
+            <ShoppingBag className="w-6 h-6" /> 
+          </button>
+          <Link to="/cart" className="hover:text-gray-600">
+            <Heart className="w-6 h-6" /> 
+          </Link>
+          <button onClick={() => handleNavClick("/about")} className="hover:text-gray-600">
+            <Info className="w-6 h-6" /> 
+          </button>
         </div>
       </div>
     )
