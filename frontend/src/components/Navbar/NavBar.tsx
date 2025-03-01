@@ -21,11 +21,11 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
 
   return (
     <nav className="fixed top-0 right-0 bg-white shadow-md w-full z-20 h-20">
-      <div className="flex items-center justify-between px-4 py-3">
+      <div className="flex items-center justify-between px-4 py-2">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="logo" className="h-12 cursor-pointer" />
-          <img src={name} alt="logo" className="h-12 cursor-pointer" />
+          <img src={logo} alt="logo" className="h-16 cursor-pointer" />
+          <img src={name} alt="logo" className="h-16 cursor-pointer" />
         </Link>
 
         {/* Main Navigation */}

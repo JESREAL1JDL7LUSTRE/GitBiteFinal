@@ -177,29 +177,29 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </Button>
               </form>
             ) : (
-              <div className="divide-y divide-green-100">
-                <div className="flex justify-center items-center gap-3 py-2">
-                  <Mail className="text-green-500" size={20} />
-                  <p className="text-sm text-green-700 font-medium">Email</p>
-                  <div>
-                    <p className="text-gray-700">{profile?.email}</p>
+                <div className="divide-y divide-green-100">
+                  <div className="flex justify-center items-center gap-3 py-2">
+                    <Mail className="text-green-500" size={20} />
+                    <p className="text-sm text-green-700 font-medium">Email</p>
+                    <div>
+                      <p className="text-gray-700">{profile?.email}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center items-center gap-3 py-2">
+                    <Phone className="text-green-500" size={20} />
+                    <h1 className="text-sm text-green-700 font-medium">Phone</h1>
+                    <p className="text-gray-700">{profile?.phone_number}</p>
+                  </div>
+
+                  <div className="flex justify-center items-center gap-3 py-2">
+                    <MapPin className="text-green-500" size={20} />
+                    <p className="text-sm text-green-700 font-medium">Address</p>
+                    <div>
+                      <p className="text-gray-700">{profile?.address}</p>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex justify-center items-center gap-3 py-2">
-                  <Phone className="text-green-500" size={20} />
-                  <h1 className="text-sm text-green-700 font-medium">Phone</h1>
-                  <p className="text-gray-700">{profile?.phone_number}</p>
-                </div>
-
-                <div className="flex justify-center items-center gap-3 py-2">
-                  <MapPin className="text-green-500" size={20} />
-                  <p className="text-sm text-green-700 font-medium">Address</p>
-                  <div>
-                    <p className="text-gray-700">{profile?.address}</p>
-                  </div>
-                </div>
-              </div>
             )}
           </div>
         </CardContent>
