@@ -43,8 +43,8 @@ const Layout = () => {
             <Route path='/previousorder' element={<ProtectedRoute><div className='mt-20'><PreviousOrders/></div></ProtectedRoute>} />
             <Route path='*' element={<div className='mt-20'><NotFound /></div>} />
             <Route path='/review' element={<ProtectedRoute><AddReview/></ProtectedRoute>} />
-            <Route path="/products" element={<ProtectedRoute><Layout2> <div className='mt-20'><Products /></div></Layout2></ProtectedRoute>} />
-            <Route path="/product/:id" element={<ProtectedRoute><Layout2> <div className='mt-20'><ProductDetailPage /></div></Layout2></ProtectedRoute>} />
+            <Route path="/products" element={<Layout2> <div className='mt-24'><Products /></div></Layout2>} />
+            <Route path="/product/:id" element={<Layout2> <div className='mt-20'><ProductDetailPage /></div></Layout2>} />
             <Route path='/signin' element={ <div className=''><SignIn /></div>} />
             <Route path='/signup' element={<SignUp />} />
           </Routes>

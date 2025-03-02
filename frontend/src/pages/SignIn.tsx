@@ -44,7 +44,7 @@ const SignIn = () => {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="text-white text-center"
             >
-              <img src={logo} alt="Logo" className="" />
+              <img src={logo} alt="Logo" className="mt-20" />
               
             </motion.div>
           </div>
@@ -99,7 +99,7 @@ function SignInForm({ route = "/api/token/" }: SignInFormProps) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <CardTitle className="text-2xl font-light text-center text-gray-800">Welcome back!</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center text-gray-800">Welcome Back!</CardTitle>
             <p className="text-center text-gray-500 mt-2 text-sm">
               Enter your credentials to access your account
             </p>
