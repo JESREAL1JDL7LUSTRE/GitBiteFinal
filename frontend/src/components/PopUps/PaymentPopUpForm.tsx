@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "../ui/button";
 import { useAddToOrderWhenPayingStore } from "@/lib/AddToOrderWhenPayingStore";
+import { usePlanToOrderStore } from "./Context/PlanToOrderContext";
 
 interface PaymentPopUpFormProps {
   isOpen: boolean;
@@ -24,7 +25,7 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
   const { dishDetails, clearDishDetails } = useAddToOrderWhenPayingStore(); // ✅ Get stored dishes
   const [order, setOrder] = useState<{ id: number; total_price: number } | null>(null);
   const [paymentMethod, setPaymentMethod] = useState("Card");
-
+  const clearPlanToOrder = usePlanToOrderStore((state) => state.clearPlanToOrder);
   const { createOrder } = usePostOrder2(); // ✅ Create order API
   const { postPayment, loading: postLoading, error: postError } = usePostPayment();
   const { paymentMethods, loading: methodsLoading, error: fetchError } = useFetchPaymentMethods();
@@ -61,6 +62,7 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
       });
 
       clearDishDetails();
+      clearPlanToOrder();
       onClose();
     } catch (err) {
       console.error("Payment Error:", err);
