@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 const About = () => {
+  const nav = useNavigate();
   return (
     <div className="max-w-5xl mx-auto px-6 py-16 text-gray-800">
       {/* Title */}
@@ -119,7 +122,7 @@ const About = () => {
             Sign up today and discover a smarter, more enjoyable way to experience food!
           </p>
 
-          <button className="mt-6 px-6 py-3 bg-green-500 text-white text-lg font-semibold rounded-lg hover:bg-green-600 transition">
+          <button className="mt-6 px-6 py-3 bg-green-500 text-white text-lg font-semibold rounded-lg hover:bg-green-600 transition" onClick={() => nav("/")}>
             Join Us Today
           </button>
         </div>
