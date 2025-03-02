@@ -16,6 +16,7 @@ import AddReview from './components/Reviews/AddReview.tsx';
 import ProductDetailPage from "../../frontend/src/pages/ProductDetails.tsx";
 import Layout2 from './components/Contents/Layout';
 import Products from './pages/Products.tsx';
+import TermsAndConditions from './pages/TermsAndCondition.tsx';
 
 
 const Layout = () => {
@@ -47,6 +48,7 @@ const Layout = () => {
             <Route path="/product/:id" element={<Layout2> <div className='mt-20'><ProductDetailPage /></div></Layout2>} />
             <Route path='/signin' element={ <div className=''><SignIn /></div>} />
             <Route path='/signup' element={<SignUp />} />
+            <Route path='/termsandconditions' element={<div className='mt-20'><TermsAndConditions/></div>} />
           </Routes>
     </>
     

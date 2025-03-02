@@ -257,7 +257,12 @@ function SignUpForm({ route }: SignUpFormProps) {
                                     className="h-4 w-4 rounded border-gray-300 text-[#a0c878] focus:ring-[#a0c878]"
                                 />
                                 <label htmlFor="terms" className="text-sm text-gray-600">
-                                    I agree to the Data Privacy terms and conditions.
+                                    I agree to the Data Privacy{" "}
+                                    <span 
+                                    className="text-[#a0c878] font-medium cursor-pointer hover:underline transition-all"
+                                    onClick={() => nav("/termsandconditions")}>
+                                        terms and conditions
+                                        </span>.
                                 </label>
                             </div>
                         </motion.div>
