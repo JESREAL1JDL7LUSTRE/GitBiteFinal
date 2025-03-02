@@ -54,7 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
         </div>
         <div className="flex-row sm:flex items-center gap-3">
           <StarRatingShow rating={averageRating} />
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-500 truncate">
             ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
           </span>
         </div>

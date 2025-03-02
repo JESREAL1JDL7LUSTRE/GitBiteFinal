@@ -30,6 +30,11 @@ const Products = () => {
     }
   }, [page, setSearchParams]);
 
+  useEffect(() => {
+    // Scroll to top when the page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -42,12 +47,12 @@ const Products = () => {
 
   if (loading) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="flex flex-col items-center justify-center min-h-[60vh]"
       >
-        <motion.div 
+        <motion.div
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
           className="w-12 h-12 border-4 border-[#a0c878] border-t-transparent rounded-full mb-4"
@@ -59,14 +64,14 @@ const Products = () => {
 
   if (error) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col items-center justify-center min-h-[60vh]"
       >
         <div className="bg-red-50 p-6 rounded-lg border border-red-200 text-center">
           <p className="text-red-600 mb-3">{error}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
           >
@@ -94,7 +99,7 @@ const Products = () => {
       </motion.h2>
 
       {/* Dishes Grid */}
-      <motion.div 
+      <motion.div
         variants={container}
         initial="hidden"
         animate="show"

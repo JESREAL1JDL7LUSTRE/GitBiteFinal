@@ -236,7 +236,7 @@ function Featured() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10"
+              className="absolute bottom-4 left-10 -translate-x-1/2 flex space-x-2 z-10"
             >
               {featuredDishes.map((_, index) => (
                 <motion.button
