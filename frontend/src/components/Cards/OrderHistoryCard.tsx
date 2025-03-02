@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Clock, CreditCard, ChevronDown, ChevronUp, ShoppingBag, Check, Trash2, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { Clock, CreditCard, ChevronDown, ChevronUp, ShoppingBag } from "lucide-react";
 import AddReview from "@/components/Reviews/AddReview";
 import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import OrderDelButton from "../Buttons/DeleteButtons/OrderDelButton";
@@ -33,8 +34,6 @@ interface OrderProps {
   payments: Payment[];
 }
 
-
-
 const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isExpanded2, setIsExpanded2] = useState(false);
@@ -47,14 +46,12 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
     quantity: item.quantity,
   }));
 
-  // Format date
   const formattedDate = new Date(order.created_at).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric'
   });
 
-  // Status badge color
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'delivered':
@@ -71,8 +68,12 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
   };
 
   return (
-    <div className="w-5/6 mx-auto overflow-hidden rounded-xl shadow-sm border border-green-100 bg-white transition-all duration-300 hover:shadow-md">
-      {/* Order Header */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="w-5/6 mx-auto overflow-hidden rounded-xl shadow-sm border border-green-100 bg-white transition-all duration-300 hover:shadow-md"
+    >
       <div className="bg-[#a0c878] p-4 text-white">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
@@ -85,7 +86,6 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
         </div>
       </div>
 
-      {/* Order Summary */}
       <div className="p-5">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
           <div className="flex flex-col">
@@ -95,7 +95,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
               <span>{formattedDate}</span>
             </div>
           </div>
-          
+
           <div className="flex flex-col">
             <span className="text-xs text-gray-500 uppercase tracking-wider">Payment Method</span>
             <div className="flex items-center mt-1 text-gray-700 justify-center">
@@ -103,7 +103,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
               <span>{orderPayments[0]?.payment_method ?? "Not Paid"}</span>
             </div>
           </div>
-          
+
           <div className="flex flex-col">
             <span className="text-xs text-gray-500 uppercase tracking-wider">Items</span>
             <div className="flex items-center mt-1 text-gray-700 justify-center">
@@ -111,7 +111,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
               <span>{order.ordered_items.length} items</span>
             </div>
           </div>
-          
+
           <div className="flex flex-col">
             <span className="text-xs text-gray-500 uppercase tracking-wider">Total Amount</span>
             <div className="flex items-center mt-1 font-bold justify-center">
@@ -120,7 +120,6 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-wrap gap-2 mt-4 border-t pt-4">
           {orderPayments?.length > 0 ? (
             <button
@@ -131,14 +130,14 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
               {isExpanded2 ? <ChevronUp className="ml-1 w-4 h-4" /> : <ChevronDown className="ml-1 w-4 h-4" />}
             </button>
           ) : (
-            <button 
+            <button
               className="flex items-center px-3 py-2 text-sm bg-black text-white rounded-md hover:bg-[#a0c878] transition-colors"
               onClick={() => setIsPayOpen(true)}
             >
               Pay Now
             </button>
           )}
-          
+
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="flex items-center px-3 py-2 text-sm text-black rounded-lg border shadow-sm"
@@ -151,7 +150,6 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
             <OrderDelButton OrderId={order.id} />
           </div>
 
-          {/* Payment Popup */}
           <PaymentPopUpForm
             isOpen={isPayOpen}
             onClose={() => setIsPayOpen(false)}
@@ -160,10 +158,14 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
           />
         </div>
       </div>
-      
-      {/* Payment Details */}
+
       {isExpanded2 && (
-        <div className="bg-green-50 p-5 border-t border-green-100 animate-fadeIn">
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          transition={{ duration: 0.1 }}
+          className="bg-green-50 p-5 border-t border-green-100"
+        >
           <h4 className="font-medium text-green-800 mb-3">Payment Information</h4>
           {payments
             .filter((payment) => payment.order === order.id)
@@ -187,12 +189,16 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
                 </div>
               </div>
             ))}
-        </div>
+        </motion.div>
       )}
 
-      {/* Order Items */}
       {isExpanded && (
-        <div className="border-t border-green-100 animate-fadeIn">
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          transition={{ duration: 0.1 }}
+          className="border-t border-green-100"
+        >
           <h4 className="font-medium text-green-800 p-4 bg-green-50">Ordered Items</h4>
           <div className="divide-y divide-gray-10">
             {order.ordered_items.map((item) => (
@@ -200,7 +206,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
                 <div className="flex items-start gap-4">
                   <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
                     <img
-                      src={item.image }
+                      src={item.image}
                       alt={item.dish_name}
                       className="w-full h-full object-cover"
                     />
@@ -210,7 +216,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
                       <h3 className="font-medium text-gray-900">{item.dish_name}</h3>
                       <div className=" font-bold">${item.subtotal.toFixed(2)}</div>
                     </div>
-                    <div className="mt-5 flex items-center justify-between text-xs text-gray-500" >
+                    <div className="mt-5 flex items-center justify-between text-xs text-gray-500">
                       Quantity: {item.quantity}x
                       <AddReview dishId={item.dishId} />
                     </div>
@@ -219,9 +225,9 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

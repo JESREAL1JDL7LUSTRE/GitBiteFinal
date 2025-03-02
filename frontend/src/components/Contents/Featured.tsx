@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import useFetchDishes, { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
 import PaymentButton from '../Buttons/PaymentButton';
 import { useNavigate } from "react-router-dom"; 
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 function Featured() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -29,111 +31,232 @@ function Featured() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-emerald-600 text-xl">Loading featured dishes...</div>
-      </div>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="min-h-screen bg-gray-50 flex items-center justify-center"
+      >
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.1, 1],
+            opacity: [0.8, 1, 0.8]
+          }}
+          transition={{ 
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="text-[#a0c878] text-xl font-medium"
+        >
+          Loading featured dishes...
+        </motion.div>
+      </motion.div>
     );
   }
-
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-red-600 text-xl">Error loading dishes: {error}</div>
-      </div>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="min-h-screen bg-gray-50 flex items-center justify-center"
+      >
+        <motion.div 
+          initial={{ x: -50 }}
+          animate={{ x: 0 }}
+          className="text-red-600 text-xl"
+        >
+          Error loading dishes: {error}
+        </motion.div>
+      </motion.div>
     );
   }
-
   if (featuredDishes.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-600 text-xl">No featured dishes available</div>
-      </div>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="min-h-screen bg-gray-50 flex items-center justify-center"
+      >
+        <motion.div 
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
+          className="text-gray-600 text-xl"
+        >
+          No featured dishes available
+        </motion.div>
+      </motion.div>
     );
   }
-
   return (
-    <div className=" bg-gray-50 border-[#a0c878] rounded-lg">
-      
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-50 border-[#a0c878] rounded-lg"
+    >
       <div className="relative overflow-hidden bg-gradient-to-b from-emerald-50 to-white">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Delicious Food,
-              <span className="text-[#a0c878]"> Delivered Fresh</span>
-            </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Experience the finest cuisine
-            </p>
-          </div>
-
-          <div className="relative max-w-5xl mx-auto">
-            <div className="overflow-hidden rounded-2xl shadow-2xl">
-              <div 
-                className="flex transition-transform duration-500 ease-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          <motion.div 
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-8"
+          >
+            <motion.h1 
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            >
+              <motion.span>Delicious Food,</motion.span>{" "}
+              <motion.span
+                initial={{ color: "#000000" }}
+                animate={{ color: "#a0c878" }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="text-[#a0c878]"
               >
-                {featuredDishes.map((dish) => (
-                  <div key={dish.id} className="w-full flex-shrink-0">
-                    <div className="relative h-[400px] md:h-[500px] bg-white">
-                      <div className="absolute inset-0">
-                        <img 
-                          src={dish.image} 
-                          alt={dish.name}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                Delivered Fresh
+              </motion.span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="text-lg text-gray-600 max-w-2xl mx-auto"
+            >
+              Experience the finest cuisine
+            </motion.p>
+          </motion.div>
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="relative max-w-5xl mx-auto"
+          >
+            <motion.div 
+              className="overflow-hidden rounded-2xl shadow-2xl"
+              whileHover={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+              transition={{ duration: 0.3 }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div 
+                  key={currentSlide}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-full"
+                >
+                  <div 
+                    className="relative h-[400px] md:h-[500px] bg-white"
+                  >
+                    <motion.div 
+                      className="absolute inset-0"
+                      initial={{ scale: 1.1 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 7 }}
+                    >
+                      <motion.img 
+                        src={featuredDishes[currentSlide].image} 
+                        alt={featuredDishes[currentSlide].name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                    </motion.div>
+                    
+                    <motion.div 
+                      className="absolute bottom-0 left-0 right-0 p-8 text-white"
+                      initial={{ y: 30, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
+                    >
+                      <div className="flex items-center space-x-4 mb-2">
+                        <span className="flex items-center">
+                        </span>
                       </div>
-                      
-                      <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <div className="flex items-center space-x-4 mb-2">
-                          <span className="flex items-center">
-                          </span>
-                        </div>
-                        <h2 className="text-3xl font-bold mb-2">{dish.name}</h2>
-                        <p className="text-gray-200 mb-4">{dish.description}</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-2xl font-bold">${dish.price}</span>
-                          <PaymentButton dishDetails={[dish]} />
-                        </div>
-                      </div>
-                    </div>
+                      <motion.h2 
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                        className="text-3xl font-bold mb-2"
+                      >
+                        {featuredDishes[currentSlide].name}
+                      </motion.h2>
+                      <motion.p 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        className="text-gray-200 mb-4"
+                      >
+                        {featuredDishes[currentSlide].description}
+                      </motion.p>
+                      <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.5 }}
+                        className="flex items-center justify-between"
+                      >
+                        <motion.span 
+                          className="text-2xl font-bold"
+                          initial={{ scale: 0.9 }}
+                          animate={{ scale: 1 }}
+                          transition={{ duration: 0.3, delay: 0.5 }}
+                        >
+                          ${featuredDishes[currentSlide].price}
+                        </motion.span>
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <PaymentButton dishDetails={[featuredDishes[currentSlide]]} />
+                        </motion.div>
+                      </motion.div>
+                    </motion.div>
                   </div>
-                ))}
-              </div>
-            </div>
-
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
             {/* Navigation Buttons */}
-            <button 
+            <motion.button 
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all z-10"
+              whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.95)" }}
+              whileTap={{ scale: 0.9 }}
             >
               <ChevronLeft className="w-6 h-6 text-[#a0c878]" />
-            </button>
-            <button 
+            </motion.button>
+            <motion.button 
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all z-10"
+              whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.95)" }}
+              whileTap={{ scale: 0.9 }}
             >
               <ChevronRight className="w-6 h-6 text-[#a0c878]" />
-            </button>
-
+            </motion.button>
             {/* Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-            
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10"
+            >
               {featuredDishes.map((_, index) => (
-                <button
+                <motion.button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    currentSlide === index ? 'bg-[#a0c878] w-6' : 'bg-white/50'
+                  className={`h-2 rounded-full transition-all ${
+                    currentSlide === index ? 'bg-[#a0c878] w-6' : 'bg-white/50 w-2'
                   }`}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.7 + index * 0.1 }}
                 />
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
-
 export default Featured;
