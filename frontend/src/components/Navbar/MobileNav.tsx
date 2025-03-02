@@ -25,10 +25,17 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
   const handleNavClick = (path: string) => {
     navigate(path);
     setOpen(false);
+    scrollToTop(); // Scroll to top when navigating
   };
 
   const handleCategorySelect = (category: string) => {
     setSearchQuery(category);
+    setOpen(false); // Close the menu after selecting a category
+    scrollToTop(); // Scroll to top when selecting a category
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -39,17 +46,17 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
       >
         <div className="flex flex-row items-center gap-10">
           <button onClick={() => handleNavClick("/")} className="hover:text-gray-600">
-            <Home className="w-6 h-6" /> 
+            <Home className="w-6 h-6" />
           </button>
           <CategoryDropdown setSearchQuery={handleCategorySelect} />
           <button onClick={() => handleNavClick("/previousorder")} className="hover:text-gray-600">
-            <ShoppingBag className="w-6 h-6" /> 
+            <ShoppingBag className="w-6 h-6" />
           </button>
-          <Link to="/cart" className="hover:text-gray-600">
-            <Heart className="w-6 h-6" /> 
+          <Link to="/cart" className="hover:text-gray-600" onClick={scrollToTop}>
+            <Heart className="w-6 h-6" />
           </Link>
           <button onClick={() => handleNavClick("/about")} className="hover:text-gray-600">
-            <Info className="w-6 h-6" /> 
+            <Info className="w-6 h-6" />
           </button>
         </div>
       </div>

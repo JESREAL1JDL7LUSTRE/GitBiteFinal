@@ -106,14 +106,14 @@ function Featured() {
             <motion.h1 
               className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
             >
-              <motion.span>Delicious Food,</motion.span>{" "}
+              <motion.span>Feast at Your</motion.span>{" "}
               <motion.span
                 initial={{ color: "#000000" }}
                 animate={{ color: "#a0c878" }}
                 transition={{ duration: 1, delay: 0.5 }}
                 className="text-[#a0c878]"
               >
-                Delivered Fresh
+                Fingertips!
               </motion.span>
             </motion.h1>
             <motion.p 
@@ -122,7 +122,7 @@ function Featured() {
               transition={{ delay: 0.7, duration: 0.6 }}
               className="text-lg text-gray-600 max-w-2xl mx-auto"
             >
-              Experience the finest cuisine
+              Dine Without the Line.
             </motion.p>
           </motion.div>
           <motion.div 
