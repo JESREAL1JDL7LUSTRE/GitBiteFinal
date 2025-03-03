@@ -83,7 +83,6 @@ function IsSignInOrNot() {
   ) : (
     <div className="flex gap-2">
       <Button className="bg-[#a0c878]" onClick={() => nav("/signin")}>Sign In</Button>
-      <Button className="bg-black" onClick={() => nav("/signup")}>Sign Up</Button>
     </div>
   );
 }
