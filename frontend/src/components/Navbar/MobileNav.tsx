@@ -42,26 +42,41 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
     open && (
       <div
         id="mobile-menu"
-        className="absolute top-full left-0 w-full bg-white shadow-md flex justify-center font-medium py-4"
+        className="absolute top-full left-0 w-full bg-white/90 shadow-lg backdrop-blur-md rounded-b-lg transition-opacity duration-300 opacity-100"
       >
-        <div className="flex flex-row items-center gap-10">
-          <button onClick={() => handleNavClick("/")} className="hover:text-gray-600">
+        <div className="flex flex-row items-center justify-around py-0">
+          <button 
+            onClick={() => handleNavClick("/")} 
+            className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
+          >
             <Home className="w-6 h-6" />
+            <span className="text-xs font-medium">Home</span>
+          </button>
+          <button 
+            onClick={() => handleNavClick("/previousorder")} 
+            className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
+          >
+            <ShoppingBag className="w-6 h-6" />
+            <span className="text-xs font-medium">Your Orders</span>
           </button>
           <CategoryDropdown setSearchQuery={handleCategorySelect} />
-          <button onClick={() => handleNavClick("/previousorder")} className="hover:text-gray-600">
-            <ShoppingBag className="w-6 h-6" />
-          </button>
-          <Link to="/cart" className="hover:text-gray-600" onClick={scrollToTop}>
+          <button 
+            onClick={() => handleNavClick("/cart")}  
+            className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
+          >
             <Heart className="w-6 h-6" />
-          </Link>
-          <button onClick={() => handleNavClick("/about")} className="hover:text-gray-600">
+            <span className="text-xs font-medium">Wishlist</span>
+          </button>
+          <button 
+            onClick={() => handleNavClick("/about")} 
+            className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
+          >
             <Info className="w-6 h-6" />
+            <span className="text-xs font-medium">About Us</span>
           </button>
         </div>
       </div>
     )
   );
-};
-
+}
 export default MobileNav;
