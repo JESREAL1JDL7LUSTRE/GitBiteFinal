@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Home, ShoppingBag, Info, Heart, List } from "lucide-react"; // Import icons from lucide-react
+import { Home, ShoppingBag, Info, Heart, List } from "lucide-react"; 
 import CategoryDropdown from "./Dropdowns/CategoryDropdown";
+import { useRef } from "react";
 
 interface MobileNavProps {
   open: boolean;
@@ -14,7 +15,7 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (open && !document.getElementById("mobile-menu")?.contains(event.target as Node)) {
+      if (open && menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };
@@ -38,9 +39,12 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
   return (
     open && (
       <div
+        ref={menuRef}
         id="mobile-menu"
         className="absolute top-full left-0 w-full bg-white shadow-lg backdrop-blur-md rounded-b-lg transition-opacity duration-300 opacity-100"
       >
