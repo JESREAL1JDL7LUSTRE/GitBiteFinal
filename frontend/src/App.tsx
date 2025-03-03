@@ -6,7 +6,6 @@ import Products from './pages/Products';
 
 function App() {
   return (
-    // Remove PlanToOrderProvider from here
     <Layout2>
       <Featured />
       <Products />

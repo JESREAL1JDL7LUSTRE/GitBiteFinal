@@ -25,13 +25,13 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
   const handleNavClick = (path: string) => {
     navigate(path);
     setOpen(false);
-    scrollToTop(); // Scroll to top when navigating
+    scrollToTop(); 
   };
 
   const handleCategorySelect = (category: string) => {
     setSearchQuery(category);
-    setOpen(false); // Close the menu after selecting a category
-    scrollToTop(); // Scroll to top when selecting a category
+    setOpen(false); 
+    scrollToTop(); 
   };
 
   const scrollToTop = () => {
@@ -42,7 +42,7 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
     open && (
       <div
         id="mobile-menu"
-        className="absolute top-full left-0 w-full bg-white/90 shadow-lg backdrop-blur-md rounded-b-lg transition-opacity duration-300 opacity-100"
+        className="absolute top-full left-0 w-full bg-white shadow-lg backdrop-blur-md rounded-b-lg transition-opacity duration-300 opacity-100"
       >
         <div className="flex flex-row items-center justify-around py-0">
           <button 
