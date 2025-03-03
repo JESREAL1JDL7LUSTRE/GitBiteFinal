@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
   
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger className="font-semibold">Category</DropdownMenuTrigger>
+        <DropdownMenuTrigger className="">Category</DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Select a Category</DropdownMenuLabel>
           <DropdownMenuSeparator />

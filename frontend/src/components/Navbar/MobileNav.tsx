@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Home, ShoppingBag, Info, Heart } from "lucide-react"; // Import icons from lucide-react
+import { Home, ShoppingBag, Info, Heart, List } from "lucide-react"; // Import icons from lucide-react
 import CategoryDropdown from "./Dropdowns/CategoryDropdown";
 
 interface MobileNavProps {
@@ -59,7 +59,10 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
             <ShoppingBag className="w-6 h-6" />
             <span className="text-xs font-medium">Your Orders</span>
           </button>
-          <CategoryDropdown setSearchQuery={handleCategorySelect} />
+          <div className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition">
+            <List className="w-6 h-6" />
+            <CategoryDropdown setSearchQuery={handleCategorySelect} />
+          </div>
           <button 
             onClick={() => handleNavClick("/cart")}  
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
