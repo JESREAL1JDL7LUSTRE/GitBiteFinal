@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Home, ShoppingBag, Info, Heart } from "lucide-react"; // Import icons from lucide-react
 import CategoryDropdown from "./Dropdowns/CategoryDropdown";
 
