@@ -38,6 +38,7 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
           </div>
 
           <SideCartButton type="open" />
+          
           <IsSignInOrNot />
 
           {/* Mobile Menu Button */}
