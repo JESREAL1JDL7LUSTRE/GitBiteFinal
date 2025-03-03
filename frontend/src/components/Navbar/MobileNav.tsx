@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Home, ShoppingBag, Info, Heart } from "lucide-react"; // Import icons from lucide-react
 import CategoryDropdown from "./Dropdowns/CategoryDropdown";
@@ -20,7 +20,7 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [open]);
+  }, [open, setOpen]);
 
   const handleNavClick = (path: string) => {
     navigate(path);

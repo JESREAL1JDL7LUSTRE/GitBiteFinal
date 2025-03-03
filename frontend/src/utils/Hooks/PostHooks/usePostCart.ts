@@ -3,10 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import api from "../../../api/api";
 
+interface CartItem {
+  dish: {
+    id: number;
+    [key: string]: number;
+  };
+  quantity: number;
+}
+
 const usePostCart = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [cart, setCart] = useState<any[]>([]); // Add cart state
+  const [cart, setCart] = useState<CartItem[]>([]); // Add cart state
   const nav = useNavigate();
 
   const addToCart = async (dishId: number, quantity: number = 1) => {

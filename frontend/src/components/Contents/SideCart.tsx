@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ShoppingCartIcon, Minus, Plus, Trash2 } from "lucide-react";
 import {
   AlertDialog,
@@ -33,7 +33,7 @@ const SideCart = () => {
       );
       return [...stillSelected, ...newSelections];
     });
-  }, [planToOrderList.length]);
+  }, [planToOrderList, planToOrderList.length]);
 
   const handleSelectItem = (id: number) => {
     setSelectedItems((prev) => {

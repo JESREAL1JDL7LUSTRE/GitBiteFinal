@@ -81,7 +81,7 @@ const ProductDetailPage = () => {
             animate={{ opacity: 1 }}
             className="flex justify-center min-h-screen bg-gradient-to-b from-white to-[#f5f5f7]"
         >
-            <ProductDetailsCard dish={dish} onBack={() => navigate(-1)} />
+            <ProductDetailsCard dish={{ ...dish, category_name: [dish.category_name] }} onBack={() => navigate(-1)} />
         </motion.div>
     );
 };

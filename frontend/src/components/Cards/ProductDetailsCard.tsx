@@ -86,8 +86,8 @@ const ProductDetailsCard: React.FC<ProductDetailsProps> = ({ dish, onBack }) => 
             <CardContent className=""></CardContent>
 
             <CardFooter className="flex flex-col gap-3 p-0">
-              <PlanToOrderButton dish={dish} />
-              <PaymentButton dishDetails={[dish]} />
+              <PlanToOrderButton dish={{ ...dish, image: dish.image || "/placeholder.png" }} />
+              <PaymentButton dishDetails={[{ id: dish.id, name: dish.name, price: dish.price, quantity: 1 }]} />
             </CardFooter>
           </div>
         </Card>

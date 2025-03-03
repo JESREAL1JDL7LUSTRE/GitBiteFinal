@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Clock, CreditCard, ChevronDown, ChevronUp, ShoppingBag } from "lucide-react";
 import AddReview from "@/components/Reviews/AddReview";
-import PaymentPopUpForm from "../PopUps/PaymentPopUpForm";
 import OrderDelButton from "../Buttons/DeleteButtons/OrderDelButton";
+import PayUnpaidOrderForm from "../PopUps/PayUnpaidOrderForm";
 
 interface OrderedItem {
   id: number;
@@ -41,6 +41,7 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
   const [isPayOpen, setIsPayOpen] = useState(payments.length === 0);
 
   const dishDetails = order.ordered_items.map((item) => ({
+    id: item.dishId,
     name: item.dish_name,
     price: item.subtotal / item.quantity,
     quantity: item.quantity,
@@ -150,12 +151,13 @@ const OrderHistoryCard: React.FC<OrderProps> = ({ order, payments }) => {
             <OrderDelButton OrderId={order.id} />
           </div>
 
-          <PaymentPopUpForm
+          <PayUnpaidOrderForm
             isOpen={isPayOpen}
             onClose={() => setIsPayOpen(false)}
             order={order}
             dishDetails={dishDetails}
           />
+
         </div>
       </div>
 

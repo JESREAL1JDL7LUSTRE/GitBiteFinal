@@ -12,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Loader2, Trash2 } from "lucide-react"; // Import a loader icon for visual feedback
+import { Trash2 } from "lucide-react"; // Import a loader icon for visual feedback
 import { useNavigate } from "react-router-dom";
 
 interface CartDelButtonProps {
