@@ -44,7 +44,7 @@ const About: React.FC = () => {
     {
       name: "Angel Janette Taglucop",
       role: "Head Frontend Designer",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      image: "public/AuthorsPic/Angel.png",
       description: "Angel leads the frontend design, ensuring a visually appealing and responsive user experience.",
       link:"https://github.com/angel-jane"
     }
