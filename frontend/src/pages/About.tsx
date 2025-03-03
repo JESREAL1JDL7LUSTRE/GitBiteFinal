@@ -31,21 +31,21 @@ const About: React.FC = () => {
     {
       name: "Jesreal D. Lustre",
       role: "Backend and Frontend Logic Programmer",
-      image: "AuthorsPic/Jesreal.png",
+      image: "/AuthorsPic/Jesreal.png",
       description: "Jesreal specializes in building and optimizing both backend and frontend logic, ensuring seamless system performance.",
       link:"https://github.com/JESREAL1JDL7LUSTRE"
     },
     {
       name: "Bea Clarise Bacaling",
       role: "Frontend Logic and Frontend Design Programmer",
-      image: "AuthorsPic/Bea.png",
+      image: "/AuthorsPic/Bea.png",
       description: "Bea focuses on frontend logic and design, crafting user-friendly interfaces with smooth interactions.",
       link:"https://github.com/baeeyuh"
     },
     {
       name: "Angel Janette Taglucop",
       role: "UI/UX Designer",
-      image: "AuthorsPic/Angel.png",
+      image: "/AuthorsPic/Angel.png",
       description: "Angel leads the frontend design, ensuring a visually appealing and responsive user experience.",
       link:"https://github.com/angel-jane"
     }
