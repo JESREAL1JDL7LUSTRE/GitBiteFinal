@@ -1,5 +1,4 @@
 import useFetchReviews from '@/utils/Hooks/FetchHooks/useFetchReviews';
-import React from 'react'
 import {
   AlertDialog,
   AlertDialogCancel,

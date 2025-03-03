@@ -3,17 +3,13 @@ import Featured from './components/Contents/Featured';
 import Layout2 from './components/Contents/Layout';
 import Products from './pages/Products';
 
-interface AppProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-}
 
-function App({ searchQuery }: AppProps) {
+function App() {
   return (
     // Remove PlanToOrderProvider from here
     <Layout2>
       <Featured />
-      <Products searchQuery={searchQuery} />
+      <Products />
     </Layout2>
   )
 }

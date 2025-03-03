@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChefHat, Clock, Award, Truck, Users, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const About: React.FC = () => {
+  const navigate = useNavigate();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -26,25 +28,27 @@ const About: React.FC = () => {
 
   const teamMembers = [
     {
-      name: "Alex Chen",
-      role: "Executive Chef",
-      image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      description: "With 15 years of culinary experience across Asia and Europe, Alex brings authentic flavors to every dish."
+      name: "Jesreal D. Lustre",
+      role: "Backend and Frontend Logic Programmer",
+      image: "public/AuthorsPic/Jesreal.png",
+      description: "Jesreal specializes in building and optimizing both backend and frontend logic, ensuring seamless system performance.",
+      link:"https://github.com/JESREAL1JDL7LUSTRE"
     },
     {
-      name: "Sarah Johnson",
-      role: "Operations Manager",
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      description: "Sarah ensures your orders are processed efficiently and delivered with care and precision."
+      name: "Bea Clarise Bacaling",
+      role: "Frontend Logic and Frontend Design Programmer",
+      image: "public/AuthorsPic/Bea.png",
+      description: "Bea focuses on frontend logic and design, crafting user-friendly interfaces with smooth interactions.",
+      link:"https://github.com/baeeyuh"
     },
     {
-      name: "Michael Rodriguez",
-      role: "Head of Technology",
+      name: "Angel Janette Taglucop",
+      role: "Head Frontend Designer",
       image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      description: "Michael is the brain behind our seamless ordering platform, constantly improving your experience."
+      description: "Angel leads the frontend design, ensuring a visually appealing and responsive user experience.",
+      link:"https://github.com/angel-jane"
     }
-  ];
-
+];
   const values = [
     { icon: <ChefHat className="h-8 w-8 text-green-600" />, title: "Quality Ingredients", description: "We source only the freshest, highest quality ingredients for all our dishes." },
     { icon: <Clock className="h-8 w-8 text-green-600" />, title: "Fast Delivery", description: "Our efficient delivery system ensures your food arrives hot and fresh." },
@@ -181,6 +185,7 @@ const About: React.FC = () => {
               variants={itemVariants}
               whileHover={{ y: -10 }}
               className="bg-white rounded-lg overflow-hidden shadow-md"
+              onClick={() => window.open(member.link, "_blank")}
             >
               <img 
                 src={member.image} 
@@ -294,7 +299,7 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <button className="bg-white text-green-600 px-8 py-3 rounded-md text-lg font-medium shadow-md hover:bg-gray-100 transition-colors duration-300">
+            <button onClick={() => navigate("/")} className="bg-white text-green-600 px-8 py-3 rounded-md text-lg font-medium shadow-md hover:bg-gray-100 transition-colors duration-300">
               Order Now
             </button>
           </motion.div>
@@ -314,10 +319,10 @@ const About: React.FC = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Menu</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                <li><a href="/" className="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                <li><a href="/about" className="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+                <li><a href="/" className="text-gray-400 hover:text-white transition-colors duration-300">Menu</a></li>
+                <li><a href="/" className="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
               </ul>
             </div>
             

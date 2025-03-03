@@ -10,7 +10,7 @@ import usePostProfile from "../utils/Hooks/PostHooks/usePostProfile";
 
 const Profile = () => {
   const { profile, loading: fetching, error: fetchError } = useFetchProfile();
-  const { postProfile, loading: updating, error: updateError } = usePostProfile();
+  const { postProfile, loading: updating } = usePostProfile();
   const [isEditing, setIsEditing] = useState(false);
   const [tempImagePreview, setTempImagePreview] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -75,7 +75,7 @@ const Profile = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const success = await postProfile(formData);
-    if (success) {
+    if (success && profile) {
       setIsEditing(false);
       // Update the actual image preview only after successful save
       setImagePreview(tempImagePreview);

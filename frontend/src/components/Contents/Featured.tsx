@@ -1,17 +1,14 @@
-import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import useFetchDishes, { Dish } from "../../utils/Hooks/FetchHooks/useFetchDishes";
+import useFetchDishes from "../../utils/Hooks/FetchHooks/useFetchDish2";
 import PaymentButton from '../Buttons/PaymentButton';
-import { useNavigate } from "react-router-dom"; 
 import { motion, AnimatePresence } from 'framer-motion';
 
 
 function Featured() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { dishes, loading, error } = useFetchDishes();
+  const { dishes, loading, error } = useFetchDishes(1, "");
   const featuredDishes = dishes.filter((dish) => dish.featured);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -206,7 +203,7 @@ function Featured() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
-                          <PaymentButton dishDetails={[featuredDishes[currentSlide]]} />
+                          <PaymentButton dishDetails={[{ ...featuredDishes[currentSlide], quantity: 1 }]} />
                         </motion.div>
                       </motion.div>
                     </motion.div>

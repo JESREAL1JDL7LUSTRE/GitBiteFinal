@@ -1,4 +1,3 @@
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import useFetchOrders from "../utils/Hooks/FetchHooks/useFetchOrders";
 import useFetchPayments from "../utils/Hooks/FetchHooks/useFetchPayments";

@@ -69,7 +69,7 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ dish, cartId }) => {
 
         <CardFooter className="p-4 pt-0 mt-auto flex flex-col sm:flex-row gap-2">
           <button onClick={(e) => e.stopPropagation()} className="w-full sm:flex-1">
-            <PaymentButton dishDetails={[dish]} />
+            <PaymentButton dishDetails={[{ id: dish.id, name: dish.name, price: dish.price, quantity: 1 }]} />
           </button>
         </CardFooter>
       </Card>

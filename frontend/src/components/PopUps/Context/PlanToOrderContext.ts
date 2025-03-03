@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 interface Dish {
+  image: string | undefined;
   id: number;
   name: string;
   price: number;

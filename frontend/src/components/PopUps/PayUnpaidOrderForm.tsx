@@ -1,69 +1,39 @@
 import { useState } from "react";
-import usePostOrder2 from "@/utils/Hooks/PostHooks/usePostOrder2"; // ✅ Order API
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import usePostPayment from "../../utils/Hooks/PostHooks/usePostPayment"
 import useFetchPaymentMethods from "../../utils/Hooks/FetchHooks/useFetchPaymentMethod";
-import usePostPayment from "../../utils/Hooks/PostHooks/usePostPayment";
+import { useNavigate } from "react-router-dom";
 
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "../ui/button";
-import { useAddToOrderWhenPayingStore } from "@/lib/AddToOrderWhenPayingStore";
-import { usePlanToOrderStore } from "./Context/PlanToOrderContext";
+interface DishDetails {
+  id: number;
+  name: string;
+  price: number;
+  quantity?: number;
+}
 
-interface PaymentPopUpFormProps {
+interface PayUnpaidOrderFormProps {
+  order: { id: number; total_price: number };
+  dishDetails: DishDetails[];
   isOpen: boolean;
   onClose: () => void;
 }
 
-function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
-  const { dishDetails, clearDishDetails } = useAddToOrderWhenPayingStore(); // ✅ Get stored dishes
-  const [order, setOrder] = useState<{ id: number; total_price: number } | null>(null);
+function PayUnpaidOrderForm({ order, dishDetails, isOpen, onClose }: PayUnpaidOrderFormProps) {
   const [paymentMethod, setPaymentMethod] = useState("Card");
-  const clearPlanToOrder = usePlanToOrderStore((state) => state.clearPlanToOrder);
-  const { createOrder } = usePostOrder2(); // ✅ Create order API
   const { postPayment, loading: postLoading, error: postError } = usePostPayment();
   const { paymentMethods, loading: methodsLoading, error: fetchError } = useFetchPaymentMethods();
+  const nav = useNavigate();
 
   const handlePayment = async () => {
-    let finalOrder = order;
-
-    if (!finalOrder) {
-      try {
-        // ✅ Ensure order creation includes quantity
-        finalOrder = await createOrder(
-          dishDetails.map((dish) => ({
-            id: dish.id,
-            name: dish.name,
-            price: dish.price,
-            quantity: dish.quantity ?? 1, // ✅ Ensure quantity is included
-          }))
-        );
-        if (!finalOrder) throw new Error("Failed to create order.");
-        setOrder(finalOrder);
-      } catch (err) {
-        console.error("Order Error:", err);
-        alert("Failed to create order. Please try again.");
-        return;
-      }
-    }
-
     try {
-      // ✅ Now process the payment using the created order
       await postPayment({
-        order: finalOrder.id,
+        order: order.id,
         payment_method: paymentMethod,
-        amount: finalOrder.total_price,
+        amount: parseFloat(order.total_price.toFixed(2)),
       });
-
-      clearDishDetails();
-      clearPlanToOrder();
       onClose();
+      nav(0);
     } catch (err) {
       console.error("Payment Error:", err);
       alert("Payment failed. Please try again.");
@@ -74,7 +44,9 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent className="p-6 rounded-lg shadow-lg">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-2xl font-bold text-gray-800 text-center">Confirm Payment</AlertDialogTitle>
+          <AlertDialogTitle className="text-2xl font-bold text-gray-800 text-center">
+            Confirm Payment
+          </AlertDialogTitle>
           <AlertDialogDescription className="text-gray-600 text-center">
             Complete your payment for the order
           </AlertDialogDescription>
@@ -135,4 +107,4 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
   );
 }
 
-export default PaymentPopUpForm;
+export default PayUnpaidOrderForm;

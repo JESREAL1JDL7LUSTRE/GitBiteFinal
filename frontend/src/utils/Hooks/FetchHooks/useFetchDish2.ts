@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../../api/api";
 
 export interface Dish {
+  featured: unknown;
   id: number;
   name: string;
   description: string;
@@ -42,7 +43,7 @@ const useFetchDishes = (page: number, searchQuery: string) => {
     fetchDishes();
   }, [page, searchQuery]); // Fetch when page or searchQuery changes
 
-  return { dishes, loading, error, totalPages };
+  return { dishes, loading, error, setDishes,totalPages };
 };
 
 export default useFetchDishes;

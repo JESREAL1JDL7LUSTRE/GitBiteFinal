@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import name from "../../assets/logoName.png";
-import { Menu, X, Heart } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import IsSignInOrNot from "../User/IsSignInOrNot";
-import { Button } from "@/components/ui/button";
 import SearchFunction from "./SearchFunction";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
@@ -17,7 +16,6 @@ interface NavbarProps {
 
 const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 right-0 bg-white shadow-md w-full z-20 h-20">
@@ -31,7 +29,7 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
         {/* Main Navigation */}
         <div className="flex-1 flex items-center justify-end gap-3 md:gap-6">
           <div className="flex justify-end min-w-[100px] md:min-w-[150px] max-w-[250px] md:max-w-[300px]">
-            <SearchFunction searchQuery={searchQuery} onSearch={setSearchQuery} />
+            <SearchFunction searchQuery={searchQuery} />
           </div>
 
           {/* Desktop Navigation */}

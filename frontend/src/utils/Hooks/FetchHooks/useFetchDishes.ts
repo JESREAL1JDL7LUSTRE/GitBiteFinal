@@ -38,7 +38,6 @@ const useFetchDishes = (searchQuery = "") => {
   useEffect(() => {
     setDishes([]); // Reset when search query changes
     setNextPage(`/api/dish/?search=${searchQuery}`);
-    fetchDishes();
   }, [searchQuery]);
 
   return { dishes, loading, error, fetchDishes, nextPage };
