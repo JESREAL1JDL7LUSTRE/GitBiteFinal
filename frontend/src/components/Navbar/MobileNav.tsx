@@ -50,14 +50,14 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Home className="w-6 h-6" />
-            <span className="text-xs font-medium">Home</span>
+            <span className="text-sm font-medium">Home</span>
           </button>
           <button 
             onClick={() => handleNavClick("/previousorder")} 
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <ShoppingBag className="w-6 h-6" />
-            <span className="text-xs font-medium">Your Orders</span>
+            <span className="text-sm font-medium">Your Orders</span>
           </button>
           <div 
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition" 
@@ -71,14 +71,14 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Heart className="w-6 h-6" />
-            <span className="text-xs font-medium">Wishlist</span>
+            <span className="text-sm font-medium">Wishlist</span>
           </button>
           <button 
             onClick={() => handleNavClick("/about")} 
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Info className="w-6 h-6" />
-            <span className="text-xs font-medium">About Us</span>
+            <span className="text-sm font-medium">About Us</span>
           </button>
         </div>
       </div>
