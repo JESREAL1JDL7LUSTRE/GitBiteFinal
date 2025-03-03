@@ -18,7 +18,7 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 right-0 bg-white shadow-md w-full z-20 h-20">
+    <nav className="fixed top-0 right-0 bg-white shadow-md w-full z-20 h-20 transition-all duration-300 opacity-95">
       <div className="flex items-center justify-between px-4 py-2">
         {/* Logo */}
         <Link to="/" className="flex items-center">
