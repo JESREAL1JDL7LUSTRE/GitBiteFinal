@@ -59,7 +59,10 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
             <ShoppingBag className="w-6 h-6" />
             <span className="text-xs font-medium">Your Orders</span>
           </button>
-          <div className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition">
+          <div 
+            className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition" 
+            onClick={(e) => e.stopPropagation()} 
+          >
             <List className="w-6 h-6" />
             <CategoryDropdown setSearchQuery={handleCategorySelect} />
           </div>
