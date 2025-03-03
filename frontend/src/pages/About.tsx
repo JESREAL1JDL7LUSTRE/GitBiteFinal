@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ChefHat, Clock, Award, Truck, Users, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+
 const About: React.FC = () => {
   const navigate = useNavigate();
   const containerVariants = {
@@ -30,21 +31,21 @@ const About: React.FC = () => {
     {
       name: "Jesreal D. Lustre",
       role: "Backend and Frontend Logic Programmer",
-      image: "public/AuthorsPic/Jesreal.png",
+      image: "AuthorsPic/Jesreal.png",
       description: "Jesreal specializes in building and optimizing both backend and frontend logic, ensuring seamless system performance.",
       link:"https://github.com/JESREAL1JDL7LUSTRE"
     },
     {
       name: "Bea Clarise Bacaling",
       role: "Frontend Logic and Frontend Design Programmer",
-      image: "public/AuthorsPic/Bea.png",
+      image: "AuthorsPic/Bea.png",
       description: "Bea focuses on frontend logic and design, crafting user-friendly interfaces with smooth interactions.",
       link:"https://github.com/baeeyuh"
     },
     {
       name: "Angel Janette Taglucop",
       role: "UI/UX Designer",
-      image: "public/AuthorsPic/Angel.png",
+      image: "AuthorsPic/Angel.png",
       description: "Angel leads the frontend design, ensuring a visually appealing and responsive user experience.",
       link:"https://github.com/angel-jane"
     }
