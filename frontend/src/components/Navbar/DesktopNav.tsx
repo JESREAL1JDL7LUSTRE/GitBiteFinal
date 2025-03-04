@@ -17,10 +17,13 @@ const DesktopNav = ({ setSearchQuery }: DesktopNavProps) => {
   return (
     <ul className="hidden md:flex items-center gap-6 text-xs font-medium md:text-sm lg:text-base whitespace-nowrap">
         <li ><Link to="/" className="hover:text-gray-600" onClick={scrollToTop}>Home</Link></li>
-        <CategoryDropdown setSearchQuery={handleCategorySelect} />
+        <div>
+            <span>Category</span>
+            <CategoryDropdown setSearchQuery={handleCategorySelect} />
+          </div>
         <li ><Link to="/previousorder" className="hover:text-gray-600" onClick={scrollToTop}>Your Orders</Link></li>
         <li ><Link to="/cart" className="hover:text-gray-600" onClick={scrollToTop}>Wishlist</Link></li>
-        <li ><Link to="/about" className="hover:text-gray-600" onClick={scrollToTop}>About Us</Link></li>
+        <li ><Link to="/about" className="hover:text-gray-600" onClick={scrollToTop}>About</Link></li>
 
     </ul>
   );

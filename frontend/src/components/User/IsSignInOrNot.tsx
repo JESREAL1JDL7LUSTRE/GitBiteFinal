@@ -5,8 +5,9 @@ import api from "../../api/api";
 import { ACCESS_TOKEN, REFRECH_TOKEN } from '@/api/constant';
 import SignOut from './SignOut';
 import { Button } from '../ui/button';
-import useFetchProfile from "../../utils/Hooks/FetchHooks/useFetchProfile"; // Import the custom hook
+import useFetchProfile from "../../utils/Hooks/FetchHooks/useFetchProfile"; 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { motion, AnimatePresence } from "framer-motion"; 
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem(REFRECH_TOKEN);
@@ -44,10 +45,9 @@ const isLoggedIn = async () => {
   }
 };
 
-
 function IsSignInOrNot() {
   const [isLoggedInState, setIsLoggedInState] = useState<boolean | null>(null);
-  const { profile, loading } = useFetchProfile(); // ✅ Correct usage
+  const { profile, loading } = useFetchProfile(); 
   const nav = useNavigate();
 
   useEffect(() => {
@@ -58,13 +58,20 @@ function IsSignInOrNot() {
 
     checkLoginStatus();
   }, []);
-  
-  
+
+  const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setToggle((prev) => !prev);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (isLoggedInState === null || loading) {
-    return <div>Loading...</div>; // ✅ Show loading state properly
+    return <div>Loading...</div>; 
   }
-
 
   return isLoggedInState ? (
     <DropdownMenu>
@@ -82,8 +89,25 @@ function IsSignInOrNot() {
     </DropdownMenu>
   ) : (
     <div className="flex gap-2">
-      <Button className="bg-[#a0c878]" onClick={() => nav("/signin")}>Sign In</Button>
+      <Button
+        className={`relative overflow-hidden px-10 py-2 text-white rounded-lg transition-all duration-300 ${toggle ? "bg-black" : "bg-[#a0c878]"}`}
+        onClick={() => nav("/signin")}
+      >
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={toggle ? "signup" : "signin"}
+            initial={{ x: 30, opacity: 0 }} // Start from the right
+            animate={{ x: 0, opacity: 1 }}  // Move to the center
+            exit={{ x: -30, opacity: 0 }}   // Exit to the left
+            transition={{ duration: 0.4 }}
+            className="absolute w-full text-center"
+          >
+            {toggle ? "Sign Up" : "Sign In"}
+          </motion.span>
+        </AnimatePresence>
+      </Button>
     </div>
   );
 }
+
 export default IsSignInOrNot;
