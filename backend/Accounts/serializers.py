@@ -7,6 +7,13 @@ Customer = get_user_model()
 
 # Customer Serializer
 class CustomerSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.url  # This should return the full Cloudinary URL
+        return None
+    
     class Meta:
         model = Customer
         fields = ["id", "email", "first_name", "last_name", "username", "phone_number", "password", "address", "image", "created_at", "updated_at"]
