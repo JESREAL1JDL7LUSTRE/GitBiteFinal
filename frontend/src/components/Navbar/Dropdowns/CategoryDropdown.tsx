@@ -23,8 +23,8 @@ import { useNavigate } from "react-router-dom";
   
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger className=""></DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuTrigger className="">Category</DropdownMenuTrigger>
+        <DropdownMenuContent id="category-dropdown">
           <DropdownMenuLabel>Select a Category</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setSearchQuery("")}>
@@ -37,7 +37,7 @@ import { useNavigate } from "react-router-dom";
               key={category}
               onClick={() => {
                 setSearchQuery(Array.isArray(category) ? category[0] : category);
-                navigate("/");// Ensure it's a string
+                navigate("/");
               }}
             >
               {category}
