@@ -7,7 +7,7 @@ Customer = get_user_model()
 
 # Customer Serializer
 class CustomerSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
+    image = serializers.ImageField(required=False)
 
     def get_image(self, obj):
         if obj.image:
@@ -19,7 +19,6 @@ class CustomerSerializer(serializers.ModelSerializer):
         fields = ["id", "email", "first_name", "last_name", "username", "phone_number", "password", "address", "image", "created_at", "updated_at"]
         extra_kwargs = {
             "password": {"write_only": True},  # Hide password in responses
-            "image": {"required": False}  # Correct spelling of "required"
         }
         
     def create(self, validated_data):
