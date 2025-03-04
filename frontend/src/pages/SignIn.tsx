@@ -15,7 +15,7 @@ const SignIn = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen flex bg-white"
     >
-      <div className="flex flex-1 flex-col lg:flex-row">
+      <div className="flex flex-1 flex-col lg:flex-row mt-20">
         {/* Form Section */}
         <motion.div 
           initial={{ x: -20, opacity: 0 }}

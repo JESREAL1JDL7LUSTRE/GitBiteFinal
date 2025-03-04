@@ -15,7 +15,7 @@ const SignUp = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen flex bg-white"
     >
-      <div className="flex flex-1 flex-col lg:flex-row">
+      <div className="flex flex-1 flex-col lg:flex-row mt-20">
         {/* Form Section */}
         <motion.div 
           initial={{ x: -20, opacity: 0 }}
@@ -23,7 +23,7 @@ const SignUp = () => {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="w-full lg:w-1/2 h-full flex items-center justify-center p-6 md:p-12 lg:p-16"
         >
-          <div className="w-full h-full max-w-md py-12 ">
+          <div className="w-full h-full max-w-md">
             <SignUpForm route="/api/register/" />
           </div>
         </motion.div>
