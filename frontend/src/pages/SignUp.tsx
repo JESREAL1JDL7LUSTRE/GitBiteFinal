@@ -4,7 +4,6 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import logo from "../assets/logo.png";
 import api from "@/api/api";
 
 
@@ -44,7 +43,7 @@ const SignUp = () => {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="text-white text-center"
             >
-              <img src={logo} alt="Logo" className="mb-40" />
+              <img src="/Logo/logo.png" alt="Logo" className="mb-40" />
             </motion.div>
           </div>
         </motion.div>

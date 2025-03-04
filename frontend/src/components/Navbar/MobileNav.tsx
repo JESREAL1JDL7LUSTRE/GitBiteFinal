@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Home, ShoppingBag, Info, Heart } from "lucide-react"; // Import icons from lucide-react
+import { Home, ShoppingBag, Info, Heart, List } from "lucide-react"; 
 import CategoryDropdown from "./Dropdowns/CategoryDropdown";
+import { useRef } from "react";
 
 interface MobileNavProps {
   open: boolean;
@@ -14,7 +15,7 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (open && !document.getElementById("mobile-menu")?.contains(event.target as Node)) {
+      if (open && menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };
@@ -38,9 +39,12 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
   return (
     open && (
       <div
+        ref={menuRef}
         id="mobile-menu"
         className="absolute top-full left-0 w-full bg-white shadow-lg backdrop-blur-md rounded-b-lg transition-opacity duration-300 opacity-100"
       >
@@ -50,29 +54,35 @@ const MobileNav = ({ open, setOpen, setSearchQuery }: MobileNavProps) => {
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Home className="w-6 h-6" />
-            <span className="text-xs font-medium">Home</span>
+            <span className="text-sm font-medium">Home</span>
           </button>
           <button 
             onClick={() => handleNavClick("/previousorder")} 
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <ShoppingBag className="w-6 h-6" />
-            <span className="text-xs font-medium">Your Orders</span>
+            <span className="text-sm font-medium">Your Orders</span>
           </button>
-          <CategoryDropdown setSearchQuery={handleCategorySelect} />
+          <div 
+            className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition" 
+            onClick={(e) => e.stopPropagation()} 
+          >
+            <List className="w-6 h-6" />
+            <CategoryDropdown setSearchQuery={handleCategorySelect} />
+          </div>
           <button 
             onClick={() => handleNavClick("/cart")}  
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Heart className="w-6 h-6" />
-            <span className="text-xs font-medium">Wishlist</span>
+            <span className="text-sm font-medium">Wishlist</span>
           </button>
           <button 
             onClick={() => handleNavClick("/about")} 
             className="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-gray-100 transition"
           >
             <Info className="w-6 h-6" />
-            <span className="text-xs font-medium">About Us</span>
+            <span className="text-sm font-medium">About Us</span>
           </button>
         </div>
       </div>

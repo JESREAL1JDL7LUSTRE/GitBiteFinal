@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ACCESS_TOKEN, REFRECH_TOKEN } from "@/api/constant";
-import logo from "../assets/logo.png";
 import api from "@/api/api";
 
 const SignIn = () => {
@@ -44,7 +43,7 @@ const SignIn = () => {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="text-white text-center"
             >
-              <img src={logo} alt="Logo" className="mt-20" />
+              <img src="/Logo/logo.png" alt="Logo" className="mt-20" />
               
             </motion.div>
           </div>

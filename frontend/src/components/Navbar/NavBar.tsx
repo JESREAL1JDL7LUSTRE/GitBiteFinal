@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo.png";
-import name from "../../assets/logoName.png";
 import { Menu, X } from "lucide-react";
 import IsSignInOrNot from "../User/IsSignInOrNot";
 import SearchFunction from "./SearchFunction";
@@ -19,12 +17,14 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
 
   return (
     <nav className="fixed top-0 right-0 bg-white shadow-md w-full z-20 h-20 transition-all duration-300 opacity-95">
-      <div className="flex items-center justify-between px-4 py-2">
+      <div className="flex items-center justify-between px-1 py-2">
         {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <img src={logo} alt="logo" className="h-16 cursor-pointer" />
-          <img src={name} alt="logo" className="h-16 cursor-pointer" />
-        </Link>
+        <div className="flex items-center justify-between w-full">
+          <Link to="/" className="flex items-center shrink-0">
+            <img src="/Logo/logo.png" alt="logo" className="h-16 w-auto cursor-pointer" />
+            <img src="/Logo/logoName.png" alt="logoName" className="h-16 w-auto cursor-pointer" />
+          </Link>
+        </div>
 
         {/* Main Navigation */}
         <div className="flex-1 flex items-center justify-end gap-3 md:gap-6">
@@ -38,6 +38,7 @@ const NavBar = ({ searchQuery, setSearchQuery }: NavbarProps) => {
           </div>
 
           <SideCartButton type="open" />
+          
           <IsSignInOrNot />
 
           {/* Mobile Menu Button */}
