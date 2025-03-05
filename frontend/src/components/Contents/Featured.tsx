@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 function Featured() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { dishes, loading, error } = useFetchDishes(1);
+  const { dishes, loading, error } = useFetchDishes(1, "");
   const featuredDishes = dishes.filter((dish) => dish.featured);
 
   useEffect(() => {

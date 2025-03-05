@@ -13,7 +13,7 @@ export interface Dish {
   image?: string;
 }
 
-const useFetchDishes = (page: number) => {
+const useFetchDishes = (page: number, searchQuery: string) => {
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,10 @@ const useFetchDishes = (page: number) => {
       setLoading(true);
       try {
         const res = await api.get(`/api/dish/`, {
-          params: { page }, // Only fetch by page
+          params: {
+            page: page,
+            search: searchQuery || "", // Pass search query
+          },
         });
 
         setDishes(res.data.results);
@@ -38,9 +41,9 @@ const useFetchDishes = (page: number) => {
     };
 
     fetchDishes();
-  }, [page]); // Fetch only when page changes
+  }, [page, searchQuery]); // Fetch when page or searchQuery changes
 
-  return { dishes, loading, error, setDishes, totalPages };
+  return { dishes, loading, error, setDishes,totalPages };
 };
 
 export default useFetchDishes;
