@@ -91,7 +91,7 @@ function IsSignInOrNot() {
     <div className="flex gap-2">
       <Button
         className={`relative overflow-hidden px-10 py-2 text-white rounded-lg transition-all duration-300 ${toggle ? "bg-black" : "bg-[#a0c878]"}`}
-        onClick={() => nav("/signin")}
+        onClick={() => nav(toggle ? "/signup" : "/signin")}
       >
         <AnimatePresence mode="wait">
           <motion.span

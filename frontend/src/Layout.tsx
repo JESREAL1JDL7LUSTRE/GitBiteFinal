@@ -40,7 +40,7 @@ export const Layout = () => {
               <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path='/cart' element={<ProtectedRoute><div className='mt-20'><Cart /></div></ProtectedRoute>} />
               <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              <Route path='/changepassword' element={<ProtectedRoute><div className='mt-20'><ChangePassword/></div></ProtectedRoute>}  />
+              <Route path='/changepassword' element={<ProtectedRoute><div className=''><ChangePassword/></div></ProtectedRoute>}  />
               <Route path='/forgotpassword' element={<div className=''><ForgotPassword/></div>} />
               <Route path='/about' element={<div className='mt-20'><About/></div>} />
               <Route path='/previousorder' element={<ProtectedRoute><div className='mt-20'><PreviousOrders/></div></ProtectedRoute>} />
