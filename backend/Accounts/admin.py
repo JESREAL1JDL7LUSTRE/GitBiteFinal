@@ -6,7 +6,7 @@ class CustomerAdmin(UserAdmin):
     model = Customer
 
     # Fields to display in the list view
-    list_display = ("email", "username", "first_name", "last_name", "phone_number", "address", "is_active", "is_staff", "image")
+    list_display = ("email", "username", "first_name", "last_name", "phone_number", "address", "is_active", "is_staff", "image_display")
 
     # Fields to search in the admin panel
     search_fields = ("email", "username", "phone_number")
@@ -27,6 +27,10 @@ class CustomerAdmin(UserAdmin):
             "fields": ("email", "username", "first_name", "last_name", "phone_number", "address", "password1", "password2"),
         }),
     )
+    
+    def image_display(self, obj):
+        return obj.image.url if obj.image else "No Image"
+    image_display.short_description = "Image"
 
     ordering = ("email",)
 
