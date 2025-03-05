@@ -16,6 +16,8 @@ import Products from './pages/Products.tsx';
 import TermsAndConditions from './pages/TermsAndCondition.tsx';
 
 import { Routes, Route, useLocation } from 'react-router-dom';
+import ChangePassword from './pages/ChangePassword.tsx';
+import ForgotPassword from './pages/ForgotPassword.tsx';
 
 export const Layout = () => {
     const location = useLocation();
@@ -38,6 +40,8 @@ export const Layout = () => {
               <Route path='/profile/:id' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path='/cart' element={<ProtectedRoute><div className='mt-20'><Cart /></div></ProtectedRoute>} />
               <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path='/changepassword' element={<ProtectedRoute><div className='mt-20'><ChangePassword/></div></ProtectedRoute>}  />
+              <Route path='/forgotpassword' element={<div className=''><ForgotPassword/></div>} />
               <Route path='/about' element={<div className='mt-20'><About/></div>} />
               <Route path='/previousorder' element={<ProtectedRoute><div className='mt-20'><PreviousOrders/></div></ProtectedRoute>} />
               <Route path='*' element={<div className='mt-20'><NotFound /></div>} />

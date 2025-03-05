@@ -144,6 +144,15 @@ function SignInForm({ route = "/api/token/" }: SignInFormProps) {
                   required
                 />
               </div>
+              <p className="text-gray-600 text-sm">
+              Forgot your Password?{" "}
+              <span 
+                className="text-[#a0c878] font-medium cursor-pointer hover:underline transition-all"
+                onClick={() => nav("/forgotpassword")}
+              >
+                Forgot Password
+              </span>
+            </p>
             </motion.div>
             
             <motion.div

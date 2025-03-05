@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Edit, Camera, User, Loader2 } from "lucide-react";
 import useFetchProfile from "../utils/Hooks/FetchHooks/useFetchProfile";
 import usePostProfile from "../utils/Hooks/PostHooks/usePostProfile";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { profile, loading: fetching, error: fetchError } = useFetchProfile();
@@ -14,6 +15,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempImagePreview, setTempImagePreview] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -319,6 +321,14 @@ const Profile = () => {
                     className="mt-1 border-gray-200 focus:border-[#a0c878] focus:ring-[#a0c878]"
                     required 
                   />
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={() => navigate('/changepassword')}
+                    className="mt-1 border-gray-300 text-gray-700"
+                  >
+                    Change Password
+                  </Button>
                 </div>
 
                 <div className="flex justify-center gap-3 pt-2">

@@ -56,3 +56,20 @@ class ChangePasswordView(APIView):
         update_last_login(None, user)
 
         return Response({"detail": "Password changed successfully."}, status=status.HTTP_200_OK)
+
+class ResetPasswordDirectlyView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        email = request.data.get("email")
+        username = request.data.get("username")
+        phone_number = request.data.get("phone_number")
+        new_password = request.data.get("new_password")
+
+        try:
+            user = User.objects.get(email=email, username=username, phone_number=phone_number)
+            user.set_password(new_password)
+            user.save()
+            return Response({"detail": "Password reset successful."}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found or incorrect details."}, status=status.HTTP_400_BAD_REQUEST)
