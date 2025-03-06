@@ -12,8 +12,9 @@ const WishlistButton: React.FC<CartButtonProps> = ({ dishId }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const handleWishlist = async () => {
+    if (isWishlisted) return; // Prevent multiple clicks
     await addToCart(dishId);
-    setIsWishlisted(true);
+    setIsWishlisted(!isWishlisted);
   };
 
   return (
@@ -24,10 +25,11 @@ const WishlistButton: React.FC<CartButtonProps> = ({ dishId }) => {
         onClick={handleWishlist} 
         disabled={loading}
       >
-        {<Heart fill={isWishlisted ? "red" : "none"} color={isWishlisted ? "red" : "white"} />}
+        <Heart fill={isWishlisted ? "red" : "none"} color={isWishlisted ? "red" : "white"} />
       </Button>
       {error && <p className="text-red-500">{error}</p>}
-    </div>  );
+    </div>
+  );
 };    
 
 export default WishlistButton;
