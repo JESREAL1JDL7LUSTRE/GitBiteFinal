@@ -13,7 +13,6 @@ const ProductDetailPage = () => {
     const { dishes, loading, error, fetchDishes } = useFetchDishes();
 
     useEffect(() => {
-        // Fetch dishes when the component mounts or when `id` changes
         fetchDishes();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
