@@ -5,9 +5,9 @@ import api from "../../api/api";
 import { ACCESS_TOKEN, REFRECH_TOKEN } from '@/api/constant';
 import SignOut from './SignOut';
 import { Button } from '../ui/button';
-import useFetchProfile from "../../utils/Hooks/FetchHooks/useFetchProfile"; 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { motion, AnimatePresence } from "framer-motion"; 
+import useFetchProfile from '@/utils/Hooks/Tanstack/Profile/useQueryProfile';
 
 const refreshToken = async () => {
   const refreshToken = localStorage.getItem(REFRECH_TOKEN);
@@ -47,7 +47,7 @@ const isLoggedIn = async () => {
 
 function IsSignInOrNot() {
   const [isLoggedInState, setIsLoggedInState] = useState<boolean | null>(null);
-  const { profile, loading } = useFetchProfile(); 
+  const { data: profile, isLoading: loading } = useFetchProfile(); 
   const nav = useNavigate();
 
   useEffect(() => {
@@ -77,7 +77,7 @@ function IsSignInOrNot() {
     <DropdownMenu>
       <DropdownMenuTrigger className="w-9 h-9 bg-gray-300 rounded-full flex items-center justify-center text-lg font-bold text-white cursor-pointer">
         {profile?.image ? (
-          <img src={profile.image} alt="profile" className="w-full h-full rounded-full object-cover" />
+          <img src={typeof profile.image === 'string' ? profile.image : URL.createObjectURL(profile.image)} alt="profile" className="w-full h-full rounded-full object-cover" />
         ) : (
           profile?.first_name?.charAt(0).toUpperCase() || "?"
         )}

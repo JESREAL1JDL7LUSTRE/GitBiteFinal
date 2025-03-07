@@ -2,9 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import PaymentButton from "../Buttons/PaymentButton";
-import useFetchReviews from '@/utils/Hooks/FetchHooks/useFetchReviews';
 import StarRatingShow from "../Reviews/StarRatingShow";
 import CartDelButton from "../Buttons/DeleteButtons/CartDelButton";
+import useFetchReviews from "@/utils/Hooks/Tanstack/Review/useQueryReview";
 
 interface WishlistCardProps {
   dish: {
@@ -20,11 +20,11 @@ interface WishlistCardProps {
 }
 
 const WishlistCard: React.FC<WishlistCardProps> = ({ dish, cartId }) => {
-  const { reviews } = useFetchReviews(dish.id);
+  const { data: reviews } = useFetchReviews(dish.id);
 
   const averageRating =
-    reviews.length > 0
-      ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+    (reviews ?? []).length > 0
+      ? reviews!.reduce((sum, review) => sum + review.rating, 0) / reviews!.length
       : 0;
 
   return (
@@ -44,9 +44,9 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ dish, cartId }) => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute top-3 right-3 flex gap-2">
-              <button onClick={(e) => e.stopPropagation()} className="transition-transform hover:scale-110">
+              <div onClick={(e) => e.stopPropagation()} className="transition-transform hover:scale-110">
                 <CartDelButton cartId={cartId} />
-              </button>
+              </div>
             </div>
           </div>
         </CardHeader>
@@ -62,15 +62,15 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ dish, cartId }) => {
           <div className="flex-row sm:flex items-center gap-3">
             <StarRatingShow rating={averageRating} />
             <span className="text-xs text-gray-500">
-              ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
+              ({reviews?.length ?? 0} {(reviews?.length ?? 0) === 1 ? 'review' : 'reviews'})
             </span>
           </div>
         </CardContent>
 
         <CardFooter className="p-4 pt-0 mt-auto flex flex-col sm:flex-row gap-2">
-          <button onClick={(e) => e.stopPropagation()} className="w-full sm:flex-1">
+          <div onClick={(e) => e.stopPropagation()} className="w-full sm:flex-1">
             <PaymentButton dishDetails={[{ id: dish.id, name: dish.name, price: dish.price, quantity: 1 }]} />
-          </button>
+          </div>
         </CardFooter>
       </Card>
     </motion.div>

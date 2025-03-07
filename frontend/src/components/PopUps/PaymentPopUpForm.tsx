@@ -1,8 +1,4 @@
 import { useState } from "react";
-import usePostOrder2 from "@/utils/Hooks/PostHooks/usePostOrder2"; // ✅ Order API
-import useFetchPaymentMethods from "../../utils/Hooks/FetchHooks/useFetchPaymentMethod";
-import usePostPayment from "../../utils/Hooks/PostHooks/usePostPayment";
-
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -15,6 +11,9 @@ import {
 import { Button } from "../ui/button";
 import { useAddToOrderWhenPayingStore } from "@/lib/AddToOrderWhenPayingStore";
 import { usePlanToOrderStore } from "./Context/PlanToOrderContext";
+import useQueryPayment from "@/utils/Hooks/Tanstack/Payment/useQueryPayment";
+import useMutationPayment from "@/utils/Hooks/Tanstack/Payment/useMutationPayment";
+import useOrderMutations from "@/utils/Hooks/Tanstack/Order/useMutationOrder";
 
 interface PaymentPopUpFormProps {
   isOpen: boolean;
@@ -22,13 +21,16 @@ interface PaymentPopUpFormProps {
 }
 
 function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
+  const {useFetchPaymentMethods} = useQueryPayment();
+  const useMutationPaymentPost = useMutationPayment();
+  const { createOrderMutation } = useOrderMutations();
+  const { mutateAsync: createOrder } = createOrderMutation; // ✅ Create order API
   const { dishDetails, clearDishDetails } = useAddToOrderWhenPayingStore(); // ✅ Get stored dishes
   const [order, setOrder] = useState<{ id: number; total_price: number } | null>(null);
   const [paymentMethod, setPaymentMethod] = useState("Card");
   const clearPlanToOrder = usePlanToOrderStore((state) => state.clearPlanToOrder);
-  const { createOrder } = usePostOrder2(); // ✅ Create order API
-  const { postPayment, loading: postLoading, error: postError } = usePostPayment();
-  const { paymentMethods, loading: methodsLoading, error: fetchError } = useFetchPaymentMethods();
+  const { mutate: PostPayment, isPending: postLoading, error: postError } = useMutationPaymentPost();
+  const { data: paymentMethods, isLoading: methodsLoading, error: fetchError } = useFetchPaymentMethods();
 
   const handlePayment = async () => {
     let finalOrder = order;
@@ -36,7 +38,7 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
     if (!finalOrder) {
       try {
         // ✅ Ensure order creation includes quantity
-        finalOrder = await createOrder(
+        const result = await createOrder(
           dishDetails.map((dish) => ({
             id: dish.id,
             name: dish.name,
@@ -44,6 +46,8 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
             quantity: dish.quantity ?? 1, // ✅ Ensure quantity is included
           }))
         );
+        if (!result) return null;
+        finalOrder = result as { id: number; total_price: number };
         if (!finalOrder) throw new Error("Failed to create order.");
         setOrder(finalOrder);
       } catch (err) {
@@ -55,7 +59,7 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
 
     try {
       // ✅ Now process the payment using the created order
-      await postPayment({
+      await PostPayment({
         order: finalOrder.id,
         payment_method: paymentMethod,
         amount: finalOrder.total_price,
@@ -99,7 +103,7 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
           {methodsLoading ? (
             <p className="text-gray-500">Loading payment methods...</p>
           ) : fetchError ? (
-            <p className="text-red-500">{fetchError}</p>
+            <p className="text-red-500">{fetchError.message}</p>
           ) : (
             <select
               value={paymentMethod}
@@ -107,7 +111,7 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
               disabled={postLoading}
               className="w-full p-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {paymentMethods.map((method) => (
+              {paymentMethods?.map((method) => (
                 <option key={method.value} value={method.value}>
                   {method.label}
                 </option>
@@ -116,7 +120,7 @@ function PaymentPopUpForm({ isOpen, onClose }: PaymentPopUpFormProps) {
           )}
         </div>
 
-        {postError && <p className="text-red-500 mt-3">{postError}</p>}
+        {postError && <p className="text-red-500 mt-3">{postError.message}</p>}
 
         <AlertDialogFooter className="mt-6">
           <AlertDialogCancel onClick={onClose} className="border rounded-md px-4 py-2 text-gray-700">

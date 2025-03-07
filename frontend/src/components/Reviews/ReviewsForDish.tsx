@@ -1,4 +1,3 @@
-import useFetchReviews from '@/utils/Hooks/FetchHooks/useFetchReviews';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -10,14 +9,15 @@ import {
 } from "@/components/ui/alert-dialog"
 import { AlertDialogDescription } from '@radix-ui/react-alert-dialog';
 import StarRatingShow from './StarRatingShow';
+import useFetchReviews from "@/utils/Hooks/Tanstack/Review/useQueryReview";
 
 
 
 function ReviewsForDish({ dishId }: { dishId: number }) {
-  const { reviews, loading, error } = useFetchReviews(dishId);
+  const { data: reviews, isLoading: loading, error } = useFetchReviews(dishId);
 
   if (loading) return <p>Loading orders...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return <p>{error.message}</p>;
 
 
 
@@ -31,7 +31,7 @@ function ReviewsForDish({ dishId }: { dishId: number }) {
         <AlertDialogTitle>Reviews</AlertDialogTitle>
         <div> {/* Changed from <AlertDialogDescription> */}
           <ul>
-            {reviews.length > 0 ? (
+            {reviews && reviews.length > 0 ? (
               reviews.map((review) => (
                 <li key={review.id} className="border-b pb-2 mb-2">
                   <p>{review.customer_email}</p>

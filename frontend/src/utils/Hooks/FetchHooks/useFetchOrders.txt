@@ -1,0 +1,28 @@
+import { getOrders } from "@/api/OrderApi";
+import { Order } from "@/types/Types";
+import { useEffect, useState } from "react";
+
+const useFetchOrders = () => {
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const data = await getOrders();
+                setOrders(data);
+            } catch (err) {
+                setError(`Failed to fetch orders ${err}`);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOrders();
+    }, []);
+
+    return { orders, loading, error };
+};
+
+export default useFetchOrders;

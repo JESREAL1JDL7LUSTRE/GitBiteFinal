@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import useFetchCart, { CartItem } from "../utils/Hooks/FetchHooks/useFetchWishlist";
 import WishlistCard from "@/components/Cards/WishlistCard";
 import { Loader2 } from "lucide-react";
+import { CartItem } from "@/types/Types";
+import useQueryCart from "@/utils/Hooks/Tanstack/Wishlist/useQueryCart";
 
 const Wishlist = () => {
-  const { cart, loading, error } = useFetchCart();
+  const { data: cart, isPending: loading, error } = useQueryCart();
   const navigate = useNavigate();
 
   if (loading) {
@@ -28,7 +29,7 @@ const Wishlist = () => {
             className="flex items-center justify-center min-h-screen"
         >
             <div className="bg-white p-8 rounded-lg shadow-md border border-red-200">
-                <p className="text-red-600 font-medium">{error}</p>
+                <p className="text-red-600 font-medium">{error.message}</p>
                 <button 
                     onClick={() => navigate(-1)} 
                     className="mt-4 px-4 py-2 bg-[#a0c878] hover:bg-[#8fb86a] text-white rounded-md"
@@ -63,18 +64,10 @@ const Wishlist = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
                 className="cursor-pointer"
-                onClick={() => navigate(`/product/${item.dish.id}`)}
+                onClick={() => navigate(`/product/${item.dish_data.id}`)}
               >
                 <WishlistCard
-                  dish={{
-                    id: item.dish.id,
-                    name: item.dish.name,
-                    category_name: item.dish.category,
-                    price: item.dish.price,
-                    image: item.dish.image,
-                    description: item.dish.description,
-                    available: item.dish.available,
-                  }}
+                  dish={item.dish_data}
                   cartId={item.id}
                 />
               </motion.div>

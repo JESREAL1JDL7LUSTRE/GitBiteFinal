@@ -1,0 +1,31 @@
+import { getDishes } from "@/api/DishApi";
+import { Dish } from "@/types/Types";
+import { useEffect, useState } from "react";
+
+const useFetchDishes = (page: number, searchQuery: string) => {
+  const [dishes, setDishes] = useState<Dish[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    const fetchDishes = async () => {
+      setLoading(true);
+      try {
+        const { dishes, totalPages } = await getDishes(page, searchQuery);
+        setDishes(dishes);
+        setTotalPages(totalPages);
+      } catch {
+        setError("Failed to fetch dishes");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDishes();
+  }, [page, searchQuery]);
+
+  return { dishes, loading, error, setDishes, totalPages };
+};
+
+export default useFetchDishes;

@@ -8,8 +8,8 @@ import {
 import WishlistButton from "../Buttons/WishlistButton";
 import PaymentButton from "../Buttons/PaymentButton";
 import CartButton from "../Buttons/CartButton";
-import useFetchReviews from '@/utils/Hooks/FetchHooks/useFetchReviews';
 import StarRatingShow from "../Reviews/StarRatingShow";
+import useFetchReviews from "@/utils/Hooks/Tanstack/Review/useQueryReview";
 
 interface ProductCardProps {
   dish: {
@@ -22,11 +22,11 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
-  const { reviews } = useFetchReviews(dish.id);
+  const { data: reviews } = useFetchReviews(dish.id);
 
   const averageRating =
-    reviews.length > 0
-      ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+    (reviews ?? []).length > 0
+      ? reviews!.reduce((sum, review) => sum + review.rating, 0) / reviews!.length
       : 0;
 
   return (
@@ -55,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ dish }) => {
         <div className="flex-row sm:flex items-center gap-3">
           <StarRatingShow rating={averageRating} />
           <span className="text-xs text-gray-500 truncate">
-            ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
+            ({reviews?.length ?? 0} {(reviews?.length ?? 0) === 1 ? 'review' : 'reviews'})
           </span>
         </div>
       </CardContent>

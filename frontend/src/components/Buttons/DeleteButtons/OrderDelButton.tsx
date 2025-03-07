@@ -1,4 +1,3 @@
-import useDeleteOrder from "@/utils/Hooks/PostHooks/usePostOrderDel";
 import { useState } from "react";
 import {
   AlertDialog,
@@ -14,14 +13,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react"; // Import a loader icon for visual feedback
 import { useNavigate } from "react-router-dom";
+import { deleteOrder } from "@/api/OrderApi";
 
 interface CartDelButtonProps {
   OrderId: number; // Accept cart ID as a prop
 }
 
 function CartDelButton({ OrderId }: CartDelButtonProps) {
-  const { deleteOrder, loading, error } = useDeleteOrder();
   const [open, setOpen] = useState(false); // Controls the dialog visibility
+  const [error] = useState<string | null>(null); // Track error messages
+  const [loading] = useState(false); // Track loading state
 
   const nav = useNavigate();
 

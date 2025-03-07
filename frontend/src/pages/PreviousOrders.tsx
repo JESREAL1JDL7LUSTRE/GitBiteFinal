@@ -1,12 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
-import useFetchOrders from "../utils/Hooks/FetchHooks/useFetchOrders";
-import useFetchPayments from "../utils/Hooks/FetchHooks/useFetchPayments";
 import OrderHistoryCard from "@/components/Cards/OrderHistoryCard";
 import { Loader2 } from "lucide-react";
+import useQueryPayment from "@/utils/Hooks/Tanstack/Payment/useQueryPayment";
+import useQueryOrder from "@/utils/Hooks/Tanstack/Order/useQueryOrder";
 
 const PreviousOrders = () => {
-  const { orders, loading: ordersLoading, error: ordersError } = useFetchOrders();
-  const { payments, loading: paymentsLoading, error: paymentsError } = useFetchPayments();
+  const { useFetchPayment } = useQueryPayment();
+  const { data: orders, isLoading: ordersLoading, error: ordersError } = useQueryOrder();
+  const { data: payments, isLoading: paymentsLoading, error: paymentsError } = useFetchPayment();
 
   if (ordersLoading || paymentsLoading) { return (
     <motion.div 
@@ -20,10 +21,9 @@ const PreviousOrders = () => {
 );
 }
   
-  if (ordersError) return <p>{ordersError}</p>;
-  if (paymentsError) return <p>{paymentsError}</p>;
-
-  const sortedOrders = [...orders].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  if (ordersError) return <p>{ordersError.message}</p>;
+  if (paymentsError) return <p>{paymentsError.message}</p>;
+  const sortedOrders = [...(orders || [])].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
   return (
     <motion.div
@@ -48,7 +48,7 @@ const PreviousOrders = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <OrderHistoryCard order={order} payments={payments} />
+                <OrderHistoryCard order={order} payments={payments || []} />
               </motion.div>
             ))}
           </motion.div>

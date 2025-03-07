@@ -1,4 +1,3 @@
-import useDeleteCart from "@/utils/Hooks/PostHooks/usePostCartDel";
 import { useState } from "react";
 import {
   AlertDialog,
@@ -11,29 +10,27 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Heart, Loader2 } from "lucide-react"; // Import a loader icon for visual feedback
-import { useNavigate } from "react-router-dom";
+import { Heart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import useMutationCart from "@/utils/Hooks/Tanstack/Wishlist/useMutationCart";
 
 interface CartDelButtonProps {
   cartId: number; // Accept cart ID as a prop
 }
 
 function CartDelButton({ cartId }: CartDelButtonProps) {
-  const { deleteCart, loading, error } = useDeleteCart();
+  const  { useMutationCartDel } = useMutationCart();
+  const { mutate: deleteCart, isPending: loading, error } = useMutationCartDel();
   const [open, setOpen] = useState(false); // Controls the dialog visibility
-
-  const nav = useNavigate();
 
   const handleDelete = async () => {
     await deleteCart(cartId);
     setOpen(false);
-    nav(0);
   };
 
   return (
     <>
-      {error && <p className="">{error}</p>} {/* Show error if any */}
+      {error && <p className="">{error.message}</p>} {/* Show error if any */}
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
           <Button className="rounded-full shadow-md p-3 transition-colors duration-300 bg-white"  data-tooltip="Unadd to Wishlist" disabled={loading}> 

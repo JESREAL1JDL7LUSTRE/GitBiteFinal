@@ -1,15 +1,12 @@
+import { forgotPassword } from "@/api/ChangePassApi";
 import { useState } from "react";
 
-interface ForgotPasswordResponse {
-  detail: string;
-}
-
 const usePostForgotPassword = () => {
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const postForgotPassword = async (
+  const handleForgotPassword = async (
     email: string,
     username: string,
     phoneNumber: string,
@@ -17,34 +14,18 @@ const usePostForgotPassword = () => {
   ) => {
     setLoading(true);
     setError(null);
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/forgot-password/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            username,
-            phone_number: phoneNumber,
-            new_password: newPassword,
-          }),
-        }
-      );
 
-      const data: ForgotPasswordResponse = await response.json();
-      if (!response.ok) {
-        throw new Error(data.detail || "Something went wrong");
-      }
-      setMessage(data.detail);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An unknown error occurred");
+    try {
+      const successMessage = await forgotPassword(email, username, phoneNumber, newPassword);
+      setMessage(successMessage);
+    } catch (errorMessage) {
+      setError(errorMessage as string);
     } finally {
       setLoading(false);
     }
   };
 
-  return { postForgotPassword, message, loading, error };
+  return { postForgotPassword: handleForgotPassword, message, loading, error };
 };
 
 export default usePostForgotPassword;

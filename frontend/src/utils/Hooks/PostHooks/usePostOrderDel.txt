@@ -1,0 +1,23 @@
+import { useState } from "react";
+
+const useDeleteOrder = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const deleteOrder = async (orderId: number) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await deleteOrder(orderId);
+    } catch (error) {
+      setError(`Failed to delete order. Please try again. ${error}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { deleteOrder, loading, error };
+};
+
+export default useDeleteOrder;

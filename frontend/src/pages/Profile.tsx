@@ -5,13 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { Edit, Camera, User, Loader2 } from "lucide-react";
-import useFetchProfile from "../utils/Hooks/FetchHooks/useFetchProfile";
-import usePostProfile from "../utils/Hooks/PostHooks/usePostProfile";
 import { useNavigate } from "react-router-dom";
+import useFetchProfile from "@/utils/Hooks/Tanstack/Profile/useQueryProfile";
+import usePostProfile from "@/utils/Hooks/Tanstack/Profile/useMutateProfile";
 
 const Profile = () => {
-  const { profile, loading: fetching, error: fetchError } = useFetchProfile();
-  const { postProfile, loading: updating } = usePostProfile();
+  const { data: profile, isLoading: fetching, error: fetchError } = useFetchProfile();
+  const { mutate: postProfile, isPending: updating } = usePostProfile();
   const [isEditing, setIsEditing] = useState(false);
   const [tempImagePreview, setTempImagePreview] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -76,14 +76,17 @@ const Profile = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await postProfile(formData);
-    if (success && profile) {
-      setIsEditing(false);
-      // Update the actual image preview only after successful save
-      setImagePreview(tempImagePreview);
-      // Manually update the state so changes reflect immediately
-      Object.assign(profile, formData);
-    }
+    await postProfile(formData, {
+      onSuccess: () => {
+        if (profile) {
+          setIsEditing(false);
+          // Update the actual image preview only after successful save
+          setImagePreview(tempImagePreview);
+          // Manually update the state so changes reflect immediately
+          Object.assign(profile, formData);
+        }
+      }
+    });
   };
 
   const handleCancelEdit = () => {
@@ -125,7 +128,7 @@ const Profile = () => {
         className="flex items-center justify-center min-h-screen bg-gradient-to-b from-white to-[#f5f5f7]"
       >
         <div className="bg-white p-8 rounded-lg shadow-md border border-red-200">
-          <p className="text-red-600 font-medium">{fetchError}</p>
+          <p className="text-red-600 font-medium">{fetchError.message}</p>
           <Button 
             onClick={() => window.location.reload()} 
             className="mt-4 bg-[#a0c878] hover:bg-[#8fb86a]"

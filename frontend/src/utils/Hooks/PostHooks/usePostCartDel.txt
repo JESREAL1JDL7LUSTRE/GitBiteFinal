@@ -1,5 +1,5 @@
+import { deleteCartApi } from "@/api/CartApi";
 import { useState } from "react";
-import api from "../../../api/api";
 
 const useDeleteCart = () => {
   const [loading, setLoading] = useState(false);
@@ -10,9 +10,9 @@ const useDeleteCart = () => {
     setError(null);
 
     try {
-      await api.delete(`/api/cart/${cartId}/`);
-    } catch (err) {
-      console.error("Cart deletion failed:", err);
+      await deleteCartApi(cartId);
+    } catch (error) {
+      console.error("❌ Cart deletion failed:", error);
       setError("Failed to delete cart. Please try again.");
     } finally {
       setLoading(false);

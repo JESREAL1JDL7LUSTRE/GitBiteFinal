@@ -10,7 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import useFetchDish2 from "@/utils/Hooks/FetchHooks/useFetchDish2";
+import useQueryDishes from "@/utils/Hooks/Tanstack/Dish/useQueryDish";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,9 +19,9 @@ const Products = () => {
   // Get page number from URL, default to 1
   const page = parseInt(searchParams.get("page") || "1", 10);
   const searchQuery = searchParams.get("search") || "";
-
-  const { dishes, loading, error, totalPages } = useFetchDish2(page, searchQuery);
-  const filteredDishes = Array.isArray(dishes) ? dishes : [];
+  const { data, isLoading:loading, error } = useQueryDishes(page, searchQuery);
+  const filteredDishes = Array.isArray(data?.dishes) ? data.dishes : [];
+  const totalPages = data?.totalPages ?? 1;
 
   useEffect(() => {
     // Ensure the page number in URL is valid
@@ -70,7 +70,7 @@ const Products = () => {
         className="flex flex-col items-center justify-center min-h-[60vh]"
       >
         <div className="bg-red-50 p-6 rounded-lg border border-red-200 text-center">
-          <p className="text-red-600 mb-3">{error}</p>
+          <p className="text-red-600 mb-3">{error.message}</p>
           <button
             onClick={() => window.location.reload()}
             className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"

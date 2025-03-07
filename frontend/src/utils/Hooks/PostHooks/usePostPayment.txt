@@ -1,31 +1,25 @@
+import { postPayment } from "@/api/PaymentApi";
+import { PaymentData } from "@/types/Types";
 import { useState } from "react";
-import api from "../../../api/api";
-
-interface PaymentData {
-  order: number;
-  payment_method: string;
-  amount: number;
-}
 
 const usePostPayment = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const postPayment = async (paymentData: PaymentData) => {
+  const PostPayment = async (paymentData: PaymentData) => {
     setLoading(true);
     setError(null);
 
     try {
-      await api.post("/api/payment/", paymentData);
-    } catch (err) {
-      console.error("Payment failed:", err);
+      await postPayment(paymentData);
+    } catch {
       setError("Payment failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  return { postPayment, loading, error };
+  return { PostPayment, loading, error };
 };
 
 export default usePostPayment;

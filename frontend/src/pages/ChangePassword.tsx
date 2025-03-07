@@ -3,16 +3,16 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import usePostChangePassword from "@/utils/Hooks/PostHooks/usePostChangePassword";
+import usePostChangePassword from "@/utils/Hooks/Tanstack/Profile/useMutateChangePassword";
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const { message, changePassword } = usePostChangePassword(); // Use the hook
+  const { mutate: changePassword, data: message } = usePostChangePassword();
 
   const handleChangePassword = (e: React.FormEvent) => {
     e.preventDefault();
-    changePassword(oldPassword, newPassword);
+    changePassword({ oldPassword, newPassword });
   };
 
   return (

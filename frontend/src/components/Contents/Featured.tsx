@@ -1,14 +1,14 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import useFetchDishes from "../../utils/Hooks/FetchHooks/useFetchDish2";
 import PaymentButton from '../Buttons/PaymentButton';
 import { motion, AnimatePresence } from 'framer-motion';
+import useQueryDishes from '@/utils/Hooks/Tanstack/Dish/useQueryDish';
 
 
 function Featured() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { dishes, loading, error } = useFetchDishes(1, "");
-  const featuredDishes = dishes.filter((dish) => dish.featured);
+  const { data, isLoading: loading, error } = useQueryDishes(1, "");
+  const featuredDishes = data?.dishes?.filter((dish) => dish.featured) || [];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -63,7 +63,7 @@ function Featured() {
           animate={{ x: 0 }}
           className="text-red-600 text-xl"
         >
-          Error loading dishes: {error}
+          Error loading dishes: {error.message}
         </motion.div>
       </motion.div>
     );

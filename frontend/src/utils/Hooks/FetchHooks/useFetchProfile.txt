@@ -1,16 +1,7 @@
 // src/hooks/useFetchProfile.ts
 import { useState, useEffect } from "react";
-import api from "../../../api/api"; // Ensure this is the correct path for your API
-
-export interface ProfileData {
-  first_name: string;
-  last_name: string;
-  username: string;
-  email: string;
-  phone_number: string;
-  address: string;
-  image: string;
-}
+import { getProfileB } from "@/api/ProfileApi";
+import { ProfileData } from "@/types/Types";
 
 const useFetchProfile = () => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
@@ -21,9 +12,9 @@ const useFetchProfile = () => {
     const getProfile = async () => {
       setLoading(true);
       try {
-        const res = await api.get<ProfileData>("/api/profile/");
-        setProfile(res.data);
-      } catch {
+        const data = await getProfileB();
+        setProfile(data);
+      } catch { 
         setError("Failed to fetch profile details");
       } finally {
         setLoading(false);

@@ -1,0 +1,27 @@
+import { getPayments } from "@/api/PaymentApi";
+import { useEffect, useState } from "react";
+
+const useFetchPayments = () => {
+  const [payments, setPayments] = useState<PaymentItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPayments = async () => {
+      try {
+        const data = await getPayments();
+        setPayments(data);
+      } catch {
+        setError("Failed to fetch payment details");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPayments();
+  }, []);
+
+  return { payments, loading, error };
+};
+
+export default useFetchPayments;

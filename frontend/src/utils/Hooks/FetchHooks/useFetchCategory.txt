@@ -1,6 +1,5 @@
-// src/hooks/useFetchPayments.ts
+import { getCategories } from "@/api/DishApi";
 import { useState, useEffect } from "react";
-import api from "../../../api/api";// Ensure this is the correct path for your API
 
 export interface CategoryItem {
     id: number;
@@ -13,20 +12,19 @@ const useFetchCategory = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getCategory = async () => {
+    const fetchCategories = async () => {
       setLoading(true);
       try {
-        const res = await api.get<CategoryItem[]>("/api/category/");
-        setCategory(res.data);
-      } catch (err) {
-        setError("Failed to fetch payment details");
-        console.error(err);
+        const data = await getCategories();
+        setCategory(data);
+      } catch (error) {
+        setError(`Failed to fetch categories: ${error}`);
       } finally {
         setLoading(false);
       }
     };
 
-    getCategory();
+    fetchCategories();
   }, []);
 
   return { category, loading, error };

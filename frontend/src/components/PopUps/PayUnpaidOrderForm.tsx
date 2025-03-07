@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import usePostPayment from "../../utils/Hooks/PostHooks/usePostPayment"
-import useFetchPaymentMethods from "../../utils/Hooks/FetchHooks/useFetchPaymentMethod";
 import { useNavigate } from "react-router-dom";
+import useQueryPayment from "@/utils/Hooks/Tanstack/Payment/useQueryPayment";
+import useMutationPayment from "@/utils/Hooks/Tanstack/Payment/useMutationPayment";
+
 
 interface DishDetails {
   id: number;
@@ -20,9 +21,11 @@ interface PayUnpaidOrderFormProps {
 }
 
 function PayUnpaidOrderForm({ order, dishDetails, isOpen, onClose }: PayUnpaidOrderFormProps) {
+  const {useFetchPaymentMethods} = useQueryPayment();
+  const useMutationPaymentPost = useMutationPayment();
   const [paymentMethod, setPaymentMethod] = useState("Card");
-  const { postPayment, loading: postLoading, error: postError } = usePostPayment();
-  const { paymentMethods, loading: methodsLoading, error: fetchError } = useFetchPaymentMethods();
+  const { mutate: postPayment, isPending: postLoading, error: postError } = useMutationPaymentPost();
+  const { data: paymentMethods, isLoading: methodsLoading, error: fetchError } = useFetchPaymentMethods();
   const nav = useNavigate();
 
   const handlePayment = async () => {
@@ -71,7 +74,7 @@ function PayUnpaidOrderForm({ order, dishDetails, isOpen, onClose }: PayUnpaidOr
           {methodsLoading ? (
             <p className="text-gray-500">Loading payment methods...</p>
           ) : fetchError ? (
-            <p className="text-red-500">{fetchError}</p>
+            <p className="text-red-500">{fetchError.message}</p>
           ) : (
             <select
               value={paymentMethod}
@@ -79,7 +82,7 @@ function PayUnpaidOrderForm({ order, dishDetails, isOpen, onClose }: PayUnpaidOr
               disabled={postLoading}
               className="w-full p-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {paymentMethods.map((method) => (
+              {paymentMethods?.map((method) => (
                 <option key={method.value} value={method.value}>
                   {method.label}
                 </option>
@@ -88,7 +91,7 @@ function PayUnpaidOrderForm({ order, dishDetails, isOpen, onClose }: PayUnpaidOr
           )}
         </div>
 
-        {postError && <p className="text-red-500 mt-3">{postError}</p>}
+        {postError && <p className="text-red-500 mt-3">{postError.message}</p>}
 
         <AlertDialogFooter className="mt-6">
           <AlertDialogCancel onClick={onClose} className="border rounded-md px-4 py-2 text-gray-700">

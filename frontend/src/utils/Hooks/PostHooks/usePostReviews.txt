@@ -1,0 +1,25 @@
+import { postReview } from "@/api/DishApi";
+import { ReviewData } from "@/types/Types";
+import { useState } from "react";
+
+const usePostReview = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handlePostReview = async (reviewData: ReviewData) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await postReview(reviewData);
+    } catch {
+      setError("Failed to submit review. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { postReview: handlePostReview, loading, error };
+};
+
+export default usePostReview;

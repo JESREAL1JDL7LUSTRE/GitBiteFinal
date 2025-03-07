@@ -3,8 +3,8 @@ import { Card, CardHeader, CardFooter, CardContent } from "@/components/ui/card"
 import WishlistButton from "../Buttons/WishlistButton";
 import PaymentButton from "../Buttons/PaymentButton";
 import PlanToOrderButton from "../Buttons/CartButton";
-import useFetchReviews from "@/utils/Hooks/FetchHooks/useFetchReviews";
 import StarRatingShow from "../Reviews/StarRatingShow";
+import useFetchReviews from "@/utils/Hooks/Tanstack/Review/useQueryReview";
 
 interface ProductDetailsProps {
   dish: {
@@ -20,7 +20,7 @@ interface ProductDetailsProps {
 }
 
 const ProductDetailsCard: React.FC<ProductDetailsProps> = ({ dish, onBack }) => {
-  const { reviews = [] } = useFetchReviews(dish?.id || 0);
+  const { data: reviews = [] } = useFetchReviews(dish?.id || 0);
 
   const averageRating =
     reviews.length > 0

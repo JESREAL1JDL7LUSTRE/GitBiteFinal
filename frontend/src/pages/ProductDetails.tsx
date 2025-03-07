@@ -1,23 +1,21 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import useFetchDishes from "../utils/Hooks/FetchHooks/useFetchDishes";
 import ProductDetailsCard from "../components/Cards/ProductDetailsCard";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
+import useFetchDishes from "@/utils/Hooks/Tanstack/Dish/useInfiniteQueryDish";
 
 
 
 const ProductDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { dishes, loading, error, fetchDishes } = useFetchDishes();
+    const { data: dishes, isLoading:loading, error } = useFetchDishes();
 
-    useEffect(() => {
-        // Fetch dishes when the component mounts or when `id` changes
-        fetchDishes();
-
+useEffect(() => {
+    // Scroll to top when the component mounts or when `id` changes
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [id, fetchDishes]);
+}, [id]);
     
 
     if (loading) {
@@ -41,7 +39,7 @@ const ProductDetailPage = () => {
                 className="flex items-center justify-center min-h-screen"
             >
                 <div className="bg-white p-8 rounded-lg shadow-md border border-red-200">
-                    <p className="text-red-600 font-medium">{error}</p>
+                    <p className="text-red-600 font-medium">{error.message}</p>
                     <button 
                         onClick={() => navigate(-1)} 
                         className="mt-4 px-4 py-2 bg-[#a0c878] hover:bg-[#8fb86a] text-white rounded-md"
@@ -53,7 +51,7 @@ const ProductDetailPage = () => {
         );
     }
 
-    const dish = dishes.find((d) => d.id === Number(id));
+    const dish = dishes?.pages.flatMap(page => page.results).find((d) => d.id === Number(id));
 
     if (!dish) {
         return (

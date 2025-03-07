@@ -16,6 +16,25 @@ api.interceptors.request.use(
     (error) => {
         return Promise.reject(error)
     }
-)
+);
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error(`Response error [${error.response?.status}]:`, error.response?.data);
+    return Promise.reject(error);
+  }
+);
 
 export default api
+
+// 🔹 Function to Fetch Cart Items
+export const getCart = async () => {
+    try {
+        const res = await api.get('/api/cart/'); // Changed `post` to `get`
+        return res.data;
+    } catch (error) {
+        console.error("Something went wrong:", error);
+        throw error; // Fixed error throwing
+    }
+};

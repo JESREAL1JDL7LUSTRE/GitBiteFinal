@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import StarRating from "../Reviews/StarRating";
-import usePostReview from "../../utils/Hooks/PostHooks/usePostReviews"; 
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,13 +12,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Star } from "lucide-react";
+import usePostReview from "@/utils/Hooks/Tanstack/Review/useMutateReview";
 
 interface AddReviewProps {
   dishId: number; // Pass dishId when using this component
 }
 
 const AddReview: React.FC<AddReviewProps> = ({ dishId }) => {
-  const { postReview, loading, error } = usePostReview();
+  const { mutate: postReview, isPending: loading, error } = usePostReview();
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
 
@@ -62,7 +62,7 @@ const AddReview: React.FC<AddReviewProps> = ({ dishId }) => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <p className="text-red-500">{error.message}</p>}
           
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

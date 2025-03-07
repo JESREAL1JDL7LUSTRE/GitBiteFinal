@@ -1,0 +1,28 @@
+import { getPaymentMethods } from "@/api/PaymentApi";
+import { PaymentMethod } from "@/types/Types";
+import { useEffect, useState } from "react";
+
+const useFetchPaymentMethods = () => {
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchMethods = async () => {
+      try {
+        const methods = await getPaymentMethods();
+        setPaymentMethods(methods);
+      } catch {
+        setError("Failed to load payment methods.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMethods();
+  }, []);
+
+  return { paymentMethods, loading, error };
+};
+
+export default useFetchPaymentMethods;

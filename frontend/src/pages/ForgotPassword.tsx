@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import usePostForgotPassword from "@/utils/Hooks/PostHooks/usePostForgotPassword";
+import usePostForgotPassword from "@/utils/Hooks/Tanstack/Profile/useMutateForgotPassword";
 
 const ForgotPassword = () => {
-  const { postForgotPassword, message, loading, error } = usePostForgotPassword();
+  const { mutate: postForgotPassword, data: message, isPending: loading, error } = usePostForgotPassword();
   
   // ✅ Define state for input fields
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ const ForgotPassword = () => {
 
   const handleResetPassword = (e: React.FormEvent) => {
     e.preventDefault();
-    postForgotPassword(email, username, phoneNumber, newPassword);
+    postForgotPassword({ email, username, phoneNumber, newPassword });
   };
 
   return (
@@ -91,7 +91,7 @@ const ForgotPassword = () => {
               animate={{ opacity: 1 }}
               className="mt-4 text-center text-red-500 font-medium"
             >
-              {error}
+              {error.message}
             </motion.p>
           )}
 
