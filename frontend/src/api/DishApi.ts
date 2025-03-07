@@ -1,6 +1,5 @@
-import { CategoryItem } from "@/utils/Hooks/FetchHooks/useFetchCategory";
 import api from "./api";
-import { Dish, ReviewData, ReviewsItem } from "@/types/Types";
+import { CategoryItem, Dish, ReviewData, ReviewsItem } from "@/types/Types";
 
 export const getCategories = async () => {
     try {
